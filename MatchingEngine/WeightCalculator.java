@@ -20,8 +20,8 @@ public class WeightCalculator {
         } 
         //calculate inverse of priorities
         List<Double> inverses = priorities.stream()
-                               .map(priorities -> 1.0/priorities)
-                               .collect(Collectors.toList()) ;
+                        .map(priorities -> 1.0/priorities)
+                        .collect(Collectors.toList()) ;
         // sum of all inverses
         double sum = inverses.stream()
                      .mapToDouble(Double :: doubleValues)

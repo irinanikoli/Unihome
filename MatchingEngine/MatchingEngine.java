@@ -70,8 +70,8 @@ public class MatchingEngine {
         // choices between maxScore and treshold(limit)
         List<HousingOption> similarOptions = housingOptions.stream()
                       .filter(option -> {
-                         double score = scores.get(option);
-                         return score < maxScore && score > maxScore - treshold;
+                         double scoree = scores.get(option);
+                         return scoree < maxScore && scoree > maxScore - treshold;
                       }) 
                       .sorted(Comparator.comparingDouble(scores :: get).reversed())
                       .collect(Collectors.toList()); 
