@@ -32,7 +32,7 @@ public class WeightCalculator {
                                          .collect(Collectors.toList());
         Map<String, Double> weights = new HashMap<>;
         for (int i =0; i < criteria.size(); i++) {
-            weights.put(criteria.get(1), normalizedWeights.get(i));
+            weights.put(criteria.get(i), normalizedWeights.get(i));
         }
         return weights;
     }
