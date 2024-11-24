@@ -2,11 +2,14 @@ import io.jenetics.*;
 import io.jenetics.engine.*;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.Comparator;
 
 public class MatchingEngine {
     private List<HousingOption> housingOptions; 
     private Map<String, Double> weights;
-    public static final int TOP_N = 10;
+    public static final int RECCOMENDED_COUNT = 10;
     // number of houses to return
     public MatchingEngine(List<HousingOption> housingOptions, Map<String, Double> weights) {
         this.housingOptions = housingOptions;
@@ -27,6 +30,12 @@ public class MatchingEngine {
 
    /**
     * Optimize and return the best house
+    * Engine builds a genetic algorithm
+    * individual like a list index (0 for the 1st house)
+    * Codecs.ofScalar defines the range of the gene's values (0  to the size of list)
+    * limit(100): Genetic Optimization for 100 generations
+    * collect(EvolutionResult.toBestPhenotype()) : returns the best atom (house with geatest score)
+    * return housingOptions.get(...): converts result into house of the list
     */
    
     public HousingOption optimize() {
@@ -38,10 +47,40 @@ public class MatchingEngine {
         Phenotype<DoubleGene, Double> best = engine.stream()
                     .limit(100)
                     .collect(EvolutionResult.toBestPhenotype());
-                    
-        return housingOptions.get(best.genotype().gene().allele().intValue());
-         
-        
+
+        return housingOptions.get(best.genotype().gene().allele().intValue()); 
     }
 
+/**
+ * Find houses with similar score to the best and return them
+ */
+
+  public List<HousingOption> findOtherBestSolutions(double treshold) {
+    // calculate score for all the houses
+    Map<HousingOption, Double> scores = housingOptions.stream()
+                    .collect(Collectors.toMap(option -> orption, this :: evaluate ));
+        //Find max score
+        double maxScore = scores.values().stream()
+                    .max(Double :: compare)
+                    .orElse(0.0);
+        // Choices with the best score
+        List<HousingOption> topChoices = housingOptions.stream()
+                    .filter(option -> score.get(option) == maxScore)
+                    .collect(Collectors.toList());
+        // choices between maxScore and treshold(limit)
+        List<HousingOption> similarOptions = housingOptions.stream()
+                      .filter(option -> {
+                         double score = scores.get(option);
+                         return score < maxScore && score > maxScore - treshold;
+                      }) 
+                      .sorted(Comparator.comparingDouble(scores :: get).reversed())
+                      .collect(Collectors.toList()); 
+        // combination and constraint at RECOMMENDED_COUNT houses
+        List<HousingOption> result = new ArrayList<>(topChoices);
+        similarOptions.stream()
+            .limit(RECCOMENDED_COUNT - result.size())
+            .forEach(result :: add);
+        
+        return result;
+  }
 }
