@@ -58,14 +58,14 @@ public class MatchingEngine {
   public List<HousingOption> findOtherBestSolutions(double treshold) {
     // calculate score for all the houses
     Map<HousingOption, Double> scores = housingOptions.stream()
-                    .collect(Collectors.toMap(option -> orption, this :: evaluate ));
+                    .collect(Collectors.toMap(option -> option, this :: evaluate ));
         //Find max score
         double maxScore = scores.values().stream()
                     .max(Double :: compare)
                     .orElse(0.0);
         // Choices with the best score
         List<HousingOption> topChoices = housingOptions.stream()
-                    .filter(option -> score.get(option) == maxScore)
+                    .filter(option -> scores.get(option) == maxScore)
                     .collect(Collectors.toList());
         // choices between maxScore and treshold(limit)
         List<HousingOption> similarOptions = housingOptions.stream()
