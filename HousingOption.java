@@ -3,19 +3,27 @@ public class HousingOption {
     public class HousingOption {
         private String id; // Μοναδικό αναγνωριστικό για κάθε σπίτι
         private String location; // Περιγραφή τοποθεσίας
+        private String address;
         private double cost; // Ενοίκιο
+        private int floor;
         private double size; // Τετραγωνικά μέτρα
         private double distanceFromUni; // Απόσταση από το πανεπιστήμιο
         private double distanceFromMeans; // Απόσταση από μέσα μαζικής μεταφοράς
+        private int numberofbed;
+        private boolean furnished;
     }
 
-    public HousingOption(String id, String location, double cost, double size, double distanceFromUni, double distanceFromMeans) {
+    public HousingOption(String id, String location, String address, double cost, int floor, double size, double distanceFromUni, double distanceFromMeans, int numberofbed, boolean furnished) {
         this.id = id;
         this.location = location;
+        this.address = address;
         this.cost = cost;
+        this.floor = floor;
         this.size = size;
         this.distanceFromUni = distanceFromUni;
-        this.distanceFromMeans = distanceFromMeans;
+        this.distanceFromUni = distanceFromUni;
+        this.numberofbed = numberofbed;
+        this.furnished = furnished;
     }
 
     public String getId() {
@@ -34,12 +42,28 @@ public class HousingOption {
         this.location = location;
     }
 
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     public double getCost() {
         return cost;
     }
 
     public void setCost(double cost) {
         this.cost = cost;
+    }
+
+    public int getFloor() {
+        return floor;
+    }
+
+    public void setFloor(int floor) {
+        this.floor = floor;
     }
 
     public double getSize() {
@@ -66,15 +90,35 @@ public class HousingOption {
         this.distanceFromMeans = distanceFromMeans;
     }
 
+    public int getNumberofbed() {
+        return numberofbed;
+    }
+
+    public void setNumberofbed(int id) {
+        this.numberofbed = numberofbed;
+    }
+
+    public boolean getFurnished() {
+        return furnished;
+    }
+
+    public void setFurnished(boolean furnished) {
+        this.furnished = furnished;
+    }
+
     @Override
     public String toString() {
         return "HousingOption{" +
                 "id='" + id + '\'' +
                 ", location='" + location + '\'' +
+                ", address=" + address +
                 ", cost=" + cost +
+                ", floor=" + floor +
                 ", size=" + size +
                 ", distanceFromUni=" + distanceFromUni +
                 ", distanceFromMeans=" + distanceFromMeans +
+                ", numberodbed=" + numberofbed +
+                ", furnished=" + furnished +
                 '}';
     }
 }
