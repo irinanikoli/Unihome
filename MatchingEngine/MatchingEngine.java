@@ -19,13 +19,32 @@ public class MatchingEngine {
      * Calculate the score of a house based on weights and its characteristics
      */
 
-    public double evaluate(HousingOption ho) {
+    public double evaluate(HousingOption ho, Student student) {
         double score = 0.0;
         score += weights.getOrDefault("cost", 0.0) * (1.0 / ho.getCost());
         score += weights.getOrDefault("size", 0.0) * ho.getSize();
         score += weights.getOrDefault("distanceFromUni", 0.0) * ho.getDistanceFromUni();
         score += weights.getOrDefault("distanceFromMeans", 0.0) * ho.getDistanceFromMeans();
-        return score;
+        //if statements for penalties in the score
+        // Proportional penalties based on student's preferances
+        if (ho.getCost() > student.getMaxCost()) {
+            double violationRatio = ho.getCost() / student.getCost();
+            score =Math.max(1.0 - (weights.getOrDefault("cost", 0.0) * (violationRatio - 1.0)), 0.0);
+        }
+        if (ho.getDistanceFromMeans() > student.getDistanceFromMeans()) {
+            double violationRatio = ho.getDistanceFromMeans() /  student.getDistanceFromMeans();
+            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromMeans", 0.0)), 0.0);
+        }
+        if (ho.getDistanceFromUni() > student.getDistanceFromUni()) {
+            double violationRatio = ho.getDistanceFromUni() / student.getDistanceFromUni();
+            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromUni", 0.0)), 0.0);
+        }
+        if (ho.getSize() < student.getSize()) {
+            double violationRatio = ho.getSize() / student.getSize();
+            score *= Math.max(1.0 - (weights.getOrDefault("size", 0.0)) , 0.0);
+        }
+
+        return Math.max(score, 0.0);
     }
 
    /**
@@ -38,9 +57,9 @@ public class MatchingEngine {
     * return housingOptions.get(...): converts result into house of the list
     */
    
-    public HousingOption optimize() {
+    public HousingOption optimize(Student student) {
         Engine<DoubleGene, Double> engine = Engine.builder(
-            individual -> evaluate(housingOptions.get((int) Math.floor(individual.getdoubleValue()))),
+            individual -> evaluate(housingOptions.get((int) Math.floor(individual.getdoubleValue())), student),
             Codecs.ofScalar(DoubleRange.of(0, housingOptions.size()))
         ).build();
 
@@ -58,7 +77,7 @@ public class MatchingEngine {
   public List<HousingOption> findOtherBestSolutions(double treshold) {
     // calculate score for all the houses
     Map<HousingOption, Double> scores = housingOptions.stream()
-                    .collect(Collectors.toMap(option -> option, this :: evaluate ));
+                    .collect(Collectors.toMap(option -> option, ho -> evaluate(housingOptions, student)));
         //Find max score
         double maxScore = scores.values().stream()
                     .max(Double :: compare)
