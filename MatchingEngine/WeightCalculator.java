@@ -20,16 +20,16 @@ public class WeightCalculator {
         } 
         //calculate inverse of priorities
         List<Double> inverses = priorities.stream()
-                        .map(priority -> 1.0/priority)
-                        .collect(Collectors.toList()) ;
+                     .map(priority -> 1.0/priority)
+                     .collect(Collectors.toList()) ;
         // sum of all inverses
         double sum = inverses.stream()
                      .mapToDouble(Double :: doubleValue)
                      .sum(); 
         // normalization
         List<Double> normalizedWeights = inverses.stream()
-                                         .map(inverse -> inverse/sum)
-                                         .collect(Collectors.toList());
+                     .map(inverse -> inverse/sum)
+                     .collect(Collectors.toList());
         Map<String, Double> weights = new HashMap<>();
         for (int i =0; i < criteria.size(); i++) {
             weights.put(criteria.get(i), normalizedWeights.get(i));
