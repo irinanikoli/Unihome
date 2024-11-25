@@ -1,5 +1,7 @@
-import io.jenetics.*;
-import io.jenetics.engine.*;
+import io.jenetics.DoubleGene;
+import io.jenetics.engine.Engine;
+import io.jenetics.engine.EvolutionResult;
+import io.jenetics.util.DoubleRange;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
