@@ -1,6 +1,5 @@
 public class HousingOption {
 
-    public class HousingOption {
         private String id; // Μοναδικό αναγνωριστικό για κάθε σπίτι
         private String location; // Περιγραφή τοποθεσίας
         private String address;
@@ -11,7 +10,7 @@ public class HousingOption {
         private double distanceFromMeans; // Απόσταση από μέσα μαζικής μεταφοράς
         private int numberofbed;
         private boolean furnished;
-    }
+    
 
     public HousingOption(String id, String location, String address, double cost, int floor, double size, double distanceFromUni, double distanceFromMeans, int numberofbed, boolean furnished) {
         this.id = id;
