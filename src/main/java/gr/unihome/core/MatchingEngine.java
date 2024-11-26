@@ -21,7 +21,7 @@ public class MatchingEngine {
      * Calculate the score of a house based on weights and its characteristics
      */
 
-    public double evaluate(HousingOption ho, Student student) {
+    public double evaluate(HousingOption ho, Criteria student) {
         double score = 0.0;
         score += weights.getOrDefault("cost", 0.0) * (1.0 / ho.getCost());
         score += weights.getOrDefault("size", 0.0) * ho.getSize();
@@ -30,7 +30,7 @@ public class MatchingEngine {
         //if statements for penalties in the score
         // Proportional penalties based on student's preferances
         if (ho.getCost() > student.getMaxCost()) {
-            double violationRatio = ho.getCost() / student.getCost();
+            double violationRatio = ho.getCost() / student.getBudget();
             score =Math.max(1.0 - (weights.getOrDefault("cost", 0.0) * (violationRatio - 1.0)), 0.0);
         }
         if (ho.getDistanceFromMeans() > student.getDistanceFromMeans()) {
@@ -59,7 +59,7 @@ public class MatchingEngine {
     * return housingOptions.get(...): converts result into house of the list
     */
    
-    public HousingOption optimize(Student student) {
+    public HousingOption optimize(Criteria student) {
         Engine<DoubleGene, Double> engine = Engine.builder(
             individual -> evaluate(housingOptions.get((int) Math.floor(individual.getdoubleValue())), student),
             Codecs.ofScalar(DoubleRange.of(0, housingOptions.size()))
