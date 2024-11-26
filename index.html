@@ -114,12 +114,64 @@
         }
         .banner{
             width: auto;
-            height: 60vh;
+            height: 40vh;
             background-color: rgb(202, 224, 217);
         }
-        .ranking-section{
-            width: auto;
-            height: 100vh;
+                /* Στυλ για τις κάρτες */
+                .card-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+
+        .card-content {
+            padding: 15px;
+        }
+
+        .card-content h3 {
+            margin: 0 0 10px 0;
+            font-size: 20px;
+            color: #0179a4;
+        }
+
+        .card-content p {
+            margin: 0 0 15px 0;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        /* Στυλ για την κατάταξη */
+        .rating {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .rating span {
+            color: #ffc107;
+            font-size: 20px;
         }
 
     </style>
@@ -146,33 +198,47 @@
     
 
     <!-- Ranking Section for Houses -->
-    <div class="ranking-section" id="houses">
-        <h2>Κατάταξη Σπιτιών</h2>
-        <div class="house-list">
-            <div class="house-item">
-                <div class="title">Σπίτι 1</div>
-                <div class="description">Περιγραφή του σπιτιού 1.</div>
+    <div class="card-container">
+        <!-- Σπίτι 1 -->
+        <div class="card">
+            <img src="house1.jpg" alt="Σπίτι 1">
+            <div class="card-content">
+                <h3>Σπίτι 1</h3>
+                <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
+                <div class="rating">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
+                    <p>(4.0/5)</p>
+                </div>
             </div>
-            <div class="house-item">
-                <div class="title">Σπίτι 2</div>
-                <div class="description">Περιγραφή του σπιτιού 2.</div>
+        </div>
+    
+        <!-- Σπίτι 2 -->
+        <div class="card">
+            <img src="house2.jpg" alt="Σπίτι 2">
+            <div class="card-content">
+                <h3>Σπίτι 2</h3>
+                <p>Περιγραφή: Διαμέρισμα με θέα και άμεση πρόσβαση στα ΜΜΜ.</p>
+                <div class="rating">
+                    <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
+                    <p>(3.0/5)</p>
+                </div>
             </div>
-            <div class="house-item">
-                <div class="title">Σπίτι 3</div>
-                <div class="description">Περιγραφή του σπιτιού 3.</div>
+        </div>
+    
+        <!-- Σπίτι 3 -->
+        <div class="card">
+            <img src="house3.jpg" alt="Σπίτι 3">
+            <div class="card-content">
+                <h3>Σπίτι 3</h3>
+                <p>Περιγραφή: Μεγάλο σπίτι για 2 άτομα σε ήσυχη γειτονιά.</p>
+                <div class="rating">
+                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+                    <p>(5.0/5)</p>
+                </div>
             </div>
-            <div class="house-item">
-                <div class="title">Σπίτι 4</div>
-                <div class="description">Περιγραφή του σπιτιού 4.</div>
-            </div>
-            <div class="house-item">
-                <div class="title">Σπίτι 5</div>
-                <div class="description">Περιγραφή του σπιτιού 5.</div>
-            </div>
-            <!-- Προσθήκη περισσότερων σπιτιών εδώ -->
         </div>
     </div>
-
+    
 </body>
 </html>
 
