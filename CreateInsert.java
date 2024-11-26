@@ -146,22 +146,26 @@ public class CreateInsert {
             VALUES (?, ?, ?);
             """;
 
-        List<String> universities = List.of(
-            "Εθνικό Μετσόβιο Πολυτεχνείο",
-            "Πανεπιστήμιο Αθηνών",
-            "Πάντειο Πανεπιστήμιο",
-            "Οικονομικό Πανεπιστήμιο Αθηνών",
-            "Πανεπιστήμιο Πειραιώς"
-        );
-
-        List<double[]> coordinates = List.of(
-            new double[] {37.9732, 23.7657},  // emp
-            new double[] {37.9847, 23.7282},  // ekpa
-            new double[] {37.9633, 23.7179},  // panteio
-            new double[] {37.9954, 23.7327},  // opa
-            new double[] {37.9405, 23.6531}   // papei
-        );
-
+            List<String> universities = List.of(
+                "Εθνικό Μετσόβιο Πολυτεχνείο",
+                "Εθνικό Καποδιστριακό Πανεπιστήμιο Αθηνών",
+                "Πάντειο Πανεπιστήμιο",
+                "Οικονομικό Πανεπιστήμιο Αθηνών",
+                "Πανεπιστήμιο Πειραιώς",
+                "Γεωπονικό Πανεπιστήμιο Αθηνών",
+                "Χαροκόπειο Πανεπιστήμιο"
+            );
+            
+            List<double[]> coordinates = List.of(
+                new double[] {37.9732, 23.7657},  // ΕΜΠ
+                new double[] {37.9847, 23.7282},  // ΕΚΠΑ
+                new double[] {37.9633, 23.7179},  // Πάντειο
+                new double[] {37.9954, 23.7327},  // ΟΠΑ
+                new double[] {37.9405, 23.6531},  // ΠαΠει
+                new double[] {37.9763, 23.7055},  // Γεωπονικό
+                new double[] {37.9590, 23.7160}   // Χαροκόπειο
+            );
+            
         try (Connection conn = DatabaseConnection.connect();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
