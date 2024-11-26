@@ -90,17 +90,17 @@ public class MatchingEngine {
                     .collect(Collectors.toList());
         // choices between maxScore and treshold(limit)
         List<HousingOption> similarOptions = housingOptions.stream()
-                      .filter(option -> {
+                    .filter(option -> {
                          double scoree = scores.get(option);
                          return scoree < maxScore && scoree > maxScore - treshold;
-                      }) 
-                      .sorted(Comparator.comparingDouble(scores :: get).reversed())
-                      .collect(Collectors.toList()); 
+                     }) 
+                    .sorted(Comparator.comparingDouble(scores :: get).reversed())
+                    .collect(Collectors.toList()); 
         // combination and constraint at RECOMMENDED_COUNT houses
         List<HousingOption> result = new ArrayList<>(topChoices);
         similarOptions.stream()
-            .limit(RECCOMENDED_COUNT - result.size())
-            .forEach(result :: add);
+                    .limit(RECCOMENDED_COUNT - result.size())
+                    .forEach(result :: add);
         
         return result;
   }
