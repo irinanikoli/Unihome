@@ -93,7 +93,7 @@ public class HousingOption {
         return numberofbed;
     }
 
-    public void setNumberofbed(int id) {
+    public void setNumberofbed(int numberofbed) {
         this.numberofbed = numberofbed;
     }
 
