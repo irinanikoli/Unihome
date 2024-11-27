@@ -1,3 +1,5 @@
+package gr.unihome.core;
+
 public class HousingOption {
 
         private String id; // Μοναδικό αναγνωριστικό για κάθε σπίτι
