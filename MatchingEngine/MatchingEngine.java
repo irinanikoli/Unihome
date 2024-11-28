@@ -1,3 +1,5 @@
+package gr.unihome.core;
+
 import io.jenetics.DoubleGene;
 import io.jenetics.engine.Engine;
 import io.jenetics.engine.EvolutionResult;
@@ -49,20 +51,24 @@ public class MatchingEngine {
         return Math.max(score, 0.0);
     }
 
-   /**
+  /**
     * Optimize and return the best house
     * Engine builds a genetic algorithm
-    * individual like a list index (0 for the 1st house)
+    * genotype like a potential solution in genetic algorithm's population
     * Codecs.ofScalar defines the range of the gene's values (0  to the size of list)
     * limit(100): Genetic Optimization for 100 generations
     * collect(EvolutionResult.toBestPhenotype()) : returns the best atom (house with geatest score)
     * return housingOptions.get(...): converts result into house of the list
-    */
+   */
    
     public HousingOption optimize(Student student) {
-        Engine<DoubleGene, Double> engine = Engine.builder(
-            individual -> evaluate(housingOptions.get((int) Math.floor(individual.getdoubleValue())), student),
-            Codecs.ofScalar(DoubleRange.of(0, housingOptions.size()))
+        Engine<DoubleGene, Double> engine = Engine.<DoubleGene, Double>builder(
+            genotype -> {
+                DoubleGene gene = genotype.gene(); // Access to the first gene
+                double index = gene.doubleValue(); // Value of gene
+                return evaluate(housingOptions.get((int) Math.floor(index)), student);
+            },
+            Codecs.ofScalar(DoubleRange.of(0, housingOptions.size() - 1)).encoding() // Genotype factory (generate individuals)
         ).build();
 
         Phenotype<DoubleGene, Double> best = engine.stream()
@@ -79,7 +85,7 @@ public class MatchingEngine {
   public List<HousingOption> findOtherBestSolutions(double treshold) {
     // calculate score for all the houses
     Map<HousingOption, Double> scores = housingOptions.stream()
-                    .collect(Collectors.toMap(option -> option, ho -> evaluate(housingOptions, student)));
+                    .collect(Collectors.toMap(option -> option, ho -> evaluate(ho, student)));
         //Find max score
         double maxScore = scores.values().stream()
                     .max(Double :: compare)
