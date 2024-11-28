@@ -1,5 +1,6 @@
 import java.util.HashMap;
 import java.util.Map;
+import gr.unihome.database.DatabaseHandler;
 
 public class DistanceCalculator {
     
