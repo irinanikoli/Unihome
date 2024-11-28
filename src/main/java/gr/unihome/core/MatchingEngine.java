@@ -53,6 +53,7 @@ public class MatchingEngine {
         return Math.max(score, 0.0);
     }
 
+
    /**
     * Optimize and return the best house
     * Engine builds a genetic algorithm
@@ -61,7 +62,8 @@ public class MatchingEngine {
     * limit(100): Genetic Optimization for 100 generations
     * collect(EvolutionResult.toBestPhenotype()) : returns the best atom (house with geatest score)
     * return housingOptions.get(...): converts result into house of the list
-    */
+   */
+   
    
     public HousingOption optimize(Criteria student) {
         Engine<DoubleGene, Double> engine = Engine.<DoubleGene, Double>builder(
