@@ -11,8 +11,11 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.logging.Logger;
 
 public class MatchingEngine {
+    private static final Logger logger = AppLogger.getLogger();
+    //Download of Logger form AppLogger.java
     private List<HousingOption> housingOptions; 
     private Map<String, Double> weights;
     public static final int RECCOMENDED_COUNT = 10;
@@ -83,8 +86,10 @@ public class MatchingEngine {
 
             return housingOptions.get(best.genotype().gene().allele().intValue()); 
         } catch(NullPointerException e) {
+            logger.severe("NullPointerException occured: problem with the list : " + e.getMessage()); 
             e.printStackTrace();  
         } catch(Exception e) {
+            logger.severe("Error during optimization : " + e.getMessage());  
             e.printStackTrace();
         }
        return null; //returns null in case of an error
@@ -124,9 +129,11 @@ public class MatchingEngine {
         
             return result;
         } catch(NullPointerException e) {
+            logger.severe("NullPointerException occured: problem with the list : " + e.getMessage()); 
             e.printStackTrace();
         } catch(Exception e) {
             e.printStackTrace();
+            logger.severe("Error finding other best solutions : " + e.getMessage());
         } 
     return new ArrayList<>(); //returns an empty ArrayList in case of an error
   }
