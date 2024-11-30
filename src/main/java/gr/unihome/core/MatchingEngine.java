@@ -66,21 +66,28 @@ public class MatchingEngine {
    
    
     public HousingOption optimize(Criteria student) {
-        Engine<DoubleGene, Double> engine = Engine.<DoubleGene, Double>builder(
-            genotype -> {
-                DoubleGene gene = genotype.gene(); // Access to the first gene
-                double index = gene.doubleValue(); // Value of gene
-                return evaluate(housingOptions.get((int) Math.floor(index)), student);
-            },
-            Codecs.ofScalar(DoubleRange.of(0, housingOptions.size() - 1)).encoding() // Genotype factory (generate individuals)
-        ).build();
+        try {
+            Engine<DoubleGene, Double> engine = Engine.<DoubleGene, Double>builder(
+                genotype -> {
+                   DoubleGene gene = genotype.gene(); // Access to the first gene
+                   double index = gene.doubleValue(); // Value of gene
+                   return evaluate(housingOptions.get((int) Math.floor(index)), student);
+                },
+                Codecs.ofScalar(DoubleRange.of(0, housingOptions.size() - 1)).encoding() // Genotype factory (generate individuals)
+            ).build();
         
         
-        Phenotype<DoubleGene, Double> best = engine.stream()
+            Phenotype<DoubleGene, Double> best = engine.stream()
                     .limit(100)
                     .collect(EvolutionResult.toBestPhenotype());
 
-        return housingOptions.get(best.genotype().gene().allele().intValue()); 
+            return housingOptions.get(best.genotype().gene().allele().intValue()); 
+        } catch(NullPointerException e) {
+            e.printStackTrace();  
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+       return null; //returns null in case of an error
     }
 
 /**
@@ -88,32 +95,39 @@ public class MatchingEngine {
  */
 
   public List<HousingOption> findOtherBestSolutions(double treshold) {
-    // calculate score for all the houses
-    Map<HousingOption, Double> scores = housingOptions.stream()
+        // calculate score for all the houses
+        try {
+            Map<HousingOption, Double> scores = housingOptions.stream()
                     .collect(Collectors.toMap(option -> option, ho -> evaluate(ho, student)));
-
-        //Find max score
-        double maxScore = scores.values().stream()
+                 
+            //Find max score
+            double maxScore = scores.values().stream()
                     .max(Double :: compare)
                     .orElse(0.0);
-        // Choices with the best score
-        List<HousingOption> topChoices = housingOptions.stream()
+            // Choices with the best score
+            List<HousingOption> topChoices = housingOptions.stream()
                     .filter(option -> scores.get(option) == maxScore)
                     .collect(Collectors.toList());
-        // choices between maxScore and treshold(limit)
-        List<HousingOption> similarOptions = housingOptions.stream()
+            // choices between maxScore and treshold(limit)
+            List<HousingOption> similarOptions = housingOptions.stream()
                     .filter(option -> {
-                         double scoree = scores.get(option);
-                         return scoree < maxScore && scoree > maxScore - treshold;
-                     }) 
+                        double scoree = scores.get(option);
+                        return scoree < maxScore && scoree > maxScore - treshold;
+                    }) 
                     .sorted(Comparator.comparingDouble(scores :: get).reversed())
                     .collect(Collectors.toList()); 
-        // combination and constraint at RECOMMENDED_COUNT houses
-        List<HousingOption> result = new ArrayList<>(topChoices);
-        similarOptions.stream()
+            // combination and constraint at RECOMMENDED_COUNT houses
+            List<HousingOption> result = new ArrayList<>(topChoices);
+                similarOptions.stream()
                     .limit(RECCOMENDED_COUNT - result.size())
                     .forEach(result :: add);
         
-        return result;
+            return result;
+        } catch(NullPointerException e) {
+            e.printStackTrace();
+        } catch(Exception e) {
+            e.printStackTrace();
+        } 
+    return new ArrayList<>(); //returns an empty ArrayList in case of an error
   }
 }
