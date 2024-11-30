@@ -12,8 +12,8 @@ public class HousingOption {
         private double distanceFromMeans; // Απόσταση από μέσα μαζικής μεταφοράς
         private int numberofbed; //Αριθμός υπνοδωματίων
         private boolean furnished; // επιπλωμέμο/ή όχι
-        private double latitude; // syntetagmenes x
-        private double longitude; // syntetagmenes y
+        private double latitude; // γεωγραφικο πλατοσ
+        private double longitude; // γεωγραφικο μηκοσ
 
         private DistanceCalculator distanceCalculator;
     
