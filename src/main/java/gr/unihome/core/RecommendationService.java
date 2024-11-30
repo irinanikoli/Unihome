@@ -1,5 +1,6 @@
 package gr.unihome.core;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +20,13 @@ public class RecommendationService {
 
     //Provides the best house for each student
     public HousingOption getBestHouse(Criteria studentCriteria) {
-        return matchingEngine.optimize(studentCriteria);
+        try {
+
+           return matchingEngine.optimize(studentCriteria); 
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return null; //returns null in case of an error
     } 
     /*
      * Provides the list with the best recommendations
@@ -29,7 +36,12 @@ public class RecommendationService {
      */
 
     public List<HousingOption> getBestRecommendationList(Criteria studentCriteria, double treshold) {
-        return matchingEngine.findOtherBestSolutions(studentCriteria, treshold);
+        try {
+           return matchingEngine.findOtherBestSolutions(studentCriteria, treshold);
+        } catch(Exception e) {
+            e.printStackTrace();
+        }
+        return new ArrayList<>(); //returns an empty ArrayList in case of an error
     } 
 
     
