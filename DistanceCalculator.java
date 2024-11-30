@@ -1,14 +1,13 @@
+import java.util.HashMap;
 import java.util.Map;
 
 public class DistanceCalculator {
-    
-    private DatabaseHandler dbHandler;
 
-    // Κατασκευαστής που δέχεται ένα DatabaseHandler
+    private DatabaseManager dbManager;
+
     public DistanceCalculator() {
-        // Αρχικοποιούμε το DatabaseHandler
-        this.dbHandler = new DatabaseHandler();
-    }
+        this.dbManager = new DatabaseManager();
+    } 
 
     /**
      * Υπολογίζει τις αποστάσεις από το πανεπιστήμιο και την πλησιέστερη στάση ΜΜΜ.
@@ -21,17 +20,17 @@ public class DistanceCalculator {
         
         try {
             // Παίρνουμε τις συντεταγμένες του σπιτιού από τη βάση δεδομένων με βάση τη διεύθυνσή του
-            double[] houseCoordinates = dbHandler.getCoordinatesForAddress(address);
+            double[] houseCoordinates = dbManager.getCoordinatesForHouse(address);
             double houseLatitude = houseCoordinates[0];
             double houseLongitude = houseCoordinates[1];
             
             // Παίρνουμε τις συντεταγμένες του πανεπιστημίου από τη βάση δεδομένων
-            double[] uniCoordinates = dbHandler.getCoordinatesForPlace("university");
+            double[] uniCoordinates = dbManager.getCoordinatesForUniversity("university");
             double uniLatitude = uniCoordinates[0];
             double uniLongitude = uniCoordinates[1];
             
             // Παίρνουμε τις συντεταγμένες της πλησιέστερης στάσης ΜΜΜ από τη βάση δεδομένων
-            double[] meansCoordinates = dbHandler.getCoordinatesForPlace("nearest_transport");
+            double[] meansCoordinates = dbManager.getCoordinatesForNearestTransport(houseLatitude, houseLongitude);
             double meansLatitude = meansCoordinates[0];
             double meansLongitude = meansCoordinates[1];
             
@@ -66,4 +65,5 @@ public class DistanceCalculator {
         
         return R * c; // Επιστρέφει την απόσταση σε χιλιόμετρα
     }
+
 }
