@@ -2,9 +2,11 @@ package gr.unihome.core;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 public class DistanceCalculator {
-    
+    private static final Logger logger = AppLogger.getLogger();
+    //Downloading Logger from AppLogger
     private DatabaseHandler dbHandler;
 
     // Κατασκευαστής που δέχεται ένα DatabaseHandler
@@ -47,6 +49,7 @@ public class DistanceCalculator {
             distances.put("means", distanceToTransport);
             
         } catch (Exception e) {
+            logger.severe("Error during the calculation of distances : " + e.getMessage());
             System.out.println("Σφάλμα κατά τον υπολογισμό αποστάσεων: " + e.getMessage());
         }
         
