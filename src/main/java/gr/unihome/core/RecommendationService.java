@@ -3,7 +3,7 @@ package gr.unihome.core;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
-
+import java.util.logging.Logger;
 
 public class RecommendationService {
 
@@ -11,7 +11,8 @@ public class RecommendationService {
      * It plays the connecting role between other classes and MatchingEngine
      * Returns the best house and the list of recommendations for the student    
      */
-
+    private static final Logger logger = AppLogger.getLogger();
+    //Downloading Logger from AppLogger 
     private MatchingEngine matchingEngine;
     public RecommendationService(List<HousingOption> housingOptions, Map<String, Double> weights) {
         //initialization based on the list of housing and student's weights of preference
@@ -24,6 +25,7 @@ public class RecommendationService {
 
            return matchingEngine.optimize(studentCriteria); 
         } catch(Exception e) {
+            logger.severe("Error getting the best house : " + e.getMessage());
             e.printStackTrace();
         }
         return null; //returns null in case of an error
@@ -39,10 +41,9 @@ public class RecommendationService {
         try {
            return matchingEngine.findOtherBestSolutions(studentCriteria, treshold);
         } catch(Exception e) {
+            logger.severe("Error getting the best recommendations : " + e.getMessage());
             e.printStackTrace();
         }
         return new ArrayList<>(); //returns an empty ArrayList in case of an error
-    } 
-
-    
+    }   
 }
