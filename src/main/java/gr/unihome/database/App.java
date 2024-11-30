@@ -7,9 +7,10 @@
 //        MeansDatabase.initialize();
 //
 //        HousesDatabase.insertRandomHouses(100);
-//        UniversitiesDatabase.insertRandomUniversities(6);
+//        UniversitiesDatabase.insertRandomUniversities(8);
 //        MeansDatabase.insertRandomMeans(500);
 //
 //
-//  System.out.println("Δεδομένα εισήχθησαν με επιτυχία!");    }
+//        System.out.println("Δεδομένα εισήχθησαν με επιτυχία!");    
+//    }
 //}
