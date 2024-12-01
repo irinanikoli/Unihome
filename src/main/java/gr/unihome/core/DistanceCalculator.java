@@ -47,6 +47,7 @@ public class DistanceCalculator {
             // Αποθηκεύουμε τις αποστάσεις στον χάρτη
             distances.put("uni", distanceToUniversity);
             distances.put("means", distanceToTransport);
+            logger.info("successful procedure");
             
         } catch (Exception e) {
             logger.severe("Error during the calculation of distances : " + e.getMessage());
