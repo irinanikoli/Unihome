@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Map;
-public class HousingOption {
+import java.util.logging.Logger;
 
+public class HousingOption {
+        private static final Logger logger = AppLogger.getLogger();
         private String id; // Μοναδικό αναγνωριστικό για κάθε σπίτι
         private String location; // Περιγραφή τοποθεσίας
         private String address; // Διεύθυνση
@@ -165,11 +167,13 @@ public class HousingOption {
                 setDistanceFromMeans(distances.get("means"));
 
                 System.out.println("Επιτυχής φόρτωση δεδομένων για το σπίτι με ID: " + houseId);
+                logger.info("Successful connection with the database and retrieval of data");
             } else {
                 System.out.println("Δεν βρέθηκε σπίτι με το ID: " + houseId);
             }
         } catch (SQLException e) {
             System.err.println("Σφάλμα κατά την ανάκτηση δεδομένων από τη βάση: " + e.getMessage());
+            logger.severe("Error during the retrieval of data from the database : " + e.getMessage());
         }
     }
 
