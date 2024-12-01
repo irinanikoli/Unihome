@@ -34,7 +34,7 @@ public class UniversitiesDatabase {
     );
 
     public static void initialize() {
-        String dropTableSQL = "DROP TABLE IF EXISTS universities;"; // διαγραφή παλιού πίνακα και δημιουργία νέου
+        String dropTableSQL = "DROP TABLE IF EXISTS universities;";
         String createTableSQL = """
             CREATE TABLE IF NOT EXISTS universities (
                 UniversityName VARCHAR(100) PRIMARY KEY,
@@ -43,13 +43,12 @@ public class UniversitiesDatabase {
               );
               """;
         
-        //DBConnection.executeUpdate(DB_URL, dropTableSQL);  // διαγραφή παλιού πίνακα
-        //DBConnection.executeUpdate(DB_URL, createTableSQL); // δημιουργία νέου
         try (Connection conn = DriverManager.getConnection(DB_URL);
             PreparedStatement dropStmt = conn.prepareStatement(dropTableSQL);
             PreparedStatement createStmt = conn.prepareStatement(createTableSQL)) {
                 dropStmt.executeUpdate();
                 createStmt.executeUpdate();
+                // διαγραφή παλιού πίνακα και δημιουργία νέου
                 System.out.println("Ο πίνακας uni δημιουργήθηκε με επιτυχία!");
         } catch (SQLException e) {
             System.err.println("Σφάλμα κατά την εκτέλεση SQL στο uni: " + e.getMessage());
@@ -65,15 +64,13 @@ public class UniversitiesDatabase {
             insertUniversity(name, latitude, longitude);
         }
     }
-
+    
     public static void insertUniversity(String name, double latitude, double longitude) {
         String insertSQL ="""
             INSERT INTO universities (UniversityName, Latitude, Longitude)
             VALUES (?, ?, ?);
         """;
-        // εναλλακτικά
-        //String.format(     , name, latitudeH, longitudeH);     ('%s', '%d', '%d');
-        //DBConnection.executeUpdate(DB_URL, insertSQL);
+        
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             
@@ -83,7 +80,7 @@ public class UniversitiesDatabase {
             pstmt.setDouble(3, longitude);
             
             pstmt.executeUpdate();
-            
+            //σύνδεση με την βάση και εισαγωγή των δεδομένων
             System.out.println(name + " εισήχθη με επιτυχία!");
         } catch (SQLException e) {
             System.err.println("Σφάλμα κατά την εκτέλεση SQL στο uni: " + e.getMessage());
