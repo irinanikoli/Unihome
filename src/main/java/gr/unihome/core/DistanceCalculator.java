@@ -7,12 +7,12 @@ import java.util.logging.Logger;
 public class DistanceCalculator {
     private static final Logger logger = AppLogger.getLogger();
     //Downloading Logger from AppLogger
-    private DatabaseHandler dbHandler;
+    private DatabaseManager dbManager;
 
     // Κατασκευαστής που δέχεται ένα DatabaseHandler
     public DistanceCalculator() {
         // Αρχικοποιούμε το DatabaseHandler
-        this.dbHandler = new DatabaseHandler();
+        this.dbManager = new DatabaseManager();
     }
 
     /**
@@ -26,17 +26,17 @@ public class DistanceCalculator {
         
         try {
             // Παίρνουμε τις συντεταγμένες του σπιτιού από τη βάση δεδομένων με βάση τη διεύθυνσή του
-            double[] houseCoordinates = dbHandler.getCoordinatesForAddress(address);
+            double[] houseCoordinates = dbManager.getCoordinatesForHouse(address);
             double houseLatitude = houseCoordinates[0];
             double houseLongitude = houseCoordinates[1];
             
             // Παίρνουμε τις συντεταγμένες του πανεπιστημίου από τη βάση δεδομένων
-            double[] uniCoordinates = dbHandler.getCoordinatesForPlace("university");
+            double[] uniCoordinates = dbManager.getCoordinatesForUniversity("university");
             double uniLatitude = uniCoordinates[0];
             double uniLongitude = uniCoordinates[1];
             
             // Παίρνουμε τις συντεταγμένες της πλησιέστερης στάσης ΜΜΜ από τη βάση δεδομένων
-            double[] meansCoordinates = dbHandler.getCoordinatesForPlace("nearest_transport");
+            double[] meansCoordinates = dbManager.getCoordinatesForNearestTransport(houseLatitude, houseLongitude);
             double meansLatitude = meansCoordinates[0];
             double meansLongitude = meansCoordinates[1];
             
