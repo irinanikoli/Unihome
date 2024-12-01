@@ -53,13 +53,13 @@ public class HousesDatabase {
                 LongitudeH REAL
             );
         """;
-        //DBConnection.executeUpdate(DB_URL, dropTableSQL);  // διαγραφή παλιού πίνακα
-        //DBConnection.executeUpdate(DB_URL, createTableSQL);
+        
         try (Connection conn = DriverManager.getConnection(DB_URL);
             PreparedStatement dropStmt = conn.prepareStatement(dropTableSQL);
             PreparedStatement createStmt = conn.prepareStatement(createTableSQL)) {
                 dropStmt.executeUpdate();
                 createStmt.executeUpdate();
+                //διαγραφη παλιου πινακα αν υπαρχει και δημιουργία νέου
                 System.out.println("Ο πίνακας houses δημιουργήθηκε με επιτυχία!");
         } catch (SQLException e) {
             System.err.println("Σφάλμα κατά την εκτέλεση SQL στο houses: " + e.getMessage());
@@ -98,12 +98,7 @@ public class HousesDatabase {
                             DistanceFromUni, DistanceFromMeans, NumberOfBed, Furnished, LatitudeH, LongitudeH
                         ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                     """;
-                //String.format(   , id, location, address, cost, floor, size, distanceFromUni, distanceFromMeans,
-                //(%d, '%s', '%s', %d, %d, %d, %d, %d, %d, %d, %d, %d);
-                //    numberOfBed, furnished, latitude, longitude);
-        //System.out.println("Εντολή SQL προς εκτέλεση: " + insertSQL);
-        //DBConnection.executeUpdate(DB_URL, insertSQL);
-        //System.out.println("Δεδομένα εισήχθησαν με επιτυχία!");
+        // σύνδεση με την βάση δεδομένων
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             
