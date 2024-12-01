@@ -14,7 +14,7 @@ public class MeansDatabase {
     );
 
     public static void initialize() {
-        String dropTableSQL = "DROP TABLE IF EXISTS means;"; // διαγραφή παλιού πίνακα
+        String dropTableSQL = "DROP TABLE IF EXISTS means;"; // διαγραφή παλιού table
         String createTableSQL = """
             CREATE TABLE IF NOT EXISTS means (
                 CodeMeans INT PRIMARY KEY,
@@ -23,15 +23,13 @@ public class MeansDatabase {
                 Longitude REAL
               );
               """;
-        
-        //DBConnection.executeUpdate(DB_URL, dropTableSQL);  // διαγραφή παλιού πίνακα
-        //DBConnection.executeUpdate(DB_URL, createTableSQL);
-        // αντι για prepared stmt
+
         try (Connection conn = DriverManager.getConnection(DB_URL);
             PreparedStatement dropStmt = conn.prepareStatement(dropTableSQL);
             PreparedStatement createStmt = conn.prepareStatement(createTableSQL)) {
                 dropStmt.executeUpdate();
                 createStmt.executeUpdate();
+                //διαγραφή παλιού table αν υπηρχε και δημιουργία νεου
                 System.out.println("Ο πίνακας means δημιουργήθηκε με επιτυχία!");
         } catch (SQLException e) {
             System.err.println("Σφάλμα κατά την εκτέλεση SQL στο means: " + e.getMessage());
@@ -49,15 +47,13 @@ public class MeansDatabase {
             insertMeans(codeMeans, name, latitude, longitude);
         }
     }
-
+    //για την εισαγωγή δεδομένων κάθε στάσης
     public static void insertMeans(int codeMeans, String name, double latitude, double longitude) {
         String insertSQL = """
             INSERT INTO means (CodeMeans, MeansName, Latitude, Longitude)
             VALUES (?, ?, ?, ?);
         """;
-        // εναλλακτικά
-        //String.format(    (%d, '%s', %d, %d) ,CodeMeans, name, latitude, longitude);
-        //DBConnection.executeUpdate(DB_URL, insertSQL);
+
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             
