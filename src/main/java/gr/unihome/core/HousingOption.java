@@ -1,5 +1,10 @@
 package gr.unihome.core;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Map;
 public class HousingOption {
 
@@ -17,7 +22,6 @@ public class HousingOption {
         private double longitude; // γεωγραφικο μηκοσ
 
         private DistanceCalculator distanceCalculator;
-    
 
     public HousingOption(String id, String location, String address, double cost, int floor, double size, double distanceFromUni, double distanceFromMeans, int numberofbed, boolean furnished, double latitude, double longitude) {
         this.id = id;
@@ -26,8 +30,6 @@ public class HousingOption {
         this.cost = cost;
         this.floor = floor;
         this.size = size;
-        this.distanceFromUni = distanceFromUni;
-        this.distanceFromUni = distanceFromUni;
         this.numberofbed = numberofbed;
         this.furnished = furnished;
         this.longitude = longitude;
@@ -107,7 +109,7 @@ public class HousingOption {
         return numberofbed;
     }
 
-    public void setNumberofbed(int numberofbed) {
+    public void setNumberOfBed(int numberofbed) {
         this.numberofbed = numberofbed;
     }
 
@@ -134,6 +136,43 @@ public class HousingOption {
     public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
+
+    public void loadFromDatabase(String houseId) {
+        String query = "SELECT * FROM Houses WHERE Id = ?";
+
+        try (Connection conn = DriverManager.getConnection("jdbc:sqlite:houses.db");
+             PreparedStatement pstmt = conn.prepareStatement(query)) {
+            pstmt.setString(1, houseId);
+
+            ResultSet rs = pstmt.executeQuery();
+            if (rs.next()) {
+                setId(rs.getString("Id"));
+                setLocation(rs.getString("LocationH"));
+                setAddress(rs.getString("AddressH"));
+                setCost(rs.getDouble("CostH"));
+                setFloor(rs.getInt("FloorH"));
+                setSize(rs.getDouble("SizeH"));
+                setDistanceFromUni(rs.getDouble("DistanceFromUni"));
+                setDistanceFromMeans(rs.getDouble("DistanceFromMeans"));
+                setNumberOfBed(rs.getInt("NumberOfBed"));
+                setFurnished(rs.getInt("Furnished") == 1);
+                setLatitude(rs.getDouble("LatitudeH"));
+                setLongitude(rs.getDouble("LongitudeH"));
+
+                // Καλούμε τον DistanceCalculator για την ενημέρωση των αποστάσεων
+                Map<String, Double> distances = distanceCalculator.calculateDistances(getAddress());
+                setDistanceFromUni(distances.get("uni"));
+                setDistanceFromMeans(distances.get("means"));
+
+                System.out.println("Επιτυχής φόρτωση δεδομένων για το σπίτι με ID: " + houseId);
+            } else {
+                System.out.println("Δεν βρέθηκε σπίτι με το ID: " + houseId);
+            }
+        } catch (SQLException e) {
+            System.err.println("Σφάλμα κατά την ανάκτηση δεδομένων από τη βάση: " + e.getMessage());
+        }
+    }
+
 
     @Override
     public String toString() {
