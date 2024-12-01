@@ -1,20 +1,25 @@
 package gr.unihome.core;
 
+import java.util.Map;
 public class HousingOption {
 
         private String id; // Μοναδικό αναγνωριστικό για κάθε σπίτι
         private String location; // Περιγραφή τοποθεσίας
-        private String address;
+        private String address; // Διεύθυνση
         private double cost; // Ενοίκιο
-        private int floor;
+        private int floor; // Όροφος
         private double size; // Τετραγωνικά μέτρα
         private double distanceFromUni; // Απόσταση από το πανεπιστήμιο
         private double distanceFromMeans; // Απόσταση από μέσα μαζικής μεταφοράς
-        private int numberofbed;
-        private boolean furnished;
+        private int numberofbed; //Αριθμός υπνοδωματίων
+        private boolean furnished; // επιπλωμέμο/ή όχι
+        private double latitude; // γεωγραφικο πλατοσ
+        private double longitude; // γεωγραφικο μηκοσ
+
+        private DistanceCalculator distanceCalculator;
     
 
-    public HousingOption(String id, String location, String address, double cost, int floor, double size, double distanceFromUni, double distanceFromMeans, int numberofbed, boolean furnished) {
+    public HousingOption(String id, String location, String address, double cost, int floor, double size, double distanceFromUni, double distanceFromMeans, int numberofbed, boolean furnished, double latitude, double longitude) {
         this.id = id;
         this.location = location;
         this.address = address;
@@ -25,6 +30,13 @@ public class HousingOption {
         this.distanceFromUni = distanceFromUni;
         this.numberofbed = numberofbed;
         this.furnished = furnished;
+        this.longitude = longitude;
+        this.latitude = latitude;
+
+        this.distanceCalculator = new DistanceCalculator();
+        Map<String, Double> distances = this.distanceCalculator.calculateDistances(address);
+        this.distanceFromUni = distances.get("uni");
+        this.distanceFromMeans = distances.get("means");
     }
 
     public String getId() {
@@ -107,6 +119,22 @@ public class HousingOption {
         this.furnished = furnished;
     }
 
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
     @Override
     public String toString() {
         return "HousingOption{" +
@@ -120,6 +148,8 @@ public class HousingOption {
                 ", distanceFromMeans=" + distanceFromMeans +
                 ", numberodbed=" + numberofbed +
                 ", furnished=" + furnished +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }
