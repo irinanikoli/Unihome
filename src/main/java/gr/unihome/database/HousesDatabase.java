@@ -69,7 +69,7 @@ public class HousesDatabase {
             String location = athensLocations.get(random1.nextInt(athensLocations.size()));
             String address = athensAddresses.get(random1.nextInt(athensAddresses.size())) + " " + (random1.nextInt(200) + 1);
             int cost = random1.nextInt(1751) + 250;
-            int floor = random1.nextInt(5) + 1;
+            int floor = random1.nextInt(6);
             int size = random1.nextInt(121) + 30;
             int numberOfBed = random1.nextInt(4) + 1;
             int furnished = random1.nextInt(2);  // 0 ή 1 για ναι η οχι
