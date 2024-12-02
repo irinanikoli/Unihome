@@ -1,30 +1,110 @@
 <!DOCTYPE html>
 <html> 
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <title>Unihome</title>
         <link rel="stylesheet" href="style.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     </head>
 <body> 
     <div class="banner"> 
         <div class="navbar">
             <img src="logoblue1.png" class="logo">
             <ul>
-                <li><a href='#'> Contact</a></li>
-                <li><a href='#'> About Us</a></li>
+                <li><a href='#'> ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
+                <li><a href='#'> ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ</a></li>
             </ul>
         </div>
     </div>
-    <div class="container">
-        <label for="Πανεπιστήμιο">Επιλογή πανεπιστημίου: </label>
 
-        <select name="Πανεπιστήμιο" id="Πανεπιστήμιο">
-            <option value="Οικονομικό Πανεπιστήμιο Αθηνών (ΟΠΑ)">Οικονομικό Πανεπιστήμιο Αθηνών (ΟΠΑ)</option>
-            <option value="Εθνικό & Καποδιστριακό Πανεπιστήμιο Αθηνών (ΕΚΠΑ)">Εθνικό & Καποδιστριακό Πανεπιστήμιο Αθηνών (ΕΚΠΑ)</option>
-            <option value="Εθνικο Μετσόβιο Πολυτεχνείο (ΕΜΠ)">Εθνικο Μετσόβιο Πολυτεχνείο (ΕΜΠ)</option>
-            <option value="Χαροκόπειο Πανεπιστήμιο">Χαροκόπειο Πανεπιστήμιο</option>
-            <option value="Πάντειο Πανεπιστήμιο Κοινωνικών & Πολιτικών Επιστημών (ΠΑΝΤΕΙΟ)">Πάντειο Πανεπιστήμιο Κοινωνικών & Πολιτικών Επιστημών (ΠΑΝΤΕΙΟ)</option>
-            <option value="Γεωπονικό Πανεπιστήμιο Αθηνών">Γεωπονικό Πανεπιστήμιο Αθηνών</option>
-        </select>
-     </div>
+    <div class="form-container custom-form">
+        <form>
+
+    <!--Πανεπιστήμιο-->
+            <div class="form-group"> 
+                <label for="Πανεπιστήμιο">Πανεπιστήμιο <span>*</span></label> 
+                <select id="Πανεπιστήμιο" required> 
+                    <option value="" disabled selected>Επιλογή Πανεπιστημίου</option> 
+                    <option value="Οικονομικό Πανεπιστήμιο Αθηνών (ΟΠΑ)">Οικονομικό Πανεπιστήμιο Αθηνών (ΟΠΑ)</option> 
+                    <option value="Εθνικό & Καποδιστριακό Πανεπιστήμιο Αθηνών (ΕΚΠΑ)">Εθνικό & Καποδιστριακό Πανεπιστήμιο Αθηνών (ΕΚΠΑ)</option> 
+                    <option value="Εθνικο Μετσόβιο Πολυτεχνείο (ΕΜΠ)">Εθνικο Μετσόβιο Πολυτεχνείο (ΕΜΠ)</option> 
+                    <option value="Χαροκόπειο Πανεπιστήμιο">Χαροκόπειο Πανεπιστήμιο</option>
+                    <option value="Πάντειο Πανεπιστήμιο Κοινωνικών & Πολιτικών Επιστημών (ΠΑΝΤΕΙΟ)">Πάντειο Πανεπιστήμιο Κοινωνικών & Πολιτικών Επιστημών (ΠΑΝΤΕΙΟ)</option>
+                    <option value="Γεωπονικό Πανεπιστήμιο Αθηνών">Γεωπονικό Πανεπιστήμιο Αθηνών</option>
+                    <option value="Πανεπιστήμιο Πειραιώς (ΠΑΠΕΙ)">Πανεπιστήμιο Πειραιώς (ΠΑΠΕΙ)</option>                   
+                </select> 
+            </div>
+
+    <!--Τιμή-->
+            <div class="form-group"> 
+                        <label for="έυρος-τιμής">
+                            Τιμή:
+                            <span id="price-min">€250</span> - <span id="price-max">€2000</span>
+                        </label>
+                        <input type="range" id="price-min-slider" min="250" max="2000" step="10" value="250" oninput="updatePriceRange()">
+                        <input type="range" id="price-max-slider" min="250" max="2000" step="10" value="2000" oninput="updatePriceRange()">
+             </div> 
+                   
+    <!--Εμβαδόν-->
+            <div class="range-container">
+                <div class="range-item">
+                <label for="min" class="range-label">Από (τ.μ.):</label>
+                <input type="number" id="min" class="range-input" name="min" placeholder="Ελάχιστα τ.μ." min="30" max="150" step="10" value="30">
+            </div>
+
+        <div class="range-item">
+            <label for="max" class="range-label">Έως (τ.μ.):</label>
+            <input type="number" id="max" class="range-input" name="max" placeholder="Μέγιστα τ.μ."min="30" max="150" step="10" value="30">
+        </div>
+    </div>
+                
+    <!--Όροφος-->
+            <div class="form-group"> 
+                    <label for="όροφος"> Όροφος <span>*</span></label> 
+                    <select id="όροφος" required> 
+                        <option value="" disabled selected>Επιλογή Ορόφου</option> 
+                        <option value="1">1</option> 
+                        <option value="2">2</option> 
+                        <option value="3">3</option> 
+                        <option value="4">4</option> 
+                        <option value="5">5</option> 
+                    </select> 
+            </div>
+
+     <!--Υπνοδωμάτια-->
+            <div class="form-group"> 
+                <label for="Υπνοδωμάτια"> Υπνοδωμάτια: <span>*</span></label> 
+                <select id="Υπνοδωμάτια" required> 
+                    <option value="" disabled selected>Επιλογή Υπνοδωματίων</option> 
+                    <option value="1">1</option> 
+                    <option value="2">2</option> 
+                    <option value="3">3</option> 
+                    <option value="4">4</option>                    
+                </select> 
+            </div>
+       
+    <!--Επιπλωμένο Ναι/όχι-->
+                <div id="yes-no">
+                    <label for="yes-no">Επιπλωμένο </label>
+                    <div id="yes-no">
+                        <input type="radio" id="yes" name="agreement" value="yes">
+                        <label for="Ναι">Ναι</label>
+        
+                        <input type="radio" id="no" name="agreement" value="no">
+                        <label for="Όχι">Όχι</label>
+                    </div>
+                </div> 
+                    
+                    <div class="form-actions"> 
+                        <button type="button" class="btn save-btn">Save</button> 
+                        <button type="submit" class="btn continue-btn">Continue</button> 
+                    </div> 
+                </form> 
+            </div> 
+        
+<script src="main.js"></script>
 </body>
 </html>
