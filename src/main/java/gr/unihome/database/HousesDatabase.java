@@ -1,4 +1,3 @@
-//import java.sql.SQLException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -45,8 +44,6 @@ public class HousesDatabase {
                 CostH INT,
                 FloorH INT,
                 SizeH INT,
-                DistanceFromUni INT,
-                DistanceFromMeans INT,
                 NumberOfBed INT,
                 Furnished INT,
                 LatitudeH REAL,
@@ -74,8 +71,6 @@ public class HousesDatabase {
             int cost = random1.nextInt(2000) + 500;
             int floor = random1.nextInt(5) + 1;
             int size = random1.nextInt(150) + 50;
-            int distanceFromUni = random1.nextInt(5000);
-            int distanceFromMeans = random1.nextInt(5000);
             int numberOfBed = random1.nextInt(4) + 1;
             int furnished = random1.nextInt(2);  // 0 ή 1 για ναι η οχι
             double latitude = 37.8 + (random1.nextDouble() * (38.2 - 37.8));// Πλάτος: 37.8 έως 38.2
@@ -83,20 +78,19 @@ public class HousesDatabase {
             // Περιορισμός γεωγραφικών συντεταγμένων στην Αττική
 
             insertHouse(id, location, address, cost, floor, size, 
-                        distanceFromUni, distanceFromMeans, numberOfBed, furnished, 
-                        latitude, longitude);
+                        numberOfBed, furnished, latitude, longitude);
         }
     }
 
     // Για εισαγωγη καθε σπιτιου
     public static void insertHouse(
             int id, String location, String address, int cost, int floor, int size,
-            int distanceFromUni, int distanceFromMeans, int numberOfBed, int furnished, double latitude, double longitude) {
+            int numberOfBed, int furnished, double latitude, double longitude) {
                     String insertSQL = """
                         INSERT INTO Houses (
                             Id, LocationH, AddressH, CostH, FloorH, SizeH, 
-                            DistanceFromUni, DistanceFromMeans, NumberOfBed, Furnished, LatitudeH, LongitudeH
-                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+                            NumberOfBed, Furnished, LatitudeH, LongitudeH
+                        ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
                     """;
         // σύνδεση με την βάση δεδομένων
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -109,12 +103,10 @@ public class HousesDatabase {
             pstmt.setInt(4, cost);
             pstmt.setInt(5, floor);
             pstmt.setInt(6, size);
-            pstmt.setInt(7, distanceFromUni);
-            pstmt.setInt(8, distanceFromMeans);
-            pstmt.setInt(9, numberOfBed);
-            pstmt.setInt(10, furnished);
-            pstmt.setDouble(11, latitude);
-            pstmt.setDouble(12, longitude);
+            pstmt.setInt(7, numberOfBed);
+            pstmt.setInt(8, furnished);
+            pstmt.setDouble(9, latitude);
+            pstmt.setDouble(10, longitude);
             
             pstmt.executeUpdate();
             System.out.println("Το σπίτι " + id + " εισήχθη με επιτυχία!");
