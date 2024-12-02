@@ -70,7 +70,7 @@ public class HousesDatabase {
             String address = athensAddresses.get(random1.nextInt(athensAddresses.size())) + " " + (random1.nextInt(200) + 1);
             int cost = random1.nextInt(2000) + 500;
             int floor = random1.nextInt(5) + 1;
-            int size = random1.nextInt(150) + 50;
+            int size = random1.nextInt(121) + 30;
             int numberOfBed = random1.nextInt(4) + 1;
             int furnished = random1.nextInt(2);  // 0 ή 1 για ναι η οχι
             double latitude = 37.8 + (random1.nextDouble() * (38.2 - 37.8));// Πλάτος: 37.8 έως 38.2
