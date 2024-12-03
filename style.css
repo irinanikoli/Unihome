@@ -1,0 +1,243 @@
+*{
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+}
+/* Για το navigation bar */
+.banner {
+    width: 100%;
+    height: 100vh;
+    background-color: #fff;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)), url(d:\page2bg.png);
+    background-size: cover;
+    background-position: center;
+}
+.navbar{
+    width: 85%;
+    margin: auto;
+    padding: 35px 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.logo{
+    width: 190px;
+    cursor: pointer;
+}
+.navbar ul li{
+    list-style: none;
+    display: inline-block;
+    margin: 0 20px;
+    position: relative;
+}
+
+.navbar ul li a{
+    text-decoration: none;
+    color: #0179a4;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.navbar ul li::after{
+    content: '';
+    height: 3px;
+    width: 0;
+    background: #0179a4;
+    position: absolute;
+    left: 0;
+    bottom: -8px;
+    transition: 0.5s;
+}
+.navbar ul li:hover::after{
+    width: 100%;
+}
+
+
+/* Για τα select boxes (Πανεπιστήμιο, Όροφος και Υπνοδωμάτια */
+.custom-form {
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin: -650px auto;
+    
+}
+.custom-form form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.custom-form .form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-form label {
+    font-weight: bold;
+    margin-bottom: 7px;
+}
+
+.custom-form label span {
+    color: red;
+}
+.custom-form select {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+.custom-form select:focus {
+    outline: none;
+    border-color: #0179a4;
+}
+
+/*Για τα save και continue buttons */
+.custom-form .form-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.custom-form .btn {
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+}
+.custom-form .save-btn {
+    background-color: #0179a4;
+    color: white;
+}
+.custom-form .continue-btn {
+    background-color: white;
+    border: 1px solid #0179a4;
+    color: #0179a4;
+}
+.custom-form .continue-btn:hover {
+    background-color: #0179a4;
+    color: white;
+}
+.custom-form .save-btn:hover {
+    background-color: #0179a4;
+}
+
+/* Για την τιμή */
+#price-range {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+#price-min, #price-max {
+    font-size: 16px;
+    font-weight: bold;
+    color: #0179a4;
+}
+
+#price-min-slider,
+#price-max-slider {
+    appearance: none; 
+    width: 100%;
+    height: 6px;
+    background: #ddd;
+    border-radius: 5px;
+    outline: none;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+/*Ο draggable κύκλος */
+#price-min-slider::-webkit-slider-thumb,
+#price-max-slider::-webkit-slider-thumb {   
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    background: #0179a4;
+    border-radius: 50%;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+#price-min-slider::-webkit-slider-thumb:hover,
+#price-max-slider::-webkit-slider-thumb:hover {
+    background: #0056b3;
+}
+
+#price-min-slider::-webkit-slider-thumb:active,
+#price-max-slider::-webkit-slider-thumb:active {
+    background: #003d80;
+}
+
+/* Για τα ναι/όχι */
+.yes-no-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: Arial, sans-serif;
+}
+
+.yes-no label {
+    font-size: 16px;
+    font-weight: bold;
+    color: #333;
+}
+
+.yes-no-form input[type="radio"] {
+    margin-right: 8px;
+    cursor: pointer;
+}
+
+.yes-no-form label[for="yes"],
+.yes-no-form label[for="no"] {
+    font-size: 20px;
+    font-weight: normal;
+    color: #0179a4;
+    cursor: pointer;
+}
+
+.yes-no-form label[for="yes"]:hover,
+.yes-no-form label[for="no"]:hover {
+    color: #0056b3;
+}
+
+/* Για τα τετραγωνικά μέτρα */
+.range-title {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.range-container {
+    display: flex;
+    justify-content: space-between; 
+    margin-top: 1px;
+    padding: 1px;
+    width: 96%;
+}
+
+.range-item {
+    display: flex;
+    flex-direction: column;
+    width: 45%;
+    margin-left: -1px;
+    
+}
+
+.range-label {
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.range-input {
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 100%;
+}
+
+
