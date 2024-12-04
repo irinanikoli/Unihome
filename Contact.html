@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Επικοινωνία</title>
+    <link rel="icon" href="favicon-32x32.png" type="image/x-icon">
+    <link rel="preconnect" href="'https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Modak", sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .modak-regular {
+            font-family: "Modak", serif;
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .look {
+            width: 100%;
+            height: 100vh;
+            background-color: white;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(back2.jpg);
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            background-repeat: no-repeat;
+            align-items: center;
+            z-index: 1;
+            display: flex;
+            justify-content: flex-start;
+            padding-top: 80px;
+
+        }
+
+        .navbar {
+            width: 85%;
+            margin: 0 auto;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .frame {
+            background-color: beige;
+            border-radius: 30px;
+            padding: 40px;
+            width: 80%;
+            text-align: center;
+            max-width: 1200px;
+            box-shadow: 0 40px 40px rgb(164, 158, 158);
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            z-index: 5;
+            height: calc(100vh-80px);
+            transform: translateX(-50%);
+        }
+
+
+        .logo {
+            width: 200px;
+            cursor: pointer;
+            margin-left: -15px;
+        }
+
+        .linkto {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .linkto li {
+            position: relative;
+            margin: 0 20px;
+        }
+
+        .linkto li a {
+            text-decoration: none;
+            color: #0179a4;
+            font-size: 18px;
+            text-transform: uppercase;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .linkto li::after {
+            content: "";
+            display: block;
+            height: 2px;
+            width: 0;
+            background-color: #0179a4;
+            transition: width 0.3s ease;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        .linkto li:hover::after {
+            width: 100%;
+        }
+
+        .description {
+            font-family: sans-serif;
+            font-weight: 200;
+        }
+
+        .title {
+            font-weight: 200;
+            font-size: 40px;
+        }
+
+        p {
+            line-height: 1.8;
+        }
+
+        .email {
+            color: #0179a4;
+            font-weight: bold;
+            font-family: sans-serif;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .email:hover {
+            color: #0179a4;
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="look">
+        <div class="navbar">
+            <a href="Homepage.html">
+                <img src="logoblue1.png" class="logo" alt="Logo">
+            </a>
+            <ul class="linkto">
+                <li><a href="Contact.html">ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
+                <li><a href="About.html">ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ</a></li>
+            </ul>
+        </div>
+        <div class="frame">
+            <h1 class="title">Get in Touch with us!</h1>
+            <p class="description">
+                Μη διστάσεις! Επικοινώνησε μαζί μας αν χρειάζεσαι κάποια έξτρα βοήθεια!</br>
+                Ιρίνα:t8230105
+                Email:<a href="mailto:irinaanikoli@gmail.com?subject= Έξτρα Πληροφορίες&body=Hello Irina,"
+                    class="email">
+                    irinaanikoli@gmail.com
+                </a></br>
+                Iωάννα:t8230127
+                Email:<a href="mailto:ioannapykni@hotmail.com?subject= Έξτρα Πληροφορίες&body=Hello Ioanna,"
+                    class="email">
+                    ioannapykni@hotmail.com
+                </a></br>
+                Χριστίνα:t8230074 
+                Email:<a href="mainto:christinleg2@gmail.com?subject=Έξτρα Πληροφορίες&body=Hello Christina," class="email">
+                    christinleg2@gmail.com
+                </a></br>
+                Βασίλης:t8230008 
+                Email:<a href="mailto:apobill1@gmail.com?subject= Έξτρα Πληροφορίες&body=Hello Vasilis," class="email">
+                    apobill1@gmail.com
+                </a></br>
+                Ελένη:t8230003
+                Email:<a href="mailto:eleniadamouu@gmail.com?subject= Έξτρα Πληροφορίες&body=Hello Eleni," class="email">
+                    eleniadamouu@gmail.com
+                </a></br>
+                Πάνος:t8230154
+                Email:<a href="mailto:panostsires@gmail.com?subject= Έξτρα Πληροφορίες&body=Hello Panos," class="email">
+                    panostsires@gmail.com
+                </a></br>
+                Ελευθερία:t8230067
+                Email:<a href="mailto:elkilafi@gmail.com?subject= Έξτρα Πληροφορίες&body=Hello El," class="email">
+                    elkilafi@gmail.com
+                </a></br>
+                Δήμητρα:t8230076 
+                Email:<a href="mailto:dliakopoulou@gmail.com?subject= Έξτρα Πληροφορίες&body=Hello Dimitra," class="email">
+                    dliakopoulou@gmail.com
+                </a></br>
+                Αιμιλία:t8230038
+                Email:<a href="emily.zompanakis@gmail.com?subject= Έξτρα Πληροφορίες&body=Hello Emily," class="email">
+                    emily.zompanakis@gmail.com
+                </a></br>
+            </p>
+        </div>
+    </div>
+</body>
+
+</html>
