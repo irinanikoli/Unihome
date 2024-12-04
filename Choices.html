@@ -1,19 +1,20 @@
 <!DOCTYPE html>
 <html lang="el">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Οι επιλογές σας</title>
     <link rel="icon" href="favicon-32x32.png" type="image/x-icon">
     <style>
-        *{
+        * {
             margin: 0;
             padding: 0;
             font-family: sans-serif;
         }
 
         /* Banner */
-        .banner{
+        .banner {
             width: 100%;
             height: 80vh;
             background-color: #fff;
@@ -24,38 +25,43 @@
         }
 
         /* Navigation Bar */
-        .navbar{
-            width: 85%;
+        .navbar {
+            width: 100%;
             margin: auto;
             padding: 35px 0;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('back1allaghhh.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
         }
 
-        .logo{
+        .logo {
             width: 190px;
             cursor: pointer;
         }
 
-        .navbar ul{
+        .navbar ul {
             display: flex;
         }
 
-        .navbar ul li{
+        .navbar ul li {
             list-style-type: none;
             display: inline-block;
             margin: 0 20px;
             position: relative;
         }
 
-        .navbar ul li a{
+        .navbar ul li a {
             text-decoration: none;
             color: #0179a4;
             text-transform: uppercase;
+            font-weight: bold;
         }
 
-        .navbar ul li::after{
+        .navbar ul li::after {
             content: '';
             height: 3px;
             width: 0;
@@ -67,7 +73,7 @@
         }
 
         /* Hover effect for navigation items */
-        .navbar ul li:hover::after{
+        .navbar ul li:hover::after {
             width: 100%;
         }
 
@@ -113,24 +119,30 @@
             font-size: 1rem;
             color: #555;
         }
-        .banner{
+
+        .banner {
             width: auto;
             height: 70vh;
             background-color: rgb(202, 224, 217);
-            background-image: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)),url('back1.jpg');
+            background-image: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('back1.jpg');
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
 
         }
-                /* Στυλ για τις κάρτες */
-                .card-container {
+
+        /* Στυλ για τις κάρτες */
+        .card-container {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 20px;
             padding: 20px;
+            background-color: #f9f9f9;
         }
 
         .card {
-            background:rgb(202, 224, 217) ;
+            background: rgb(202, 224, 217);
             border-radius: 10px;
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
             width: 300px;
@@ -140,112 +152,143 @@
 
         .card:hover {
             transform: scale(1.05);
-            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
         }
 
         .card img {
             width: 100%;
             height: 200px;
-            object-fit: fill;
+            object-fit: cover;
+            border-bottom: 5px solid #0179a4;
         }
 
         .card-content {
             padding: 15px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
         .card-content h3 {
-            margin: 0 0 10px 0;
+            margin: 0;
             font-size: 20px;
             color: #0179a4;
+            font-weight: bold;
         }
 
         .card-content p {
-            margin: 0 0 15px 0;
+            margin: 0;
             font-size: 16px;
-            line-height: 1.5;
+            line-height: 1.6;
+            color: #333;
         }
 
-        /* Στυλ για την κατάταξη */
-        .rating {
+        .card-content .characteristics {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .card-content .characteristics p {
+            font-size: 14px;
+            color: #555;
+        }
+
+        .card-content .rating {
             display: flex;
             align-items: center;
             gap: 5px;
         }
 
-        .rating span {
-            color: #ffc107;
-            font-size: 20px;
+        .card-content .rating span {
+            color: #ffcc00;
+            font-size: 16px;
         }
 
+        .card-content .rating p {
+            font-size: 14px;
+            color: #555;
+            margin: 0;
+        }
+
+        /* Responsive Styling */
+        @media (max-width: 768px) {
+            .card {
+                width: 100%;
+            }
+        }
     </style>
 </head>
+
 <body>
-    
-     <!-- Navigation Bar -->
+
+    <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="logo">
-            <img src="logoblue1.png" alt="Logo" width="200"> <!-- Αντικατάστησε με το δικό σου λογότυπο -->
+            <img src="logoblue1.png" alt="Logo" width="200"> 
         </div>
         <ul>
-            <li><a href="#contact">Επικοινωνία</a></li>
-            <li><a href="about">Σχετικά με εμάς</a></li>
+            <li><a href="#">Επικοινωνία</a></li>
+            <li><a href="#">Σχετικά με εμάς</a></li>
         </ul>
     </nav>
 
-   <!-- Banner Section --> 
+    <!-- Banner Section -->
     <div class="banner">
         <h1 style="color: #0179a4;">Τα ιδανικά σπίτια για εσάς</h1>
 
     </div>
 
-    
-    
+
+
 
     <!-- Ranking Section for Houses -->
     <div class="card-container">
+
         <!-- Σπίτι 1 -->
         <div class="card">
-            
+
             <div class="card-content">
                 <h3>Σπίτι 1</h3>
                 <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
-                <div class="rating">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>☆</span>
-                    <p>(4.0/5)</p>
+                <div class="characteristics">
+                    <p>Κωδικός σπιτιού</p>
+
                 </div>
             </div>
-            <img src="OIP.jpg"  alt="Σπίτι 1">
+            <img src="OIP.jpg" alt="Σπίτι 1">
         </div>
-    
-        <!-- Σπίτι 2 -->
+         <!-- Σπίτι 2 -->
         <div class="card">
-           
+
             <div class="card-content">
                 <h3>Σπίτι 2</h3>
-                <p>Περιγραφή: Διαμέρισμα με θέα και άμεση πρόσβαση στα ΜΜΜ.</p>
-                <div class="rating">
-                    <span>★</span><span>★</span><span>★</span><span>☆</span><span>☆</span>
-                    <p>(3.0/5)</p>
-                </div>
-            </div>
-            <img src="OIP.jpg" alt="Σπίτι 2">
-        </div>
-    
-        <!-- Σπίτι 3 -->
-        <div class="card">
-            
-            <div class="card-content">
-                <h3>Σπίτι 3</h3>
-                <p>Περιγραφή: Μεγάλο σπίτι για 2 άτομα σε ήσυχη γειτονιά.</p>
-                <div class="rating">
-                    <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
-                    <p>(5.0/5)</p>
-                </div>
-            </div>
-            <img src="OIP.jpg" alt="Σπίτι 3"> 
-        </div>
-    </div>
-    
-</body>
-</html>
+                <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
+                <div class="characteristics">
+                    <p>Κωδικός σπιτιού</p>
 
+                </div>
+            </div>
+            <img src="OIP.jpg" alt="Σπίτι 1">
+        </div>
+                <!-- Σπίτι 3 -->
+                <div class="card">
+
+                    <div class="card-content">
+                        <h3>Σπίτι 3</h3>
+                        <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
+                        <div class="characteristics">
+                            <p>Κωδικός σπιτιού</p>
+        
+                        </div>
+                    </div>
+                    <img src="OIP.jpg" alt="Σπίτι 1">
+                </div>
+    </div>         
+
+
+
+
+</body>
+
+</html>
