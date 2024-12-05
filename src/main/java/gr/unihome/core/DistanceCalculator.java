@@ -153,5 +153,28 @@ public class DistanceCalculator {
             System.err.println("Σφάλμα κατά την εκτέλεση υπολογισμού αποστάσεων: " + e.getMessage());
         }   
     }
+    /**
+     * @param houseId το Id του σπιτιού που ενημερώνουμε
+     * @param distance Η απόσταση από το uni που υπολογίσαμε
+     * εισαγωγη των αποστάσεων απο το uni στο houses
+     */
+    public static void updateMeansCoordinates(Connection conn, int houseId, double distance) {
+        String updateClosestMeansSQL = """
+            UPDATE Houses
+            SET DistanceFromMeans = ?
+            WHERE Id = ?;
+        """;
 
+        try (PreparedStatement pstmt = conn.prepareStatement(updateClosestMeansSQL)) {
+            
+            //ορισμος παραμετρων
+            pstmt.setDouble(1, distance);
+            pstmt.setInt(2, houseId);
+
+            pstmt.executeUpdate();
+            System.out.println("Οι συντεταγμένες του σπιτιού " + houseId + " για τα μέσα ενημερώθηκαν με επιτυχία!");
+        } catch (SQLException e) {
+            System.err.println("Σφάλμα κατά την εκτέλεση SQL στο houses: " + e.getMessage());
+        }
+    }
 }
