@@ -20,9 +20,9 @@ public class MatcingEngineTest {
     @Before
     public void setUp() {
         housingOptions = Arrays.asList(
-            new HousingOption("H1", "City Center", "123 Main St", 500, 2, 30.0, 2.0, 1.0, 2, true, 40.7128, -74.0060),
-            new HousingOption("H2", "Suburbs", "456 Elm St", 600, 3, 40.0, 1.5, 0.8, 3, false, 40.7306, -73.9352),
-            new HousingOption("H3", "Downtown", "789 Oak St", 450, 1, 25.0, 3.0, 1.2, 1, true, 40.7580, -73.9855)
+            new HousingOption(1, "City Center", "123 Main St", 500, 2, 30, 2.0, 1.0, 2, 1, 40.7128, -74.0060),
+            new HousingOption(2, "Suburbs", "456 Elm St", 600, 3, 40, 1.5, 0.8, 3, 0, 40.7306, -73.9352),
+            new HousingOption(3, "Downtown", "789 Oak St", 450, 1, 25, 3.0, 1.2, 1, 1, 40.7580, -73.9855)
         );
         student = new Criteria(500, 1.0, 2.0, 25);
         criteria = Arrays.asList("cost", "size", "distanceFromUni", "distanceFromMeans");
