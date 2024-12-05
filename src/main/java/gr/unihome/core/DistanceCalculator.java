@@ -74,6 +74,31 @@ public class DistanceCalculator {
         }
     }
 
+/**
+     * @param houseId το Id του σπιτιού που ενημερώνουμε
+     * @param distance Η απόσταση από το uni που υπολογίσαμε
+     * εισαγωγη των αποστάσεων απο το uni στο houses
+     */
+    public static void updateUniCoordinates(Connection conn, int houseId, double distance) {
+        String updateSQL = """
+            UPDATE Houses
+            SET DistanceFromUni = ?
+            WHERE Id = ?;
+        """;
+
+        try (PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
+            
+            //ορισμος παραμετρων
+            pstmt.setDouble(1, distance);
+            pstmt.setInt(2, houseId);
+
+            pstmt.executeUpdate();
+            System.out.println("Οι συντεταγμένες του σπιτιού " + houseId + " για το πανεπιστήμιο ενημερώθηκαν με επιτυχία!");
+        } catch (SQLException e) {
+            System.err.println("Σφάλμα κατά την εκτέλεση SQL στο houses: " + e.getMessage());
+        }
+    }
+
     /**
      * ανοίγουμε σύνδεση με τις βάσεις και
      * υπολογίζουμε την απόσταση μεταξύ κάθε σπιτιού και κάθε στασης
