@@ -20,9 +20,9 @@ public class MatchingEngine {
     private Map<String, Double> weights;
     public static final int RECCOMENDED_COUNT = 10;
     // number of houses to return
-    public MatchingEngine(List<HousingOption> housingOptions, Map<String, Double> weights) {
+    public MatchingEngine(List<HousingOption> housingOptions, List<String> criteria, List<Integer> priorities) {
         this.housingOptions = housingOptions;
-        this.weights = weights;
+        this.weights = WeightCalculator.calculator(criteria, priorities);
     }
     /**
      * Calculate the score of a house based on weights and its characteristics
