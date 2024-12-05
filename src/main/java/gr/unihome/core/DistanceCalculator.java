@@ -1,3 +1,5 @@
+package gr.unihome.core;
+
 import java.util.logging.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -70,6 +72,7 @@ public class DistanceCalculator {
                 }       
              }
         } catch (SQLException e) {
+            logger.severe("Error with the sql connection : " + e.getMessage());
             System.err.println("Σφάλμα κατά την υπολογισμό αποστάσεων: " + e.getMessage());
         }
     }
@@ -146,6 +149,7 @@ public class DistanceCalculator {
                 }
             }
         } catch (SQLException e) {
+            logger.severe("Error with SQL connection : " + e.getMessage());
             System.err.println("Σφάλμα κατά την εκτέλεση υπολογισμού αποστάσεων: " + e.getMessage());
         }   
     }
