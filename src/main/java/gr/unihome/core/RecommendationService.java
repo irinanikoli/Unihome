@@ -14,9 +14,9 @@ public class RecommendationService {
     private static final Logger logger = AppLogger.getLogger();
     //Downloading Logger from AppLogger 
     private MatchingEngine matchingEngine;
-    public RecommendationService(List<HousingOption> housingOptions, Map<String, Double> weights) {
+    public RecommendationService(List<HousingOption> housingOptions, List<String> criteria, List<Integer> priorities) {
         //initialization based on the list of housing and student's weights of preference
-        this.matchingEngine = new MatchingEngine(housingOptions, weights);
+        this.matchingEngine = new MatchingEngine(housingOptions, criteria, priorities);
     }
 
     //Provides the best house for each student
