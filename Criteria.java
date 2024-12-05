@@ -12,12 +12,12 @@ public class Criteria {
     @SuppressWarnings({ "rawtypes", "unchecked" })
     Map <String,Integer> preferences = new HashMap();
     public Criteria(String aname, String auniveristy, double abudget, double asqMeters, double amaxDistanceFromUni, double amaxDistanceFromMeans) {
-        stName = aname;
-        stUniversity = auniveristy;
-        maxBudget = abudget;
-        minSqMeters = asqMeters;
-        maxDistanceFromUni = amaxDistanceFromUni;
-        maxDistanceFromMeans = amaxDistanceFromMeans;
+        this.stName = aname;
+        this.stUniversity = auniveristy;
+        this.maxBudget = abudget;
+        this.minSqMeters = asqMeters;
+        this.maxDistanceFromUni = amaxDistanceFromUni;
+        this.maxDistanceFromMeans = amaxDistanceFromMeans;
     }
 
     public String getStUniversity() {
