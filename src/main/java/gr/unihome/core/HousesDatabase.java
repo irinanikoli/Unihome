@@ -6,7 +6,6 @@ import java.sql.SQLException;
 import java.util.List;
 import java.util.Random;
 
-import gr.unihome.core.DBConnection;
 
 public class HousesDatabase {
     private static final String DB_HOUSES_URL = "jdbc:sqlite:houses.db";

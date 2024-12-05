@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
-import gr.unihome.core.DBConnection;
 
 public class MeansDatabase {
     private static final String DB_MEANS_URL = "jdbc:sqlite:means.db";

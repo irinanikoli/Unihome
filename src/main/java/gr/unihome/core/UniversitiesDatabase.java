@@ -5,7 +5,6 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-import gr.unihome.core.DBConnection;
 
 public class UniversitiesDatabase {
     private static final String DB_UNI_URL = "jdbc:sqlite:universities.db";
