@@ -24,6 +24,10 @@ public class MatchingEngine {
         this.housingOptions = housingOptions;
         this.weights = WeightCalculator.calculator(criteria, priorities);
     }
+    // Retrieve the calculated from calculator() weights
+     public Map<String, Double> getWeights() {
+        return weights;
+    }
     /**
      * Calculate the score of a house based on weights and its characteristics
      */
