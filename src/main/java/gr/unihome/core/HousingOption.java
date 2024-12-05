@@ -175,6 +175,7 @@ public class HousingOption {
             System.err.println("Σφάλμα κατά την ανάκτηση δεδομένων από τη βάση: " + e.getMessage());
             logger.severe("Error during the retrieval of data from the database : " + e.getMessage());
         }
+        return housingOptions;
     }
 
 
