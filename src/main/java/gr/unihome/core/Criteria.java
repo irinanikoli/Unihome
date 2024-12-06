@@ -1,5 +1,7 @@
 package gr.unihome.core;
 
+// it is written by Aimilia and commited by Panos due to technical problems
+
 public class Criteria {
     String stName;
     String stUniversity;
