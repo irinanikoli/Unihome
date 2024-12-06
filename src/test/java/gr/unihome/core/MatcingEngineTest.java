@@ -42,16 +42,23 @@ public class MatcingEngineTest {
         assertTrue("Solutions should not exceed the RECOMMENDED_COUNT", solutions.size() <= MatchingEngine.RECCOMENDED_COUNT);
         //testing the interval that solutions are accepted
     }
-    @Test
     public void testWeightsCalculation() {
+        // Υπολογίζουμε τις προτεραιότητες βάσει setup
+        List<String> criteria = Arrays.asList("cost", "size", "distanceFromUni", "distanceFromMeans");
+        List<Integer> priorities = Arrays.asList(1, 2, 3, 4); // Προτεραιότητες στο setup
+        Map<String, Double> expectedWeights = WeightCalculator.calculator(criteria, priorities);
+    
         Map<String, Double> weights = matchingEngine.getWeights();
         assertNotNull("Weights should not be null", weights);
-        //testing the existance of weights
-        assertEquals("Retrieved weights should sum to 1", 1.0, weights.values().stream()
-                .mapToDouble(Double::doubleValue)
-                .sum(), 0.001);
-        //testing the weights addition equals 1 with accuracy +- 0.001
-        assertEquals("Cost weight should match calculated value", 0.4, weights.get("cost"), 0.001);
-        //testing the "cost" weigth = 0.4 based on setUp() method
+    
+        //Testing sum of weights
+        assertEquals("Retrieved weights should sum to 1", 1.0, 
+            weights.values().stream().mapToDouble(Double::doubleValue).sum(), 0.001);
+    
+        // Test for each weight
+        expectedWeights.forEach((key, value) -> {
+            assertEquals("Weight for " + key + " should match expected value", 
+                value, weights.get(key), 0.001);
+        });
     }
 }
