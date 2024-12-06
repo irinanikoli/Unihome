@@ -42,8 +42,9 @@ public class MatcingEngineTest {
         assertTrue("Solutions should not exceed the RECOMMENDED_COUNT", solutions.size() <= MatchingEngine.RECCOMENDED_COUNT);
         //testing the interval that solutions are accepted
     }
+    @Test
     public void testWeightsCalculation() {
-        // Υπολογίζουμε τις προτεραιότητες βάσει setup
+        //Calculating preferences based on method setup
         List<String> criteria = Arrays.asList("cost", "size", "distanceFromUni", "distanceFromMeans");
         List<Integer> priorities = Arrays.asList(1, 2, 3, 4); // Προτεραιότητες στο setup
         Map<String, Double> expectedWeights = WeightCalculator.calculator(criteria, priorities);
@@ -61,5 +62,5 @@ public class MatcingEngineTest {
                 value, weights.get(key), 0.001);
         });
     }
-    
+
 }
