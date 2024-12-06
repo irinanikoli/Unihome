@@ -40,20 +40,20 @@ public class MatchingEngine {
         score += weights.getOrDefault("distanceFromMeans", 0.0) * ho.getDistanceFromMeans();
         //if statements for penalties in the score
         // Proportional penalties based on student's preferances
-        if (ho.getCost() > student.getMaxCost()) {
+        if (ho.getCost() > student.getBudget()) {
             double violationRatio = ho.getCost() / student.getBudget();
             score =Math.max(1.0 - (weights.getOrDefault("cost", 0.0) * (violationRatio - 1.0)), 0.0);
         }
-        if (ho.getDistanceFromMeans() > student.getDistanceFromMeans()) {
-            double violationRatio = ho.getDistanceFromMeans() /  student.getDistanceFromMeans();
+        if (ho.getDistanceFromMeans() > student.getMaxDistanceFromMeans()) {
+            double violationRatio = ho.getDistanceFromMeans() /  student.getMaxDistanceFromMeans();
             score *= Math.max(1.0 - (weights.getOrDefault("distanceFromMeans", 0.0)), 0.0);
         }
-        if (ho.getDistanceFromUni() > student.getDistanceFromUni()) {
-            double violationRatio = ho.getDistanceFromUni() / student.getDistanceFromUni();
+        if (ho.getDistanceFromUni() > student.getMaxDistanceFromUni()) {
+            double violationRatio = ho.getDistanceFromUni() / student.getMaxDistanceFromUni();
             score *= Math.max(1.0 - (weights.getOrDefault("distanceFromUni", 0.0)), 0.0);
         }
-        if (ho.getSize() < student.getSize()) {
-            double violationRatio = ho.getSize() / student.getSize();
+        if (ho.getSize() < student.getMinSqMeters()) {
+            double violationRatio = ho.getSize() / student.getMinSqMeters();
             score *= Math.max(1.0 - (weights.getOrDefault("size", 0.0)) , 0.0);
         }
 
@@ -103,7 +103,7 @@ public class MatchingEngine {
  * Find houses with similar score to the best and return them
  */
 
-  public List<HousingOption> findOtherBestSolutions(double treshold) {
+  public List<HousingOption> findOtherBestSolutions(Criteria student, double treshold) {
         // calculate score for all the houses
         try {
             Map<HousingOption, Double> scores = housingOptions.stream()

@@ -1,15 +1,12 @@
 package gr.unihome.core;
 
 import org.junit.Test;
-import org.junit.internal.ComparisonCriteria;
 import org.junit.Before;
-import org.junit.After;
 import static org.junit.Assert.*;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
-import java.util.HashMap;
 
 public class MatcingEngineTest {
     private MatchingEngine matchingEngine;
@@ -24,7 +21,7 @@ public class MatcingEngineTest {
             new HousingOption(2, "Suburbs", "456 Elm St", 600, 3, 40, 1.5, 0.8, 3, 0, 40.7306, -73.9352),
             new HousingOption(3, "Downtown", "789 Oak St", 450, 1, 25, 3.0, 1.2, 1, 1, 40.7580, -73.9855)
         );
-        student = new Criteria(500, 1.0, 2.0, 25);
+        student = new Criteria("John", "EΚΠΑ",500, 1.0, 2.0, 25);
         criteria = Arrays.asList("cost", "size", "distanceFromUni", "distanceFromMeans");
         priorities = Arrays.asList(1, 2, 3, 4);
         matchingEngine = new MatchingEngine(housingOptions, criteria, priorities);
@@ -39,7 +36,7 @@ public class MatcingEngineTest {
     }
     @Test
     public void testFindOtherBestSolutions() {
-        List<HousingOption> solutions = matchingEngine.findOtherBestSolutions(0.2);
+        List<HousingOption> solutions = matchingEngine.findOtherBestSolutions(student,0.2);
         assertNotNull("solutions should not be null", solutions);
         //testing the existance of solutions
         assertTrue("Solutions should not exceed the RECOMMENDED_COUNT", solutions.size() <= MatchingEngine.RECCOMENDED_COUNT);
