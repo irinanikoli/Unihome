@@ -46,15 +46,15 @@ public class MatchingEngine {
         }
         if (ho.getDistanceFromMeans() > student.getMaxDistanceFromMeans()) {
             double violationRatio = ho.getDistanceFromMeans() /  student.getMaxDistanceFromMeans();
-            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromMeans", 0.0)), 0.0);
+            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromMeans", 0.0) * (violationRatio - 1.0)), 0.0);
         }
         if (ho.getDistanceFromUni() > student.getMaxDistanceFromUni()) {
             double violationRatio = ho.getDistanceFromUni() / student.getMaxDistanceFromUni();
-            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromUni", 0.0)), 0.0);
+            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromUni", 0.0) * (violationRatio - 1.0)), 0.0);
         }
         if (ho.getSize() < student.getMinSqMeters()) {
             double violationRatio = ho.getSize() / student.getMinSqMeters();
-            score *= Math.max(1.0 - (weights.getOrDefault("size", 0.0)) , 0.0);
+            score *= Math.max(1.0 - (weights.getOrDefault("size", 0.0) * (violationRatio - 1.0)) , 0.0);
         }
 
         return Math.max(score, 0.0);
