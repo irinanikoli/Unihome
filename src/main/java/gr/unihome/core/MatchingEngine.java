@@ -54,7 +54,7 @@ public class MatchingEngine {
         }
         if (ho.getSize() < student.getMinSqMeters()) {
             double violationRatio = ho.getSize() / student.getMinSqMeters();
-            score *= Math.max(1.0 - (weights.getOrDefault("size", 0.0) * (violationRatio - 1.0)) , 0.0);
+            score *= Math.max(1.0 - (weights.getOrDefault("size", 0.0) * (1.0 - violationRatio)) , 0.0);
         }
 
         return Math.max(score, 0.0);
