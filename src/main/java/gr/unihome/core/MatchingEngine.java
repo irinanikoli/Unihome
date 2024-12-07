@@ -40,6 +40,7 @@ public class MatchingEngine {
         score += weights.getOrDefault("distanceFromMeans", 0.0) * ho.getDistanceFromMeans();
         //if statements for penalties in the score
         // Proportional penalties based on student's preferances
+        //In max preferences we use violation ratio - 1 and in min the oposite
         if (ho.getCost() > student.getBudget()) {
             double violationRatio = ho.getCost() / student.getBudget();
             score =Math.max(1.0 - (weights.getOrDefault("cost", 0.0) * (violationRatio - 1.0)), 0.0);
