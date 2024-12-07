@@ -43,7 +43,7 @@ public class MatchingEngine {
         //In max preferences we use violation ratio - 1 and in min the oposite
         if (ho.getCost() > student.getBudget()) {
             double violationRatio = ho.getCost() / student.getBudget();
-            score =Math.max(1.0 - (weights.getOrDefault("cost", 0.0) * (violationRatio - 1.0)), 0.0);
+            score *= Math.max(1.0 - (weights.getOrDefault("cost", 0.0) * (violationRatio - 1.0)), 0.0);
         }
         if (ho.getDistanceFromMeans() > student.getMaxDistanceFromMeans()) {
             double violationRatio = ho.getDistanceFromMeans() /  student.getMaxDistanceFromMeans();
