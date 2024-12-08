@@ -7,16 +7,17 @@ public class Criteria {
     String stUniversity;
     double maxBudget;
     double minSqMeters;
+    double maxSqMeters;
     double maxDistanceFromUni;
     double maxDistanceFromMeans;
     
-    public Criteria(String aname, String auniveristy, double abudget, double asqMeters, double amaxDistanceFromUni, double amaxDistanceFromMeans) {
-        this.stName = aname;
-        this.stUniversity = auniveristy;
-        this.maxBudget = abudget;
-        this.minSqMeters = asqMeters;
-        this.maxDistanceFromUni = amaxDistanceFromUni;
-        this.maxDistanceFromMeans = amaxDistanceFromMeans;
+    public Criteria(String stName, String stUniveristy, double maxBudget, double minSqMeters, double maxDistanceFromUni, double maxDistanceFromMeans) {
+        this.stName = stName;
+        this.stUniversity = stUniveristy;
+        this.maxBudget = maxBudget;
+        this.minSqMeters = minSqMeters;
+        this.maxDistanceFromUni = maxDistanceFromUni;
+        this.maxDistanceFromMeans = maxDistanceFromMeans;
     }
 
     public String getStUniversity() {

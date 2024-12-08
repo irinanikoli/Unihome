@@ -21,7 +21,7 @@ public class MatcingEngineTest {
             new HousingOption(2, "Suburbs", "456 Elm St", 600, 3, 40, 1.5, 0.8, 3, 0, 40.7306, -73.9352),
             new HousingOption(3, "Downtown", "789 Oak St", 450, 1, 25, 3.0, 1.2, 1, 1, 40.7580, -73.9855)
         );
-        student = new Criteria("John", "EΚΠΑ",500, 1.0, 2.0, 25);
+        student = new Criteria("John", "EΚΠΑ",500,100, 2.0, 25);
         criteria = Arrays.asList("cost", "size", "distanceFromUni", "distanceFromMeans");
         priorities = Arrays.asList(1, 2, 3, 4);
         matchingEngine = new MatchingEngine(housingOptions, criteria, priorities);
