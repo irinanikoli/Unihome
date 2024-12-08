@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Οι επιλογές σας</title>
+    <title>Your options</title>
     <link rel="icon" href="favicon-32x32.png" type="image/x-icon">
     <style>
         * {
@@ -130,9 +130,9 @@
             background-size: cover;
 
         }
-        
-            
-        
+
+
+
 
         /* Στυλ για τις κάρτες */
         .card-container {
@@ -142,6 +142,7 @@
             gap: 20px;
             padding: 20px;
             background-color: #f9f9f9;
+            justify-content: space-evenly;
         }
 
         .card {
@@ -151,6 +152,8 @@
             width: 300px;
             overflow: hidden;
             transition: transform 0.3s, box-shadow 0.3s;
+            flex: 1 1 calc(25% - 40px);
+            text-align: center;
         }
 
         .card:hover {
@@ -229,9 +232,9 @@
     <nav class="navbar">
         <div class="logo">
             <a href="Homepage.html">
-                <img src="logoblue1.png" alt="Logo" width="200">  
+                <img src="logoblue1.png" alt="Logo" width="200">
             </a>
-            
+
         </div>
         <ul>
             <li><a href="Contact.html">Επικοινωνία</a></li>
@@ -249,48 +252,61 @@
 
 
     <!-- Ranking Section for Houses -->
-    <div class="card-container">
+    <div class="card-container" id="card-container"></div>
 
-        <!-- Σπίτι 1 -->
-        <div class="card">
+    <script>
+        // JavaScript to fetch data and populate the cards
+        async function loadRecommendedHouses(studentCriteria, threshold) {
+    try {
+        const response = await fetch(`/api/housing-options/recommendations?threshold=${threshold}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(studentCriteria),
+        });
 
-            <div class="card-content">
-                <h3>Σπίτι 1</h3>
-                <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
-                <div class="characteristics">
-                    <p>Κωδικός σπιτιού</p>
+        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
 
-                </div>
-            </div>
-            <img src="OIP.jpg" alt="Σπίτι 1">
-        </div>
-         <!-- Σπίτι 2 -->
-        <div class="card">
+        const housingOptions = await response.json();
 
-            <div class="card-content">
-                <h3>Σπίτι 2</h3>
-                <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
-                <div class="characteristics">
-                    <p>Κωδικός σπιτιού</p>
+        const container = document.getElementById('card-container');
+        container.innerHTML = ''; // Καθαρισμός προηγούμενου περιεχομένου
 
-                </div>
-            </div>
-            <img src="OIP.jpg" alt="Σπίτι 1">
-        </div>
-                <!-- Σπίτι 3 -->
-                <div class="card">
+        housingOptions.forEach(house => {
+            const card = document.createElement('div');
+            card.className = 'card';
 
-                    <div class="card-content">
-                        <h3>Σπίτι 3</h3>
-                        <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
-                        <div class="characteristics">
-                            <p>Κωδικός σπιτιού</p>
-        
-                        </div>
-                    </div>
-                    <img src="OIP.jpg" alt="Σπίτι 1">
-                </div>
-    </div>         
+            const title = document.createElement('h3');
+            title.textContent = `House ID: ${house.id}`;
+
+            const description = document.createElement('p');
+            description.textContent = `Description: ${house.description || 'No description available'}`;
+
+            const characteristics = document.createElement('p');
+            characteristics.textContent = `Size: ${house.size} sq.m., Cost: ${house.cost} €, Distance from Uni: ${house.distanceFromUni} km`;
+
+            const img = document.createElement('img');
+            img.src = house.image || 'default-image.jpg';
+            img.alt = `Image of house ${house.id}`;
+
+            card.appendChild(img);
+            card.appendChild(title);
+            card.appendChild(description);
+            card.appendChild(characteristics);
+
+            container.appendChild(card);
+        });
+    } catch (error) {
+        console.error('Error loading recommended houses:', error);
+    }
+}
+
+
+        // Load data on page load with a default threshold
+        window.onload = () => loadRecommendedHouses(studentCriteria,10.0);
+    </script>
+
 
 
 
