@@ -9,7 +9,7 @@ public class AppLogger {
      * A class used by all clases to record every error that occurs during the making
      * Singleton: Only 1 instance of this class will be used
      */
-    private static final Logger logger = Logger.getLogger("GlobalLogger");
+    private static final Logger logger = Logger.getLogger(AppLogger.class.getName());
 
     static {
         //setting the "mistakes" file
