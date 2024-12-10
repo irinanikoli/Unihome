@@ -16,9 +16,15 @@ public class AppLogger {
         try {
             FileHandler filehandler = new FileHandler("application.log", true);
             filehandler.setFormatter(new SimpleFormatter());
+            filehandler.setLevel(Level.ALL);
             logger.addHandler(filehandler);
             ConsoleHandler consoleHandler = new ConsoleHandler();
             consoleHandler.setLevel(Level.ALL);
+            logger.addHandler(consoleHandler);
+            //setting level of logger
+            logger.setLevel(Level.ALL);
+            //turnoff of parent handler to avoid double records
+            logger.setUseParentHandlers(false);
 
         } catch(IOException e) {
             System.out.println("Error setting up filehandler" + e.getMessage());
