@@ -116,7 +116,8 @@ public class MatchingEngine {
                     .orElse(0.0);
             // Choices with the best score
             List<HousingOption> topChoices = housingOptions.stream()
-                    .filter(option -> scores.get(option) == maxScore)
+                    .filter(option -> Double.compare(scores.get(option), maxScore) == 0)
+                    .limit(RECCOMENDED_COUNT)
                     .collect(Collectors.toList());
             // choices between maxScore and treshold(limit)
             List<HousingOption> similarOptions = housingOptions.stream()
@@ -129,7 +130,7 @@ public class MatchingEngine {
             // combination and constraint at RECOMMENDED_COUNT houses
             List<HousingOption> result = new ArrayList<>(topChoices);
                 similarOptions.stream()
-                    .limit(RECCOMENDED_COUNT - result.size())
+                    .limit(Math.max(0, RECCOMENDED_COUNT - result.size()))
                     .forEach(result :: add);
         
             return result;
