@@ -189,8 +189,8 @@ public class HousingOption {
                 ", cost=" + cost +
                 ", floor=" + floor +
                 ", size=" + size +
-                ", distanceFromUni=" + distanceFromUni +
-                ", distanceFromMeans=" + distanceFromMeans +
+                ", distanceFromUni=" + String.format("%.2f", distanceFromUni) + " km" +
+                ", distanceFromMeans=" + String.format("%.2f", distanceFromMeans) + " km" +
                 ", numberodbed=" + numberofbed +
                 ", furnished=" + furnished +
                 ", latitude=" + latitude +
