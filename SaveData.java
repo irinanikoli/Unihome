@@ -9,7 +9,6 @@ import java.nio.charset.StandardCharsets;
 
 public class SaveData {
 
-    // Normal variables to store user data
     private static String university = "";
     private static String budget = "";
     private static String mintm = "";
