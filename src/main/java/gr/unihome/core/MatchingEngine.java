@@ -104,7 +104,7 @@ public class MatchingEngine {
  * Find houses with similar score to the best and return them
  */
 
-  public List<HousingOption> findOtherBestSolutions(Criteria student, double treshold) {
+  public List<HousingOption> findOtherBestSolutions(Criteria student, double treshold, HousingOption bestOption) {
         // calculate score for all the houses
         try {
             Map<HousingOption, Double> scores = housingOptions.stream()
@@ -123,7 +123,7 @@ public class MatchingEngine {
             List<HousingOption> similarOptions = housingOptions.stream()
                     .filter(option -> {
                         double scoree = scores.get(option);
-                        return scoree < maxScore && scoree > maxScore - treshold;
+                        return !option.equals(bestOption) && scoree < maxScore && scoree > maxScore - treshold;
                     }) 
                     .sorted(Comparator.comparingDouble(scores :: get).reversed())
                     .collect(Collectors.toList()); 

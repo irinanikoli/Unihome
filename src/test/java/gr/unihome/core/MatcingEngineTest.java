@@ -36,7 +36,8 @@ public class MatcingEngineTest {
     }
     @Test
     public void testFindOtherBestSolutions() {
-        List<HousingOption> solutions = matchingEngine.findOtherBestSolutions(student,0.2);
+        HousingOption bestOption = matchingEngine.optimize(student);
+        List<HousingOption> solutions = matchingEngine.findOtherBestSolutions(student,0.2,bestOption);
         assertNotNull("solutions should not be null", solutions);
         //testing the existance of solutions
         assertTrue("Solutions should not exceed the RECOMMENDED_COUNT", solutions.size() <= MatchingEngine.RECCOMENDED_COUNT);
