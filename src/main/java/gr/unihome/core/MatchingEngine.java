@@ -123,6 +123,7 @@ public class MatchingEngine {
             List<HousingOption> similarOptions = housingOptions.stream()
                     .filter(option -> {
                         double scoree = scores.get(option);
+                        //exclude the best option and listen to the conditdion
                         return !option.equals(bestOption) && scoree < maxScore && scoree > maxScore - treshold;
                     }) 
                     .sorted(Comparator.comparingDouble(scores :: get).reversed())
