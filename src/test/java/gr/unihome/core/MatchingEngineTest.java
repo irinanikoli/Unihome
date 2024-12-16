@@ -40,7 +40,7 @@ public class MatchingEngineTest {
         List<HousingOption> solutions = matchingEngine.findOtherBestSolutions(student,0.2,bestOption);
         assertNotNull("solutions should not be null", solutions);
         //testing the existance of solutions
-        assertTrue("Solutions should not exceed the RECOMMENDED_COUNT", solutions.size() <= MatchingEngine.RECCOMENDED_COUNT);
+        assertTrue("Solutions should not exceed the RECOMMENDED_COUNT", solutions.size() <= MatchingEngine.RECOMMENDED_COUNT);
         //testing the interval that solutions are accepted
     }
     @Test
