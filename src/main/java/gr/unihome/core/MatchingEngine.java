@@ -18,7 +18,7 @@ public class MatchingEngine {
     //Download of Logger form AppLogger.java
     private List<HousingOption> housingOptions; 
     private Map<String, Double> weights;
-    public static final int RECCOMENDED_COUNT = 10;
+    public static final int RECOMMENDED_COUNT = 10;
     // number of houses to return
     public MatchingEngine(List<HousingOption> housingOptions, List<String> criteria, List<Integer> priorities) {
         this.housingOptions = housingOptions;
@@ -117,7 +117,7 @@ public class MatchingEngine {
             // Choices with the best score
             List<HousingOption> topChoices = housingOptions.stream()
                     .filter(option -> Double.compare(scores.get(option), maxScore) == 0)
-                    .limit(RECCOMENDED_COUNT)
+                    .limit(RECOMMENDED_COUNT)
                     .collect(Collectors.toList());
             // choices between maxScore and treshold(limit)
             List<HousingOption> similarOptions = housingOptions.stream()
@@ -131,7 +131,7 @@ public class MatchingEngine {
             // combination and constraint at RECOMMENDED_COUNT houses
             List<HousingOption> result = new ArrayList<>(topChoices);
                 similarOptions.stream()
-                    .limit(Math.max(0, RECCOMENDED_COUNT - result.size()))
+                    .limit(Math.max(0, RECOMMENDED_COUNT - result.size()))
                     .forEach(result :: add);
         
             return result;
