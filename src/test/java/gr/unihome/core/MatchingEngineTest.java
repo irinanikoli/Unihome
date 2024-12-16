@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-public class MatcingEngineTest {
+public class MatchingEngineTest {
     private MatchingEngine matchingEngine;
     private List<HousingOption> housingOptions;
     private Criteria student ;
