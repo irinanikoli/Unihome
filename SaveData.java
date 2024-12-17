@@ -19,7 +19,6 @@ public class SaveData {
     private static String uni_preference = "";
     private static String budget_preference = "";
     private static String tm_preference = "";   
-    private static String bedroom_preference = "";  
     private static String unidistance_preference = "";
     private static String mmmdistance_preference = "";
     private static String furnished_preference = "";
