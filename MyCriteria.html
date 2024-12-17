@@ -277,9 +277,7 @@ input[type="radio"]:checked {
                     <option value="Πάντειο Πανεπιστήμιο Κοινωνικών & Πολιτικών Επιστημών (ΠΑΝΤΕΙΟ)">Πάντειο Πανεπιστήμιο Κοινωνικών & Πολιτικών Επιστημών (ΠΑΝΤΕΙΟ)</option>
                     <option value="Γεωπονικό Πανεπιστήμιο Αθηνών">Γεωπονικό Πανεπιστήμιο Αθηνών</option>
                     <option value="Πανεπιστήμιο Πειραιώς (ΠΑΠΕΙ)">Πανεπιστήμιο Πειραιώς (ΠΑΠΕΙ)</option>                   
-                </select> 
-                <input type="number" name="uni-preference" class="preference-input" min="1" max="7" step="1" placeholder="1" id="uni_preference">
-       
+                </select>        
             </div>
 
     <!--Τιμή-->
@@ -287,7 +285,7 @@ input[type="radio"]:checked {
 
                 <label for="budget">Τιμή: <span id="budget-value">€750</span></label>
                 <input type="range" id="budget" min="250" max="2000" step="50" value="750" oninput="updateBudgetValue()">
-                <input type="number" name="budget-preference" class="preference-input" min="1" max="7" step="1" placeholder="1" id="budget_preference" >         
+                <input type="number" name="budget-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="budget_preference" >         
              </div> 
                    
     <!--Εμβαδόν-->
@@ -301,7 +299,7 @@ input[type="radio"]:checked {
         <div class="range-item">
             <label for="max" class="range-label">Έως (τ.μ.):</label>
             <input type="number" id="max-tm" class="range-input" name="max" placeholder="Μέγιστα τ.μ."min="30" max="150" step="10" value="30">
-            <input type="number" name="tm-preference" class="preference-input" min="1" max="7" step="1" placeholder="1" id="tm_preference">
+            <input type="number" name="tm-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="tm_preference">
         </div>
     </div>
                 
@@ -315,7 +313,6 @@ input[type="radio"]:checked {
                     <option value="3">3</option> 
                     <option value="4">4</option>                    
                 </select> 
-                <input type="number" name="bedroom-preference" class="preference-input" min="1" max="7" step="1" placeholder="1" id="bedroom_preference">
             </div>
 
      <!--Απόσταση απο σχολή-->
@@ -335,7 +332,7 @@ input[type="radio"]:checked {
             <option value="45">45km</option> 
             <option value="50">50km</option>                  
         </select> 
-        <input type="number" name="unidistance-preference" class="preference-input" min="1" max="7" step="1" placeholder="1" id="unidistance_preference">
+        <input type="number" name="unidistance-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="unidistance_preference">
     </div>
 
 
@@ -356,7 +353,7 @@ input[type="radio"]:checked {
             <option value="45">45km</option> 
             <option value="50">50km</option>                  
         </select> 
-        <input type="number" name="mmmdistance-preference" class="preference-input" min="1" max="7" step="1" placeholder="1" id="mmmdistance_preference">
+        <input type="number" name="mmmdistance-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="mmmdistance_preference">
     </div>
 
        
@@ -369,8 +366,7 @@ input[type="radio"]:checked {
         
                         <input type="radio" id="no" name="agreement" value="no">
                         <label for="Όχι">Όχι</label>
-                    </div>
-                    <input type="number" name="furnished-preference" class="preference-input" min="1" max="7" step="1" placeholder="1" id="furnished_preference">                
+                    </div>               
                 </div> 
 
             
@@ -444,19 +440,15 @@ input[type="radio"]:checked {
     
             // Δημιουργία των δεδομένων για αποστολή
             const formData = {
-                university: document.getElementById("university").value,
                 budget: document.getElementById("budget").value,
                 mintm: document.getElementById("min-tm").value,
                 maxtm: document.getElementById("max-tm").value,
                 uniDistance: document.getElementById("uniDistance").value,
                 metroDistance: document.getElementById("metroDistance").value,
-                furnished: document.querySelector('input[name="agreement"]:checked')?.value,
-                unipref: document.getElementById("uni_preference").value,
                 budgetpref: document.getElementById("budget_preference").value,
                 tmpref: document.getElementById("tm_preference").value,               
                 uniDistancepref: document.getElementById("unidistance_preference").value,
-                metroDistancepref: document.getElementById("mmmdistance_preference").value,
-                furnishedpref: document.getElementById("furnished_preference").value
+                metroDistancepref: document.getElementById("mmmdistance_preference").value
             };
     
             // Αποστολή των δεδομένων
