@@ -9,19 +9,16 @@ import java.nio.charset.StandardCharsets;
 
 public class SaveData {
 
-    private static String university = "";
     private static String budget = "";
     private static String mintm = "";
     private static String maxtm = "";
     private static String uniDistance = "";
     private static String metroDistance = "";
-    private static String furnished = "";
-    private static String uni_preference = "";
     private static String budget_preference = "";
     private static String tm_preference = "";   
     private static String unidistance_preference = "";
     private static String mmmdistance_preference = "";
-    private static String furnished_preference = "";
+
 
     public static void main(String[] args) throws IOException {
         
@@ -54,9 +51,7 @@ public class SaveData {
                 String[] parts = requestBody.replace("{", "").replace("}", "").replace("\"", "").split(",");
                 for (String part : parts) {
                     String[] keyValue = part.split(":");
-                    if (keyValue[0].trim().equals("university")) {
-                        university = keyValue[1].trim();
-                    } else if (keyValue[0].trim().equals("budget")) {
+                    if (keyValue[0].trim().equals("budget")) {
                         budget = keyValue[1].trim();
                     } else if (keyValue[0].trim().equals("mintm")) {
                         mintm = keyValue[1].trim();
@@ -66,22 +61,14 @@ public class SaveData {
                         uniDistance = keyValue[1].trim();
                     } else if (keyValue[0].trim().equals("metroDistance")) {
                         metroDistance = keyValue[1].trim();
-                    } else if (keyValue[0].trim().equals("furnished")) {
-                        furnished = keyValue[1].trim();
-                    } else if (keyValue[0].trim().equals("uni_preference")) {
-                        uni_preference = keyValue[1].trim();
                     } else if (keyValue[0].trim().equals("budget_preference")) {
                         budget_preference = keyValue[1].trim();
                     } else if (keyValue[0].trim().equals("tm_preference")) {
-                        tm_preference = keyValue[1].trim();
-                    } else if (keyValue[0].trim().equals("bedroom_preference")) {
-                        bedroom_preference = keyValue[1].trim();
+                        tm_preference = keyValue[1].trim();                
                     } else if (keyValue[0].trim().equals("unidistance_preference")) {
                         unidistance_preference = keyValue[1].trim();
                     } else if (keyValue[0].trim().equals("mmmdistance_preference")) {
-                        mmmdistance_preference = keyValue[1].trim();
-                    } else if (keyValue[0].trim().equals("furnished_preference")) {
-                        furnished_preference = keyValue[1].trim();
+                        mmmdistance_preference = keyValue[1].trim();                   
                     }
                 }
 
