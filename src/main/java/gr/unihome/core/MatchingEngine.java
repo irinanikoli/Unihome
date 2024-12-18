@@ -32,34 +32,32 @@ public class MatchingEngine {
      * Calculate the score of a house based on weights and its characteristics
      */
 
-    public double evaluate(HousingOption ho, Criteria student) {
-        double score = 0.0;
-        score += weights.getOrDefault("cost", 0.0) * (1.0 / ho.getCost());
-        score += weights.getOrDefault("size", 0.0) * ho.getSize();
-        score += weights.getOrDefault("distanceFromUni", 0.0) * ho.getDistanceFromUni();
-        score += weights.getOrDefault("distanceFromMeans", 0.0) * ho.getDistanceFromMeans();
-        //if statements for penalties in the score
-        // Proportional penalties based on student's preferances
-        //In max preferences we use violation ratio - 1 and in min the oposite
-        if (ho.getCost() > student.getBudget()) {
-            double violationRatio = ho.getCost() / student.getBudget();
-            score *= Math.max(1.0 - (weights.getOrDefault("cost", 0.0) * (violationRatio - 1.0)), 0.0);
-        }
-        if (ho.getDistanceFromMeans() > student.getMaxDistanceFromMeans()) {
-            double violationRatio = ho.getDistanceFromMeans() /  student.getMaxDistanceFromMeans();
-            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromMeans", 0.0) * (violationRatio - 1.0)), 0.0);
-        }
-        if (ho.getDistanceFromUni() > student.getMaxDistanceFromUni()) {
-            double violationRatio = ho.getDistanceFromUni() / student.getMaxDistanceFromUni();
-            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromUni", 0.0) * (violationRatio - 1.0)), 0.0);
-        }
-        if (ho.getSize() < student.getMinSqMeters()) {
-            double violationRatio = ho.getSize() / student.getMinSqMeters();
-            score *= Math.max(1.0 - (weights.getOrDefault("size", 0.0) * (1.0 - violationRatio)) , 0.0);
-        }
-
-        return Math.max(score, 0.0);
+     public double evaluate(HousingOption ho, Criteria student) {
+        double baseScore = weights.getOrDefault("cost", 0.0) * (1.0 / ho.getCost())
+                         + weights.getOrDefault("size", 0.0) * ho.getSize()
+                         + weights.getOrDefault("distanceFromUni", 0.0) * ho.getDistanceFromUni()
+                         + weights.getOrDefault("distanceFromMeans", 0.0) * ho.getDistanceFromMeans();
+    
+        double costPenalty = (ho.getCost() > student.getBudget())
+            ? Math.max(1.0 - weights.getOrDefault("cost", 0.0) * ((ho.getCost() / student.getBudget()) - 1.0), 0.0)
+            : 1.0;
+    
+        double distanceMeansPenalty = (ho.getDistanceFromMeans() > student.getMaxDistanceFromMeans())
+            ? Math.max(1.0 - weights.getOrDefault("distanceFromMeans", 0.0) * ((ho.getDistanceFromMeans() / student.getMaxDistanceFromMeans()) - 1.0), 0.0)
+            : 1.0;
+    
+        double distanceUniPenalty = (ho.getDistanceFromUni() > student.getMaxDistanceFromUni())
+            ? Math.max(1.0 - weights.getOrDefault("distanceFromUni", 0.0) * ((ho.getDistanceFromUni() / student.getMaxDistanceFromUni()) - 1.0), 0.0)
+            : 1.0;
+    
+        double sizePenalty = (ho.getSize() < student.getMinSqMeters())
+            ? Math.max(1.0 - weights.getOrDefault("size", 0.0) * (1.0 - (ho.getSize() / student.getMinSqMeters())), 0.0)
+            : 1.0;
+    
+        double finalScore = baseScore * costPenalty * distanceMeansPenalty * distanceUniPenalty * sizePenalty;
+        return Math.max(finalScore, 0.0);
     }
+    
 
 
    /**
