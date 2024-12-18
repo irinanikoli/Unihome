@@ -63,5 +63,19 @@ public class MatchingEngineTest {
                 value, weights.get(key), 0.001);
         });
     }
-
+    @Test
+    public void testEvaluate() {
+        HousingOption perfectMatch = housingOptions.get(0); // City Center
+        HousingOption worseOption = housingOptions.get(1); // Suburbs
+    
+        double perfectScore = matchingEngine.evaluate(perfectMatch, student);
+        double worseScore = matchingEngine.evaluate(worseOption, student);
+    
+        assertTrue("Perfect match should have a higher score", perfectScore > worseScore);
+        assertTrue("Perfect match score should be positive", perfectScore > 0);
+    
+        System.out.println("Perfect match score: " + perfectScore);
+        System.out.println("Worse option score: " + worseScore);
+    }
+    
 }

@@ -9,7 +9,7 @@ import java.util.List;
 public class WeightCalculator {
     /**
      *  calculates the weigths of students' preferences
-     *  weghts are normalized so that they add to 1
+     *  weights are normalized so that they add to 1
      * 
      * @param criteria Names of citeria (cost, size etc)
      * @param priorities Map of priorities (1= higher, n = lower)
