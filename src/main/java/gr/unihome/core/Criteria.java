@@ -10,7 +10,7 @@ public class Criteria {
     double maxDistanceFromUni;
     double maxDistanceFromMeans;
     
-    public Criteria(String stName, String stUniveristy, double maxBudget, double minSqMeters, double maxDistanceFromUni, double maxDistanceFromMeans) {
+    public Criteria(String stName, String stUniversity, double maxBudget, double minSqMeters, double maxDistanceFromUni, double maxDistanceFromMeans) {
         this.stName = stName;
         this.stUniversity = stUniversity;
         this.maxBudget = maxBudget;
@@ -23,40 +23,40 @@ public class Criteria {
         return this.stUniversity;
     }
 
-    public void setStUniversity(String newStUniversity) {
-        this.stUniversity = newStUniversity;
+    public void setStUniversity(String stUniversity) {
+        this.stUniversity = stUniversity;
     }
 
     public double getBudget() {
         return maxBudget;
     }
 
-    public void setBudget(double newBudget) {
-        this.maxBudget = newBudget;
+    public void setBudget(double maxBudget) {
+        this.maxBudget = maxBudget;
     }
 
     public double getMinSqMeters() {
         return this.minSqMeters;
     }
 
-    public void setMinSqMeters(double newMinSqMeters) {
-        this.minSqMeters = newMinSqMeters;
+    public void setMinSqMeters(double minSqMeters) {
+        this.minSqMeters = minSqMeters;
     }
 
     public double getMaxDistanceFromUni() {
         return this.maxDistanceFromUni;
     }
 
-    public void setMaxDistanceFromUni(double newMaxDistanceFromUni) {
-        this.maxDistanceFromUni = newMaxDistanceFromUni;
+    public void setMaxDistanceFromUni(double maxDistanceFromUni) {
+        this.maxDistanceFromUni = maxDistanceFromUni;
     }
 
     public double getMaxDistanceFromMeans() {
         return this.maxDistanceFromMeans;
     }
 
-    public void setMaxDistanceFromMeans(double newMaxDistanceFromMeans) {
-        this.maxDistanceFromMeans = newMaxDistanceFromMeans;
+    public void setMaxDistanceFromMeans(double maxDistanceFromMeans) {
+        this.maxDistanceFromMeans = maxDistanceFromMeans;
     }
     @Override
     public String toString() {
