@@ -7,7 +7,6 @@ public class Criteria {
     String stUniversity;
     double maxBudget;
     double minSqMeters;
-    double maxSqMeters;
     double maxDistanceFromUni;
     double maxDistanceFromMeans;
     
