@@ -29,7 +29,7 @@ public class RecommendationService {
         }
         return null; //returns null in case of an error
     } 
-    /*
+    /**
      * Provides the list with the best recommendations
      * @param studentCriteria as the criteria of each student
      * @param treshold as the limit of divergence between maxScore and scores of the recommended houses
