@@ -12,7 +12,7 @@ public class Criteria {
     
     public Criteria(String stName, String stUniveristy, double maxBudget, double minSqMeters, double maxDistanceFromUni, double maxDistanceFromMeans) {
         this.stName = stName;
-        this.stUniversity = stUniveristy;
+        this.stUniversity = stUniversity;
         this.maxBudget = maxBudget;
         this.minSqMeters = minSqMeters;
         this.maxDistanceFromUni = maxDistanceFromUni;
