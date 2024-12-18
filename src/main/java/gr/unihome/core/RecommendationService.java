@@ -36,9 +36,9 @@ public class RecommendationService {
      * @return list of recommedations  
      */
 
-    public List<HousingOption> getBestRecommendationList(Criteria studentCriteria, double treshold) {
+    public List<HousingOption> getBestRecommendationList(Criteria studentCriteria, double treshold, HousingOption bestOption) {
         try {
-           return matchingEngine.findOtherBestSolutions(studentCriteria, treshold);
+           return matchingEngine.findOtherBestSolutions(studentCriteria, treshold, bestOption);
         } catch(Exception e) {
             logger.severe("Error getting the best recommendations : " + e.getMessage());
             e.printStackTrace();

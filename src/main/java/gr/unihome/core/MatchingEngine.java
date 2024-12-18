@@ -18,7 +18,7 @@ public class MatchingEngine {
     //Download of Logger form AppLogger.java
     private List<HousingOption> housingOptions; 
     private Map<String, Double> weights;
-    public static final int RECCOMENDED_COUNT = 10;
+    public static final int RECOMMENDED_COUNT = 10;
     // number of houses to return
     public MatchingEngine(List<HousingOption> housingOptions, List<String> criteria, List<Integer> priorities) {
         this.housingOptions = housingOptions;
@@ -40,21 +40,22 @@ public class MatchingEngine {
         score += weights.getOrDefault("distanceFromMeans", 0.0) * ho.getDistanceFromMeans();
         //if statements for penalties in the score
         // Proportional penalties based on student's preferances
+        //In max preferences we use violation ratio - 1 and in min the oposite
         if (ho.getCost() > student.getBudget()) {
             double violationRatio = ho.getCost() / student.getBudget();
-            score =Math.max(1.0 - (weights.getOrDefault("cost", 0.0) * (violationRatio - 1.0)), 0.0);
+            score *= Math.max(1.0 - (weights.getOrDefault("cost", 0.0) * (violationRatio - 1.0)), 0.0);
         }
         if (ho.getDistanceFromMeans() > student.getMaxDistanceFromMeans()) {
             double violationRatio = ho.getDistanceFromMeans() /  student.getMaxDistanceFromMeans();
-            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromMeans", 0.0)), 0.0);
+            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromMeans", 0.0) * (violationRatio - 1.0)), 0.0);
         }
         if (ho.getDistanceFromUni() > student.getMaxDistanceFromUni()) {
             double violationRatio = ho.getDistanceFromUni() / student.getMaxDistanceFromUni();
-            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromUni", 0.0)), 0.0);
+            score *= Math.max(1.0 - (weights.getOrDefault("distanceFromUni", 0.0) * (violationRatio - 1.0)), 0.0);
         }
         if (ho.getSize() < student.getMinSqMeters()) {
             double violationRatio = ho.getSize() / student.getMinSqMeters();
-            score *= Math.max(1.0 - (weights.getOrDefault("size", 0.0)) , 0.0);
+            score *= Math.max(1.0 - (weights.getOrDefault("size", 0.0) * (1.0 - violationRatio)) , 0.0);
         }
 
         return Math.max(score, 0.0);
@@ -103,7 +104,7 @@ public class MatchingEngine {
  * Find houses with similar score to the best and return them
  */
 
-  public List<HousingOption> findOtherBestSolutions(Criteria student, double treshold) {
+  public List<HousingOption> findOtherBestSolutions(Criteria student, double treshold, HousingOption bestOption) {
         // calculate score for all the houses
         try {
             Map<HousingOption, Double> scores = housingOptions.stream()
@@ -115,20 +116,22 @@ public class MatchingEngine {
                     .orElse(0.0);
             // Choices with the best score
             List<HousingOption> topChoices = housingOptions.stream()
-                    .filter(option -> scores.get(option) == maxScore)
+                    .filter(option -> Double.compare(scores.get(option), maxScore) == 0)
+                    .limit(RECOMMENDED_COUNT)
                     .collect(Collectors.toList());
             // choices between maxScore and treshold(limit)
             List<HousingOption> similarOptions = housingOptions.stream()
                     .filter(option -> {
                         double scoree = scores.get(option);
-                        return scoree < maxScore && scoree > maxScore - treshold;
+                        //exclude the best option and listen to the conditdion
+                        return !option.equals(bestOption) && scoree <= maxScore && scoree > maxScore - treshold;
                     }) 
                     .sorted(Comparator.comparingDouble(scores :: get).reversed())
                     .collect(Collectors.toList()); 
             // combination and constraint at RECOMMENDED_COUNT houses
             List<HousingOption> result = new ArrayList<>(topChoices);
                 similarOptions.stream()
-                    .limit(RECCOMENDED_COUNT - result.size())
+                    .limit(Math.max(0, RECOMMENDED_COUNT - result.size()))
                     .forEach(result :: add);
         
             return result;
