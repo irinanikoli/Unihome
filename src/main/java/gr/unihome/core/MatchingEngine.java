@@ -56,6 +56,11 @@ public class MatchingEngine {
             score -= weights.getOrDefault("distanceFromMeans", 0.0) * (violationRatio - 1.0) * 0.5;
              // Distance from means penalty
         }
+
+        if (ho.getSize() < student.getMinSqMeters()) {
+            double violationRatio = student.getMinSqMeters() / ho.getSize();
+            score -= weights.getOrDefault("size", 0.0) * (violationRatio - 1.0) * 0.5; // Ποινή μεγέθους
+        }
     
         // Score should not be negative
         return Math.max(score, 0.0);
@@ -107,44 +112,49 @@ public class MatchingEngine {
  * Find houses with similar score to the best and return them
  */
 
-  public List<HousingOption> findOtherBestSolutions(Criteria student, double treshold, HousingOption bestOption) {
-        // calculate score for all the houses
-        try {
-            Map<HousingOption, Double> scores = housingOptions.stream()
-                    .collect(Collectors.toMap(option -> option, ho -> evaluate(ho, student)));
-                 
-            //Find max score
-            double maxScore = scores.values().stream()
-                    .max(Double :: compare)
-                    .orElse(0.0);
-            // Choices with the best score
-            List<HousingOption> topChoices = housingOptions.stream()
-                    .filter(option -> Double.compare(scores.get(option), maxScore) == 0)
-                    .limit(RECOMMENDED_COUNT)
-                    .collect(Collectors.toList());
-            // choices between maxScore and treshold(limit)
-            List<HousingOption> similarOptions = housingOptions.stream()
-                    .filter(option -> {
-                        double scoree = scores.get(option);
-                        //exclude the best option and listen to the conditdion
-                        return !option.equals(bestOption) && scoree <= maxScore && scoree > maxScore - treshold;
-                    }) 
-                    .sorted(Comparator.comparingDouble(scores :: get).reversed())
-                    .collect(Collectors.toList()); 
-            // combination and constraint at RECOMMENDED_COUNT houses
-            List<HousingOption> result = new ArrayList<>(topChoices);
-                similarOptions.stream()
-                    .limit(Math.max(0, RECOMMENDED_COUNT - result.size()))
-                    .forEach(result :: add);
-        
-            return result;
-        } catch(NullPointerException e) {
-            logger.severe("NullPointerException occured: problem with the list : " + e.getMessage()); 
-            e.printStackTrace();
-        } catch(Exception e) {
-            e.printStackTrace();
-            logger.severe("Error finding other best solutions : " + e.getMessage());
-        } 
-    return new ArrayList<>(); //returns an empty ArrayList in case of an error
-  }
+  public List<HousingOption> findOtherBestSolutions(Criteria student, double threshold, HousingOption bestOption) {
+    try {
+        // Calculate scores for all houses
+        Map<HousingOption, Double> scores = housingOptions.stream()
+                .collect(Collectors.toMap(option -> option, ho -> evaluate(ho, student)));
+
+        // Find max score
+        double maxScore = scores.values().stream()
+                .max(Double::compare)
+                .orElse(0.0);
+
+        // Exclude the best option from both lists
+        List<HousingOption> topChoices = housingOptions.stream()
+                .filter(option -> !option.equals(bestOption)) // Exclude bestOption
+                .filter(option -> Double.compare(scores.get(option), maxScore) == 0)
+                .limit(RECOMMENDED_COUNT)
+                .collect(Collectors.toList());
+
+        // Choices between maxScore and threshold (excluding bestOption)
+        List<HousingOption> similarOptions = housingOptions.stream()
+                .filter(option -> !option.equals(bestOption)) // Exclude bestOption
+                .filter(option -> {
+                    double score = scores.get(option);
+                    return score <= maxScore && score > maxScore - threshold;
+                })
+                .sorted(Comparator.comparingDouble(scores::get).reversed())
+                .collect(Collectors.toList());
+
+        // Combine top choices and similar options
+        List<HousingOption> result = new ArrayList<>(topChoices);
+        similarOptions.stream()
+                .limit(Math.max(0, RECOMMENDED_COUNT - result.size())) // Ensure we respect RECOMMENDED_COUNT
+                .forEach(result::add);
+
+        return result.stream().distinct().limit(RECOMMENDED_COUNT).toList(); // Remove duplicates and limit size
+    } catch (NullPointerException e) {
+        logger.severe("NullPointerException occurred: problem with the list : " + e.getMessage());
+        e.printStackTrace();
+    } catch (Exception e) {
+        logger.severe("Error finding other best solutions: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return new ArrayList<>(); // Return empty list in case of an error
+}
+
 }
