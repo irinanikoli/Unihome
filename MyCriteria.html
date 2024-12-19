@@ -2,9 +2,9 @@
 <html> 
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+        <meta charset="UTF-8">
         <title>Set your criteria</title>
         <link rel="icon" href="favicon-32x32.png" type="image/x-icon">
-        <link rel="stylesheet" href="style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -92,9 +92,6 @@
     margin-bottom: 7px;
 }
 
-.custom-form label span {
-    color: red;
-}
 .custom-form select {
     padding: 8px;
     width: 92%;
@@ -108,12 +105,6 @@
 }
 
 /*Για τα save και continue buttons */
-.custom-form .form-actions {
-    display: flex;
-    justify-content: space-between;
-    gap: 10px;
-}
-
 .custom-form .btn {
     padding: 10px 15px;
     border: none;
@@ -125,15 +116,7 @@
     background-color: #0179a4;
     color: white;
 }
-.custom-form .continue-btn {
-    background-color: white;
-    border: 1px solid #0179a4;
-    color: #0179a4;
-}
-.custom-form .continue-btn:hover {
-    background-color: #0179a4;
-    color: white;
-}
+
 .custom-form .save-btn:hover {
     background-color: #0179a4;
 }
@@ -208,7 +191,13 @@ input[type="radio"]:checked {
     flex-direction: column;
     width: 45%;
     margin-left: -1px;
-    
+}
+ /* Το αριστερό κουτι τμ */
+#max-tm {
+    display: flex;
+    flex-direction: column;
+    width: 97%;
+    margin-left: -1px;   
 }
 
 .range-label {
@@ -218,7 +207,7 @@ input[type="radio"]:checked {
 }
 
 .range-input {
-    padding: 8px;
+    padding: 9px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
@@ -234,39 +223,31 @@ input[type="radio"]:checked {
     margin-left: 93%;
     display: flex;
     margin-top: -36px;
-}
-input[type="number"].preference-input3 {
-    padding:8px;
-    border: 1px solid #0179a4;
-    border-radius: 4px;
-    font-size: 14px;
-    width: 25px;
-    margin-left: 113%;
-    display: flex;
-    margin-top: -34px;
-}
+} 
 
-input[type="number"].preference-input2 {
-    padding:9px;
+#furnished_preference {
+    padding: 9px;
     border: 1px solid #0179a4;
     border-radius: 4px;
     font-size: 14px;
     width: 25px;
     margin-left: 93%;
     display: flex;
-    margin-top: -32px;
+    margin-top: -36px;
 }
 
-input[type="number"].preference-input7 {
-    padding:9px;
+#tm_preference {
+    padding: 9px;
     border: 1px solid #0179a4;
     border-radius: 4px;
     font-size: 14px;
     width: 25px;
-    margin-left: 93%;
+    margin-left: 112%;
     display: flex;
-    margin-top: -32px;
+    margin-top: -36px;
 }
+
+
 
 </style>
     <div class="banner"> 
@@ -282,12 +263,12 @@ input[type="number"].preference-input7 {
     </div>
 
     <div class="form-container custom-form">
-        <form>
+        <form id="myForm" method="POST" action="http://localhost:8000/save" onsubmit="logFormData(event)">
 
     <!--Πανεπιστήμιο-->
             <div class="form-group"> 
-                <label for="Πανεπιστήμιο">Πανεπιστήμιο <span>*</span></label> 
-                <select id="Πανεπιστήμιο" required> 
+                <label for="Πανεπιστήμιο">Πανεπιστήμιο:<span></span></label> 
+                <select id="university"> 
                     <option value="" disabled selected>Επιλογή Πανεπιστημίου</option> 
                     <option value="Οικονομικό Πανεπιστήμιο Αθηνών (ΟΠΑ)">Οικονομικό Πανεπιστήμιο Αθηνών (ΟΠΑ)</option> 
                     <option value="Εθνικό & Καποδιστριακό Πανεπιστήμιο Αθηνών (ΕΚΠΑ)">Εθνικό & Καποδιστριακό Πανεπιστήμιο Αθηνών (ΕΚΠΑ)</option> 
@@ -296,9 +277,7 @@ input[type="number"].preference-input7 {
                     <option value="Πάντειο Πανεπιστήμιο Κοινωνικών & Πολιτικών Επιστημών (ΠΑΝΤΕΙΟ)">Πάντειο Πανεπιστήμιο Κοινωνικών & Πολιτικών Επιστημών (ΠΑΝΤΕΙΟ)</option>
                     <option value="Γεωπονικό Πανεπιστήμιο Αθηνών">Γεωπονικό Πανεπιστήμιο Αθηνών</option>
                     <option value="Πανεπιστήμιο Πειραιώς (ΠΑΠΕΙ)">Πανεπιστήμιο Πειραιώς (ΠΑΠΕΙ)</option>                   
-                </select> 
-                <input type="number" name="uni-preference" class="preference-input1" min="1" max="7" step="1" placeholder="1" id="uni-preference">
-       
+                </select>        
             </div>
 
     <!--Τιμή-->
@@ -306,42 +285,41 @@ input[type="number"].preference-input7 {
 
                 <label for="budget">Τιμή: <span id="budget-value">€750</span></label>
                 <input type="range" id="budget" min="250" max="2000" step="50" value="750" oninput="updateBudgetValue()">
-                <input type="number" name="budget-preference" class="preference-input2" min="1" max="7" step="1" placeholder="1" id="budget-preference">         
+                <input type="number" name="budget-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="budget_preference" >         
              </div> 
                    
     <!--Εμβαδόν-->
             <div class="range-container">
                 <div class="range-item">
                 <label for="min" class="range-label">Από (τ.μ.):</label>
-                <input type="number" id="min" class="range-input" name="min" placeholder="Ελάχιστα τ.μ." min="30" max="150" step="10" value="30">
+                <input type="number" id="min-tm" class="range-input" name="min" placeholder="Ελάχιστα τ.μ." min="30" max="150" step="10" value="30">
                 
             </div>
 
         <div class="range-item">
             <label for="max" class="range-label">Έως (τ.μ.):</label>
-            <input type="number" id="max" class="range-input" name="max" placeholder="Μέγιστα τ.μ."min="30" max="150" step="10" value="30">
-            <input type="number" name="tm-preference" class="preference-input3" min="1" max="7" step="1" placeholder="1" id="tm-preference">
+            <input type="number" id="max-tm" class="range-input" name="max" placeholder="Μέγιστα τ.μ."min="30" max="150" step="10" value="30">
+            <input type="number" name="tm-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="tm_preference">
         </div>
     </div>
                 
      <!--Υπνοδωμάτια-->
             <div class="form-group"> 
-                <label for="Υπνοδωμάτια"> Υπνοδωμάτια: <span>*</span></label> 
-                <select id="Υπνοδωμάτια" required> 
+                <label for="Υπνοδωμάτια"> Υπνοδωμάτια: <span></span></label> 
+                <select id="bedrooms"> 
                     <option value="" disabled selected>Επιλογή Υπνοδωματίων</option> 
                     <option value="1">1</option> 
                     <option value="2">2</option> 
                     <option value="3">3</option> 
                     <option value="4">4</option>                    
                 </select> 
-                <input type="number" name="bedroom-preference" class="preference-input4" min="1" max="7" step="1" placeholder="1" id="bedroom-preference">
             </div>
 
      <!--Απόσταση απο σχολή-->
 
      <div class="form-group"> 
-        <label for="Απόσταση Από Πανεπιστήμιο"> Μέγιστη απόσταση από το Πανεπιστήμιό σας<span>*</span></label> 
-        <select id="Απόσταση Από Πανεπιστήμιο" required> 
+        <label for="Απόσταση Από Πανεπιστήμιο"> Μέγιστη απόσταση από το Πανεπιστήμιό σας:<span></span></label> 
+        <select id="uniDistance"> 
             <option value="" disabled selected>Επιλογή Μέγιστης Απόστασης</option> 
             <option value="5">5km</option> 
             <option value="10">10km</option> 
@@ -354,15 +332,15 @@ input[type="number"].preference-input7 {
             <option value="45">45km</option> 
             <option value="50">50km</option>                  
         </select> 
-        <input type="number" name="unidistance-preference" class="preference-input5" min="1" max="7" step="1" placeholder="1" id="unidistance-preference">
+        <input type="number" name="unidistance-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="unidistance_preference">
     </div>
 
 
     <!--Απόσταση απο ΜΜΜ-->
 
     <div class="form-group"> 
-        <label for="Απόσταση Από Μεταφορικά Μέσα"> Μέγιστη απόσταση από Μέσα Μαζικής Μεταφοράς<span>*</span></label> 
-        <select id="Απόσταση Από Μεταφορικά Μέσα" required> 
+        <label for="Απόσταση Από Μεταφορικά Μέσα"> Μέγιστη απόσταση από Μέσα Μαζικής Μεταφοράς:<span></span></label> 
+        <select id="metroDistance"> 
             <option value="" disabled selected>Επιλογή Μέγιστης Απόστασης</option> 
             <option value="5">5km</option> 
             <option value="10">10km</option> 
@@ -375,31 +353,34 @@ input[type="number"].preference-input7 {
             <option value="45">45km</option> 
             <option value="50">50km</option>                  
         </select> 
-        <input type="number" name="mmmdistance-preference" class="preference-input6" min="1" max="7" step="1" placeholder="1" id="mmmdistance-preference">
+        <input type="number" name="mmmdistance-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="mmmdistance_preference">
     </div>
 
        
     <!--Επιπλωμένο Ναι/όχι-->
                 <div id="yes-no">
-                    <label for="yes-no">Επιπλωμένο </label>
-                    <div id="yes-no">
+                    <label for="yes-no">Επιπλωμένο: </label>
+                    <div id="furnished">
                         <input type="radio" id="yes" name="agreement" value="yes">
                         <label for="Ναι">Ναι</label>
         
                         <input type="radio" id="no" name="agreement" value="no">
                         <label for="Όχι">Όχι</label>
-                    </div>
-                    <input type="number" name="furnished-preference" class="preference-input7" min="1" max="7" step="1" placeholder="1" id="furnished-preference">                
+                    </div>               
                 </div> 
 
             
     <!--Κουμπιά Αποθήκευσης και Συνέχειας-->
                     
+
                     <div class="form-actions">
                         <button type="button" class="btn save-btn">Save</button> 
                         <button type="submit" class="btn continue-btn"> Continue</button>
                         <button type="button" class="btn save-btn">Αποθήκευση</button> 
                         <button onclick="location.href='Choices.html';" class="btn continue-btn">Συνέχεια </button> 
+
+                    <div class="form-actions"> 
+                        <button type="button" class="btn save-btn" id="saveButton">Αποθήκευση</button>                         
                     </div> 
                 </form> 
             </div> 
@@ -411,16 +392,11 @@ input[type="number"].preference-input7 {
     const budgetValue = document.getElementById("budget-value");
     budgetValue.textContent = `€${budgetSlider.value}`;
 }
-     
-    // Ναι ή οχι
-    document.getElementById("yes-no").addEventListener("change", function () {
-        const selectedOption = document.querySelector('input[name="agreement"]:checked').value;
-        console.log("Selected option:", selectedOption); // Καταγράφει την επιλογή του χρήστη   
-    });
-    
+
+   // Για ρτα τετραγωνικά μέτρα
     document.addEventListener("DOMContentLoaded", function() {
-        const minInput = document.querySelector("#min");
-        const maxInput = document.querySelector("#max");
+        const minInput = document.querySelector("#min-tm");
+        const maxInput = document.querySelector("#max-tm");
     
         minInput.addEventListener("input", validateRange);
         maxInput.addEventListener("input", validateRange);
@@ -438,6 +414,72 @@ input[type="number"].preference-input7 {
         }
     });
 
+
+    // Για το save button
+    document.addEventListener('DOMContentLoaded', function () {
+        let preferences = document.querySelectorAll('input.preference-input[type="number"]');
+        let saveButton = document.getElementById('saveButton');
+    
+        saveButton.addEventListener('click', function (event) {
+            let selectedNumbers = {};
+            let duplicateFound = false;
+    
+            preferences.forEach(function (input) {
+                // Αν το πεδίο είναι κενό, θέσε την τιμή 1
+                if (input.value === "") {
+                    input.value = "1";
+                }
+    
+                let fieldValue = input.value;
+    
+                // Έλεγχος για διπλό αριθμό
+                if (Object.values(selectedNumbers).includes(fieldValue)) {
+                    alert("Το νούμερο " + fieldValue + " έχει επιλεγεί σε περισσότερα από ένα πεδία!");
+                    duplicateFound = true;
+                }
+                selectedNumbers[input.id] = fieldValue;
+            });
+    
+            if (duplicateFound) {
+                event.preventDefault(); // Ακύρωση της υποβολής
+                return;
+            }
+    
+            // Δημιουργία των δεδομένων για αποστολή
+            const formData = {
+                budget: document.getElementById("budget").value,
+                mintm: document.getElementById("min-tm").value,
+                maxtm: document.getElementById("max-tm").value,
+                uniDistance: document.getElementById("uniDistance").value,
+                metroDistance: document.getElementById("metroDistance").value,
+                budgetpref: document.getElementById("budget_preference").value,
+                tmpref: document.getElementById("tm_preference").value,               
+                uniDistancepref: document.getElementById("unidistance_preference").value,
+                metroDistancepref: document.getElementById("mmmdistance_preference").value
+            };
+    
+            // Αποστολή των δεδομένων
+            fetch("http://localhost:8000/save", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(formData),
+            })
+            .then((response) => {
+                if (response.ok) {
+                    alert("Τα δεδομένα αποθηκεύτηκαν με επιτυχία!");
+                    window.location.href = 'Choices.html';
+                } else {
+                    alert("Αποτυχία αποθήκευσης δεδομένων.");
+                }
+            })
+            .catch((error) => {
+                console.error("Error:", error);
+                alert("Σφάλμα αποθήκευσης δεδομένων.");
+            });
+        });
+    });
     
     </script> 
 </body>
