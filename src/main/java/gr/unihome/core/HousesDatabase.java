@@ -11,6 +11,7 @@ public class HousesDatabase {
     private static final String DB_HOUSES_URL = "jdbc:sqlite:houses.db";
     private static Random random1 = new Random();
 
+        // List of locations in Athens
     private static List<String> athensLocations = List.of(
         "Κέντρο", "Παγκράτι", "Κολωνάκι", "Αμπελόκηποι", "Ζωγράφου", "Κηφισιά", 
         "Νέα Σμύρνη", "Πειραιάς", "Μαρούσι", "Γλυφάδα", "Περιστέρι", "Καλλιθέα", 
@@ -23,6 +24,7 @@ public class HousesDatabase {
         "Αχαρνές", "Καπανδρίτι", "Σπάτα", "Παιανία"
     );
             
+        // List of addresses in Athens
     private static List<String> athensAddresses = List.of(
         "Ακαδημίας", "Σταδίου", "Ερμού", "Μιχαλακοπούλου", "Πατησίων", "Αλεξάνδρας", 
         "Σόλωνος", "Πανεπιστημίου", "Βασιλίσσης Σοφίας", "Κηφισίας", "Μεσογείων", 
@@ -36,6 +38,9 @@ public class HousesDatabase {
         "Καλλιρρόης", "Λυσικράτους", "Ομήρου", "Ριζάρη"
     );
 
+    /**
+     * Initializes the database by dropping and creating the "Houses" table.
+     */
     public static void initialize() {
         String dropTableSQL = "DROP TABLE IF EXISTS Houses;";
         String createTableSQL = """
@@ -59,12 +64,17 @@ public class HousesDatabase {
             PreparedStatement createStmt = conn.prepareStatement(createTableSQL)) {
                 dropStmt.executeUpdate();
                 createStmt.executeUpdate();
-                System.out.println("Ο πίνακας houses δημιουργήθηκε με επιτυχία!");
+                System.out.println("The 'Houses' table was successfully created!");
         } catch (SQLException e) {
-            System.err.println("Σφάλμα κατά την εκτέλεση SQL στο houses: " + e.getMessage());
+            System.err.println("Error executing SQL on houses: " + e.getMessage());
         }
     }
 
+    /**
+     * Inserts a specified number of randomly generated houses into the database.
+     *
+     * @param numOfHouses the number of houses to insert
+     */
     public static void insertRandomHouses(int numOfHouses) {
         for (int i = 0; i < numOfHouses; i++) {
             int id = i + 1;
@@ -76,18 +86,31 @@ public class HousesDatabase {
             double distanceFromUni = -1;
             double distanceFromMeans = -1;
             int numberOfBed = random1.nextInt(4) + 1;
-            int furnished = random1.nextInt(2);  // ναι η οχι
-            double latitude = 37.8 + (random1.nextDouble() * (38.2 - 37.8));// Πλάτος: 37.8 έως 38.2
-            double longitude = 23.5 + (random1.nextDouble() * (24.0 - 23.5));// Μήκος: 23.5 έως 24.0
-            // Περιορισμός γεωγραφικών συντεταγμένων στην Αττική
+            int furnished = random1.nextInt(2);  // yes or no
+            double latitude = 37.8 + (random1.nextDouble() * (38.2 - 37.8));  // Latitude: 37.8 to 38.2
+            double longitude = 23.5 + (random1.nextDouble() * (24.0 - 23.5)); // Longitude: 23.5 to 24.0
 
             insertHouse(id, location, address, cost, floor, size, distanceFromUni, distanceFromMeans,
                         numberOfBed, furnished, latitude, longitude);
         }
     }
 
-    // Για εισαγωγη καθε σπιτιου
-    public static void insertHouse(
+    /**
+     * Inserts a single house into the database.
+     *
+     * @param id              the ID of the house
+     * @param location        the location of the house
+     * @param address         the address of the house
+     * @param cost            the cost of the house
+     * @param floor           the floor of the house
+     * @param size            the size of the house
+     * @param distanceFromUni the distance from the university
+     * @param distanceFromMeans the distance from public transport
+     * @param numberOfBed     the number of beds in the house
+     * @param furnished       whether the house is furnished (1 = yes, 0 = no)
+     * @param latitude        the latitude of the house
+     * @param longitude       the longitude of the house
+     */    public static void insertHouse(
             int id, String location, String address, int cost, int floor, int size, double distanceFromUni, double distanceFromMeans, 
             int numberOfBed, int furnished, double latitude, double longitude) {
                 String insertSQL = """
@@ -100,7 +123,7 @@ public class HousesDatabase {
         try (Connection conn = DBConnection.connect(DB_HOUSES_URL);
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
             
-            //ορισμος παραμετρων
+            // Set parameters
             pstmt.setInt(1, id);
             pstmt.setString(2, location);
             pstmt.setString(3, address);
@@ -115,9 +138,9 @@ public class HousesDatabase {
             pstmt.setDouble(12, longitude);
             
             pstmt.executeUpdate();
-            System.out.println("Το σπίτι " + id + " εισήχθη με επιτυχία!");
+            System.out.println("House " + id + " was successfully inserted!");
         } catch (SQLException e) {
-            System.err.println("Σφάλμα κατά την εκτέλεση SQL στο houses: " + e.getMessage());
+            System.err.println("Error executing SQL on houses: " + e.getMessage());
         }
     }
 }
