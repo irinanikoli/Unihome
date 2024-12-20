@@ -10,16 +10,16 @@ import java.sql.SQLException;
 public class DistanceCalculator {
     private static final Logger logger = AppLogger.getLogger();
     
-    // url για την σύνδεση με τα αρχεία των βάσεων    
+    // Database connection URLs
     private static final String DB_HOUSES_URL = "jdbc:sqlite:houses.db";
     private static final String DB_UNI_URL = "jdbc:sqlite:universities.db";
     private static final String DB_MEANS_URL = "jdbc:sqlite:means.db";
     
 
     
-    //Υπολογίζει την απόσταση ανάμεσα σε δύο σημεία βάσει συντεταγμένων (latitude, longitude).
+    // Calculates the distance between two points based on their coordinates (latitude, longitude)
     public static double calculateDistance(double lat1, double lon1, double lat2, double lon2) {
-            final int R = 6371; // Ακτίνα της γης σε χιλιόμετρα
+            final int R = 6371; // Earth's radius in kilometers
             
             double latDistance = Math.toRadians(lat2 - lat1);
             double lonDistance = Math.toRadians(lon2 - lon1);
@@ -30,19 +30,16 @@ public class DistanceCalculator {
             
             double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
             
-            return R * c; // Επιστρέφει την απόσταση σε χιλιόμετρα
+            return R * c; // Returns the distance in kilometers
         }
     
-            /**
-         * @param universityName το πανεπιστήμιο που έχει εισάγει ο χρήστης
-         * γινεται σύνδεση με τις βάσεις, παίρνουμε τις συντεταγμενες του πανεπιστημιου και των σπιτιών
-         * και για κάθε σπίτι καλεί την calculateDistance για να υπολογισει την μεταξύ τους απόσταση
-         * και την εισάγουμε μετά στο table houses στην γραμμή DistanceFromUni
+        /**
+         * @param universityName The name of the university provided by the user
+         * Connects to the databases, retrieves coordinates of the university and houses,
+         * calculates distances for each house, and updates the `DistanceFromUni` column in the `Houses` table.
          */
         public static void calculateDistancesBetweenHousesAndUni(String universityName) {
-            /** παίρνουμε από τις βάσεις το id και τις συντεταγμένες όλων των σπιτιών
-             * και τις συντεταγμένες του πανεπιστημίου που επέλεξε ο χρήστης
-             */
+
             String houseQuery = "SELECT Id, LatitudeH, LongitudeH FROM Houses;";
             String uniQuery = "SELECT UniversityName, Latitude, Longitude FROM universities WHERE UniversityName = ?;";
     
@@ -51,15 +48,14 @@ public class DistanceCalculator {
                  PreparedStatement houseStmt = houseConn.prepareStatement(houseQuery);
                  PreparedStatement uniStmt = uniConn.prepareStatement(uniQuery)) {
     
-                // ρυθμιση του preparedstmt για το πανεπιστήμιο
+                 // Set parameter for the university
                  uniStmt.setString(1, universityName);
                  try (ResultSet uniRs = uniStmt.executeQuery()) {
-                    // συντεταγμενες του συγκεκριμενου πανεπιστημιου
                     double uniLat = uniRs.getDouble("Latitude");
                     double uniLon = uniRs.getDouble("Longitude");
     
                     try (ResultSet houseRs = houseStmt.executeQuery()) {
-                        // παίρνουμε απο το table houses για κάθε σπίτι το id και τις συντεταγμένες του
+                        // Retrieve house details and calculate distances
                         while (houseRs.next()) {
                             int houseId = houseRs.getInt("Id");
                             double houseLat = houseRs.getDouble("LatitudeH");
@@ -67,20 +63,20 @@ public class DistanceCalculator {
                             
                             double distance = calculateDistance(houseLat, houseLon, uniLat, uniLon);
                         updateUniCoordinates(houseConn, houseId, distance);
-                        System.out.printf("Η απόσταση του σπιτιού " + houseId + " από το πανεπιστήμιο " + universityName + " είναι %.2f km.%n", distance);
+                        System.out.printf("The distance of house %d from university %s is %.2f km.%n", houseId, universityName, distance);
                     }
                 }       
              }
         } catch (SQLException e) {
             logger.severe("Error with the sql connection : " + e.getMessage());
-            System.err.println("Σφάλμα κατά την υπολογισμό αποστάσεων: " + e.getMessage());
+            System.err.println("Error calculating distances: " + e.getMessage());
         }
     }
 
-/**
-     * @param houseId το Id του σπιτιού που ενημερώνουμε
-     * @param distance Η απόσταση από το uni που υπολογίσαμε
-     * εισαγωγη των αποστάσεων απο το uni στο houses
+    /**
+     * @param houseId The ID of the house being updated
+     * @param distance The calculated distance from the university
+     * Updates the `DistanceFromUni` column in the `Houses` table.
      */
     public static void updateUniCoordinates(Connection conn, int houseId, double distance) {
         String updateSQL = """
@@ -91,27 +87,21 @@ public class DistanceCalculator {
 
         try (PreparedStatement pstmt = conn.prepareStatement(updateSQL)) {
             
-            //ορισμος παραμετρων
             pstmt.setDouble(1, distance);
             pstmt.setInt(2, houseId);
 
             pstmt.executeUpdate();
-            System.out.println("Οι συντεταγμένες του σπιτιού " + houseId + " για το πανεπιστήμιο ενημερώθηκαν με επιτυχία!");
+            System.out.println("Successfully updated university distance for house " + houseId);
         } catch (SQLException e) {
-            System.err.println("Σφάλμα κατά την εκτέλεση SQL στο houses: " + e.getMessage());
+            System.err.println("Error executing SQL in houses: " + e.getMessage());
         }
     }
 
     /**
-     * ανοίγουμε σύνδεση με τις βάσεις και
-     * υπολογίζουμε την απόσταση μεταξύ κάθε σπιτιού και κάθε στασης
-     * στην συνέχεια καλούμε μέθοδο για τον υπολογισμο της πιο κοντινής στάσης για κάθε σπίτι
-     * και την εισάγουμε στο table houses στην γραμμή DistanceFromMeans
+     * Connects to the databases, calculates distances between houses and means of transport,
+     * determines the closest mean for each house, and updates the `DistanceFromMeans` column in the `Houses` table.
      */
     public static void calculateDistancesBetweenHousesAndMeans() {
-        /** παίρνουμε από τις βάσεις το id και τις συντεταγμένες όλων των σπιτιών
-         * και το code και τις συντεταγμένες όλων των στάσεων
-         */
         String selectHousesSQL = "SELECT Id, LatitudeH, LongitudeH FROM houses;";
         String selectMeansSQL = "SELECT CodeMeans, Latitude, Longitude FROM means;";
         
@@ -121,7 +111,6 @@ public class DistanceCalculator {
              PreparedStatement houseStmt = houseConn.prepareStatement(selectHousesSQL);
             
             try (ResultSet houseResultSet = houseStmt.executeQuery()) {
-                // συντεταγμενες του συγκεκριμενου πανεπιστημιου
                 while (houseResultSet.next()) {
                     int houseId = houseResultSet.getInt("Id");
                     double houseLat = houseResultSet.getDouble("LatitudeH");
@@ -137,7 +126,7 @@ public class DistanceCalculator {
                             double meansLon = meansResultSet.getDouble("Longitude");
                             
                             double distance = calculateDistance(meansLat, meansLon, houseLat, houseLon);
-                            System.out.printf("Απόσταση από το σπίτι " + houseId + " στη στάση " + meansId + ": %.2f km%n", distance);
+                            System.out.printf("Distance from house %d to means %d: %.2f km%n", houseId, meansId, distance);
 
                             if (distance < minDistance || (distance == minDistance && meansId < closestMeansId)) {
                                 minDistance = distance;
@@ -150,13 +139,14 @@ public class DistanceCalculator {
             }
         } catch (SQLException e) {
             logger.severe("Error with SQL connection : " + e.getMessage());
-            System.err.println("Σφάλμα κατά την εκτέλεση υπολογισμού αποστάσεων: " + e.getMessage());
+            System.err.println("Error calculating distances: " + e.getMessage());
         }   
     }
+
     /**
-     * @param houseId το Id του σπιτιού που ενημερώνουμε
-     * @param distance Η απόσταση από το uni που υπολογίσαμε
-     * εισαγωγη των αποστάσεων απο το uni στο houses
+     * @param houseId The ID of the house being updated
+     * @param distance The calculated distance from the means
+     * Updates the `DistanceFromMeans` column in the `Houses` table.
      */
     public static void updateMeansCoordinates(Connection conn, int houseId, double distance) {
         String updateClosestMeansSQL = """
@@ -167,12 +157,11 @@ public class DistanceCalculator {
 
         try (PreparedStatement pstmt = conn.prepareStatement(updateClosestMeansSQL)) {
             
-            //ορισμος παραμετρων
             pstmt.setDouble(1, distance);
             pstmt.setInt(2, houseId);
 
             pstmt.executeUpdate();
-            System.out.println("Οι συντεταγμένες του σπιτιού " + houseId + " για τα μέσα ενημερώθηκαν με επιτυχία!");
+            System.out.println("Successfully updated means distance for house " + houseId);
         } catch (SQLException e) {
             System.err.println("Σφάλμα κατά την εκτέλεση SQL στο houses: " + e.getMessage());
         }
