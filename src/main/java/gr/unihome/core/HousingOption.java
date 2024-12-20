@@ -12,22 +12,22 @@ public class HousingOption {
         private static final Logger logger = AppLogger.getLogger();
 
         private static final String DB_HOUSES_URL = "jdbc:sqlite:houses.db";
-        private int id; // Μοναδικό αναγνωριστικό για κάθε σπίτι
-        private String location; // Περιγραφή τοποθεσίας
-        private String address; // Διεύθυνση
-        private int cost; // Ενοίκιο
-        private int floor; // Όροφος
-        private int size; // Τετραγωνικά μέτρα
-        private double distanceFromUni; // Απόσταση από το πανεπιστήμιο
-        private double distanceFromMeans; // Απόσταση από μέσα μαζικής μεταφοράς
-        private int numberofbed; //Αριθμός υπνοδωματίων
-        private int furnished; // επιπλωμέμο/ή όχι
-        private double latitude; // γεωγραφικο πλατοσ
-        private double longitude; // γεωγραφικο μηκοσ
+        private int id; // Unique identifier for each house
+        private String location; // Description of the location
+        private String address; // Address of the house
+        private int cost; // Rent cost
+        private int floor; // Floor number
+        private int size; // Area in square meters
+        private double distanceFromUni; // Distance from university
+        private double distanceFromMeans; // Distance from public transportation
+        private int numberOfBed; // Number of bedrooms
+        private int furnished; // Indicates if the house is furnished
+        private double latitude; // Geographical latitude
+        private double longitude; // Geographical longitude
 
-    // constructor
+    // Constructor
     public HousingOption(int id, String location, String address, int cost, int floor,
-            int size, double distanceFromUni, double distanceFromMeans, int numberofbed,
+            int size, double distanceFromUni, double distanceFromMeans, int numberOfBed,
             int furnished, double latitude, double longitude) {
         this.id = id;
         this.location = location;
@@ -35,7 +35,7 @@ public class HousingOption {
         this.cost = cost;
         this.floor = floor;
         this.size = size;
-        this.numberofbed = numberofbed;
+        this.numberOfBed = numberOfBed;
         this.furnished = furnished;
         this.longitude = longitude;
         this.latitude = latitude;
@@ -107,12 +107,12 @@ public class HousingOption {
         this.distanceFromMeans = distanceFromMeans;
     }
 
-    public int getNumberofbed() {
-        return numberofbed;
+    public int getNumberOfBed() {
+        return numberOfBed;
     }
 
-    public void setNumberOfBed(int numberofbed) {
-        this.numberofbed = numberofbed;
+    public void setNumberOfBed(int numberOfBed) {
+        this.numberOfBed = numberOfBed;
     }
 
     public int getFurnished() {
@@ -140,7 +140,7 @@ public class HousingOption {
     }
 
     /**
-     * method to fetch all housinig options form the datatbase house
+     * Method to fetch all housinig options form the datatbase house
      */
     public static List<HousingOption> fetchHousingOptionsFromDB() {
         List<HousingOption> housingOptions = new ArrayList<>();
@@ -168,12 +168,12 @@ public class HousingOption {
                     cost, floor, size, distanceFromUni, distanceFromMeans, numberOfBed,
                     furnished, latitude, longitude);
                     housingOptions.add(housingOption);
-                    System.out.println("Το σπίτι " + id + " εισήχθη με επιτυχία στην λίστα!");
+                    System.out.println("House " + id + " successfully added to the list!");
 
                 logger.info("Successful connection with the database and retrieval of data");
             }
         } catch (SQLException e) {
-            System.err.println("Σφάλμα κατά την ανάκτηση δεδομένων από τη βάση: " + e.getMessage());
+            System.err.println("Error while retrieving data from the database: " + e.getMessage());
             logger.severe("Error during the retrieval of data from the database : " + e.getMessage());
         }
         return housingOptions;
@@ -191,7 +191,7 @@ public class HousingOption {
                 ", size=" + size +
                 ", distanceFromUni=" + String.format("%.2f", distanceFromUni) + " km" +
                 ", distanceFromMeans=" + String.format("%.2f", distanceFromMeans) + " km" +
-                ", numberodbed=" + numberofbed +
+                ", numberodbed=" + numberOfBed +
                 ", furnished=" + furnished +
                 ", latitude=" + latitude +
                 ", longitude=" + longitude +
