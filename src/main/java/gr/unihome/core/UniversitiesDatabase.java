@@ -48,7 +48,7 @@ public class UniversitiesDatabase {
      * If the table already exists, it is dropped and recreated.
      */
     public static void initialize() {
-        String dropTableSQL = "DROP TABLE IF EXISTS universities;"; // διαγραφή παλιού πίνακα και δημιουργία νέου
+        String dropTableSQL = "DROP TABLE IF EXISTS universities;";
         String createTableSQL = """
             CREATE TABLE IF NOT EXISTS universities (
                 UniversityName VARCHAR(100) PRIMARY KEY,
