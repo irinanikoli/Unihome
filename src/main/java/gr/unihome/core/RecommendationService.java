@@ -18,7 +18,9 @@ public class RecommendationService {
         this.matchingEngine = new MatchingEngine(housingOptions, criteria, priorities);
     }
 
-    //Provides the best house for each student
+    /** Provides the best house for each student
+     * @param studentCriteria as an object of Criteria
+     */ 
     public HousingOption getBestHouse(Criteria studentCriteria) {
         try {
 
