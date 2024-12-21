@@ -30,6 +30,8 @@ public class MatchingEngine {
     }
     /**
      * Calculate the score of a house based on weights and its characteristics
+     * @param ho as an object of HousingOption
+     * @param student as an object of criteria
      */
 
      public double evaluate(HousingOption ho, Criteria student) {
@@ -78,7 +80,8 @@ public class MatchingEngine {
     * limit(100): Genetic Optimization for 100 generations
     * collect(EvolutionResult.toBestPhenotype()) : returns the best atom (house with geatest score)
     * return housingOptions.get(...): converts result into house of the list
-   */
+    * @param student as an object of Criteria
+    */
    
    
     public HousingOption optimize(Criteria student) {
@@ -110,6 +113,9 @@ public class MatchingEngine {
 
 /**
  * Find houses with similar score to the best and return them
+ * @param student as an object of Criteria
+ * @param threshold the limit for the accepted scores in the returned list
+ * @param bestOption the best option found from the optimize mehtod and needs to be excluded from the final
  */
 
   public List<HousingOption> findOtherBestSolutions(Criteria student, double threshold, HousingOption bestOption) {
