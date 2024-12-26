@@ -1,3 +1,8 @@
+/**
+ * This file uses the Jenetics library, licensed under the Apache License, Version 2.0.
+ * For more details, see http://www.apache.org/licenses/LICENSE-2.0
+ */
+
 package gr.unihome.core;
 
 import io.jenetics.DoubleGene;
