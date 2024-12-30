@@ -19,20 +19,20 @@
     </properties>
     
     <dependencies>
-        <!-- Spring Boot Web -->
+        <!-- Spring Boot Web for REST API -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
 
-        <!-- Spring Boot Test -->
+        <!-- Spring Boot Test (for testing purposes) -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
         
-        <!-- Jenetics Library -->
+        <!-- Jenetics for optimization algorithms -->
         <dependency>
             <groupId>io.jenetics</groupId>
             <artifactId>jenetics</artifactId>
@@ -45,10 +45,12 @@
             <artifactId>sqlite-jdbc</artifactId>
             <version>3.47.0.0</version>
         </dependency>
+
     </dependencies>
     
     <build>
         <plugins>
+            <!-- Spring Boot Maven Plugin for executable JAR creation -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
@@ -56,3 +58,4 @@
         </plugins>
     </build>
 </project>
+
