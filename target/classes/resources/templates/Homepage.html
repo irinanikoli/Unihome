@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="el">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to Unihome!</title>
+    <link rel="icon" href="favicon-32x32.png" type="image/x-icon">
+    <link rel="preconnect" href="'https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Modak&display=swap" rel="stylesheet">
+    <style>
+        * {
+            font-family: "Modak", sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        @font-face {
+            font-family: "Modak";
+            src: url("C:/Users/User/Documents/Unihome/Modak/Modak-Regular.ttf") format("truetype");
+            font-weight: 400;
+            font-style: normal;
+        }
+
+        .modak-regular {
+            font-family: "Modak", serif;
+            font-weight: 300;
+            font-style: normal;
+        }
+
+        .banner {
+            width: 100%;
+            height: 100vh;
+            background-color: white;
+            background-image: linear-gradient(rgba(0, 0, 0, 0.3), rgba(46, 46, 46, 0.3)), url(back1.jpg);
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            position: relative;
+            z-index: 1;
+            display: flex;
+        }
+
+        .navbar {
+            width: 85%;
+            margin: 0 auto;
+            padding: 10px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+        }
+
+        .logo {
+            width: 300px;
+            cursor: pointer;
+            margin-left: -15px;
+        }
+
+        .link {
+            display: flex;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .link li {
+            position: relative;
+            margin: 0 20px;
+        }
+
+        .link li a {
+            text-decoration: none;
+            color: #0179a4;
+            font-size: 18px;
+            text-transform: uppercase;
+            position: relative;
+            font-weight: bold;
+        }
+
+        .link li::after {
+            content: "";
+            display: block;
+            height: 2px;
+            width: 0;
+            background: #0179a4;
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            transition: width 0.3s ease;
+        }
+
+        .link li:hover::after {
+            width: 100%;
+        }
+
+        .keimeno {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 40vh;
+            text-align: center;
+        }
+
+        #minima {
+            font-family: "Modak", sans-serif;
+            font-size: 80px;
+            color: white;
+            text-align: center;
+            margin-top: 20px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 10;
+            font-weight: 300;
+
+        }
+
+        .koumpi {
+            display: flex;
+            position: absolute;
+            align-items: center;
+            transform: translateΧ(-50%);
+            top: 75%;
+            left: 42%;
+            z-index: 10;
+        }
+
+        .pame {
+            background-color: #0179a4;
+            color: white;
+            font-size: 25px;
+            padding: 15px 50px;
+            cursor: pointer;
+            border-radius: 50px;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .pame:hover {
+            background-color: rgb(7, 48, 62);
+        }
+    </style>
+</head>
+
+<body>
+    <!--Φτιάχνω το navigation bar-->
+    <div class="banner">
+        <div class="navbar">
+            <a href="Homepage.html">
+                <img src="logoblue1.png" class="logo" alt="Logo">
+            </a>
+            <ul class="link">
+                <li><a href='Contact.html'>ΕΠΙΚΟΙΝΩΝΙΑ</a></li>
+                <li><a href='About.html'>ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ</a></li>
+            </ul>
+        </div>
+        <section class="keimeno">
+            <h1 id="minima">Better home,</br> Better Unilife!</h1>
+        </section>
+        <!--Φτιάχνω το κουμπί Πάμε! για να ξεκινήσει η πλοήγηση-->
+        <div class="koumpi">
+            <button class="pame">Θέλω!</button>
+        </div>
+    </div>
+    <script>
+        //Θέλω την μορφοποίηση για το κείμενο
+        const minima = document.getElementById("minima");
+        const text = minima.textContent;
+        minima.textContent = "";
+
+
+        function typeWriter(i = 0) {
+            if (i < text.length) {
+                minima.textContent += text.charAt(i);
+                setTimeout(() => typeWriter(i + 1), 120);
+            } else {
+                minima.style.visibility = "visible";
+            }
+        }
+
+        window.onload = () => {
+            typeWriter();
+        };
+
+        //Θέλω το κουμπί
+        const pame = document.querySelector('.pame');
+        pame.addEventListener('click', () => {
+            window.location.href = "MyCriteria.html";
+
+        });
+    </script>
+</body>
+
+</html>
