@@ -268,18 +268,18 @@
                 card.innerHTML = `
                     <img src="${house.imageUrl}" alt="${house.id}">
                     <div class="card-content">
-                        <h3 th:text="${house.id}"></h3>
-                        <p th:text="${house.location}"></p>
-                        <p th:text="${house.address}"></p>
-                        <p th:text="${house.cost} + ' €'"></p>
-                        <p th:text="'Floor: ' + ${house.floor}"></p>
-                        <p th:text="'Size: ' + ${house.size} + ' m²'"></p>
-                        <p th:text="'Distance from Uni: ' + ${house.distanceFromUni} + ' km'"></p>
-                        <p th:text="'Distance from Transport: ' + ${house.distanceFromMeans} + ' km'"></p>
-                        <p th:text="'Beds: ' + ${house.numberOfBed}"></p>
-                        <p th:text="'Furnished: ' + (${house.furnished} == 1 ? 'Yes' : 'No')"></p>
-                        <p th:text="'Latitude: ' + ${house.latitude}"></p>
-                        <p th:text="'Longitude: ' + ${house.longitude}"></p>
+                        <h3>${house.id}</h3>
+                        <p>Location: ${house.location}</p>
+                        <p>Address: ${house.address}</p>
+                        <p>Cost: ${house.cost} €</p>
+                        <p>Floor: ${house.floor}</p>
+                        <p>Size: ${house.size} m²</p>
+                        <p>Distance from University: ${house.distanceFromUni.toFixed(2)} km</p>
+                        <p>Distance from Transport: ${house.distanceFromMeans.toFixed(2)} km</p>
+                        <p>Beds: ${house.numberOfBed}</p>
+                        <p>Furnished: ${house.furnished === 1 ? 'Yes' : 'No'}</p>
+                        <p>Latitude: ${house.latitude.toFixed(6)}</p>
+                        <p>Longitude: ${house.longitude.toFixed(6)}</p>
                     </div>
                 `;
                 cardContainer.appendChild(card);
