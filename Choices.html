@@ -255,59 +255,40 @@
     <div class="card-container" id="card-container"></div>
 
     <script>
-        // JavaScript to fetch data and populate the cards
-        async function loadRecommendedHouses(studentCriteria, threshold) {
-    try {
-        const response = await fetch(`/api/housing-options/recommendations?threshold=${threshold}`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(studentCriteria),
-        });
-
-        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
-
-        const housingOptions = await response.json();
-
-        const container = document.getElementById('card-container');
-        container.innerHTML = ''; // Καθαρισμός προηγούμενου περιεχομένου
-
-        housingOptions.forEach(house => {
-            const card = document.createElement('div');
-            card.className = 'card';
-
-            const title = document.createElement('h3');
-            title.textContent = `House ID: ${house.id}`;
-
-            const description = document.createElement('p');
-            description.textContent = `Description: ${house.description || 'No description available'}`;
-
-            const characteristics = document.createElement('p');
-            characteristics.textContent = `Size: ${house.size} sq.m., Cost: ${house.cost} €, Distance from Uni: ${house.distanceFromUni} km`;
-
-            const img = document.createElement('img');
-            img.src = house.image || 'default-image.jpg';
-            img.alt = `Image of house ${house.id}`;
-
-            card.appendChild(img);
-            card.appendChild(title);
-            card.appendChild(description);
-            card.appendChild(characteristics);
-
-            container.appendChild(card);
-        });
-    } catch (error) {
-        console.error('Error loading recommended houses:', error);
-    }
-}
-
-
-        // Load data on page load with a default threshold
-        window.onload = () => loadRecommendedHouses(studentCriteria,10.0);
+        // Φόρτωση δεδομένων από το API
+        async function loadHouses() {
+            const response = await fetch('/api/houses/recommendations');
+            const houses = await response.json();
+    
+            const cardContainer = document.getElementById('card-container');
+            houses.forEach(house => {
+                const card = document.createElement('div');
+                card.className = 'card';
+    
+                card.innerHTML = `
+                    <img src="${house.imageUrl}" alt="${house.id}">
+                    <div class="card-content">
+                        <h3 th:text="${house.id}"></h3>
+                        <p th:text="${house.location}"></p>
+                        <p th:text="${house.address}"></p>
+                        <p th:text="${house.cost} + ' €'"></p>
+                        <p th:text="'Floor: ' + ${house.floor}"></p>
+                        <p th:text="'Size: ' + ${house.size} + ' m²'"></p>
+                        <p th:text="'Distance from Uni: ' + ${house.distanceFromUni} + ' km'"></p>
+                        <p th:text="'Distance from Transport: ' + ${house.distanceFromMeans} + ' km'"></p>
+                        <p th:text="'Beds: ' + ${house.numberOfBed}"></p>
+                        <p th:text="'Furnished: ' + (${house.furnished} == 1 ? 'Yes' : 'No')"></p>
+                        <p th:text="'Latitude: ' + ${house.latitude}"></p>
+                        <p th:text="'Longitude: ' + ${house.longitude}"></p>
+                    </div>
+                `;
+                cardContainer.appendChild(card);
+            });
+        }
+    
+        // Κλήση της λειτουργίας κατά τη φόρτωση της σελίδας
+        document.addEventListener('DOMContentLoaded', loadHouses);
     </script>
-
-
 
 
 
