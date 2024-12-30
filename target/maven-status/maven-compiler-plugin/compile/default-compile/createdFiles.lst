@@ -1,0 +1,12 @@
+gr\unihome\core\HousingOption.class
+gr\unihome\core\RecommendationService.class
+gr\unihome\core\DBConnection.class
+gr\unihome\core\DistanceCalculator.class
+gr\unihome\core\Application.class
+gr\unihome\core\MeansDatabase.class
+gr\unihome\core\AppLogger.class
+gr\unihome\core\Criteria.class
+gr\unihome\core\MatchingEngine.class
+gr\unihome\core\WeightCalculator.class
+gr\unihome\core\HousesDatabase.class
+gr\unihome\core\UniversitiesDatabase.class
