@@ -1,35 +1,53 @@
+package gr.unihome.core;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Logger;
+
 public class HousingOption {
+        private static final Logger logger = AppLogger.getLogger();
 
-        private String id; // Μοναδικό αναγνωριστικό για κάθε σπίτι
-        private String location; // Περιγραφή τοποθεσίας
-        private String address;
-        private double cost; // Ενοίκιο
-        private int floor;
-        private double size; // Τετραγωνικά μέτρα
-        private double distanceFromUni; // Απόσταση από το πανεπιστήμιο
-        private double distanceFromMeans; // Απόσταση από μέσα μαζικής μεταφοράς
-        private int numberofbed;
-        private boolean furnished;
-    
+        private static final String DB_HOUSES_URL = "jdbc:sqlite:houses.db";
+        private int id; // Unique identifier for each house
+        private String location; // Description of the location
+        private String address; // Address of the house
+        private int cost; // Rent cost
+        private int floor; // Floor number
+        private int size; // Area in square meters
+        private double distanceFromUni; // Distance from university
+        private double distanceFromMeans; // Distance from public transportation
+        private int numberOfBed; // Number of bedrooms
+        private int furnished; // Indicates if the house is furnished
+        private double latitude; // Geographical latitude
+        private double longitude; // Geographical longitude
 
-    public HousingOption(String id, String location, String address, double cost, int floor, double size, double distanceFromUni, double distanceFromMeans, int numberofbed, boolean furnished) {
+    // Constructor
+    public HousingOption(int id, String location, String address, int cost, int floor,
+            int size, double distanceFromUni, double distanceFromMeans, int numberOfBed,
+            int furnished, double latitude, double longitude) {
         this.id = id;
         this.location = location;
         this.address = address;
         this.cost = cost;
         this.floor = floor;
         this.size = size;
-        this.distanceFromUni = distanceFromUni;
-        this.distanceFromUni = distanceFromUni;
-        this.numberofbed = numberofbed;
+        this.numberOfBed = numberOfBed;
         this.furnished = furnished;
+        this.longitude = longitude;
+        this.latitude = latitude;
+        this.distanceFromMeans = distanceFromMeans;
+        this.distanceFromUni = distanceFromUni;
     }
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -49,11 +67,11 @@ public class HousingOption {
         this.address = address;
     }
 
-    public double getCost() {
+    public int getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(int cost) {
         this.cost = cost;
     }
 
@@ -65,11 +83,11 @@ public class HousingOption {
         this.floor = floor;
     }
 
-    public double getSize() {
+    public int getSize() {
         return size;
     }
 
-    public void setSize(double size) {
+    public void setSize(int size) {
         this.size = size;
     }
 
@@ -89,21 +107,78 @@ public class HousingOption {
         this.distanceFromMeans = distanceFromMeans;
     }
 
-    public int getNumberofbed() {
-        return numberofbed;
+    public int getNumberOfBed() {
+        return numberOfBed;
     }
 
-    public void setNumberofbed(int id) {
-        this.numberofbed = numberofbed;
+    public void setNumberOfBed(int numberOfBed) {
+        this.numberOfBed = numberOfBed;
     }
 
-    public boolean getFurnished() {
+    public int getFurnished() {
         return furnished;
     }
 
-    public void setFurnished(boolean furnished) {
+    public void setFurnished(int furnished) {
         this.furnished = furnished;
     }
+
+    public double getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(double latitude) {
+        this.latitude = latitude;
+    }
+
+    public double getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(double longitude) {
+        this.longitude = longitude;
+    }
+
+    /**
+     * Method to fetch all housinig options form the datatbase house
+     */
+    public static List<HousingOption> fetchHousingOptionsFromDB() {
+        List<HousingOption> housingOptions = new ArrayList<>();
+        String query = "SELECT * FROM Houses";
+
+        try (Connection houseConn = DBConnection.connect(DB_HOUSES_URL);
+             PreparedStatement houseStmt = houseConn.prepareStatement(query);
+             ResultSet rs = houseStmt.executeQuery()) {
+
+                while (rs.next()) {
+                    int id = rs.getInt("Id");
+                    String location = rs.getString("LocationH");
+                    String address = rs.getString("AddressH");
+                    int cost = rs.getInt("CostH");
+                    int floor = rs.getInt("FloorH");
+                    int size = rs.getInt("SizeH");
+                    double distanceFromUni = rs.getDouble("DistanceFromUni");
+                    double distanceFromMeans = rs.getDouble("DistanceFromMeans");
+                    int numberOfBed = rs.getInt("NumberOfBed");
+                    int furnished = rs.getInt("Furnished");
+                    double latitude = rs.getDouble("LatitudeH");
+                    double longitude = rs.getDouble("LongitudeH");
+
+                    HousingOption housingOption = new HousingOption(id, location, address,
+                    cost, floor, size, distanceFromUni, distanceFromMeans, numberOfBed,
+                    furnished, latitude, longitude);
+                    housingOptions.add(housingOption);
+                    System.out.println("House " + id + " successfully added to the list!");
+
+                logger.info("Successful connection with the database and retrieval of data");
+            }
+        } catch (SQLException e) {
+            System.err.println("Error while retrieving data from the database: " + e.getMessage());
+            logger.severe("Error during the retrieval of data from the database : " + e.getMessage());
+        }
+        return housingOptions;
+    }
+
 
     @Override
     public String toString() {
@@ -114,10 +189,12 @@ public class HousingOption {
                 ", cost=" + cost +
                 ", floor=" + floor +
                 ", size=" + size +
-                ", distanceFromUni=" + distanceFromUni +
-                ", distanceFromMeans=" + distanceFromMeans +
-                ", numberodbed=" + numberofbed +
+                ", distanceFromUni=" + String.format("%.2f", distanceFromUni) + " km" +
+                ", distanceFromMeans=" + String.format("%.2f", distanceFromMeans) + " km" +
+                ", numberodbed=" + numberOfBed +
                 ", furnished=" + furnished +
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
                 '}';
     }
 }

@@ -1,0 +1,33 @@
+spring:
+    datasource:
+        houses:
+            url: jdbc:sqlite:src/main/resources/houses.db
+            driver-class-name: org.sqlite.JDBC
+            username: ""
+            password: ""
+            platform: ""
+            jpa:
+                database-platform: org.hibernate.dialect.SQLiteDialect
+            initialization-mode: always
+        universities:
+            url: jdbc:sqlite:src/main/resources/universities.db
+            driver-class-name: org.sqlite.JDBC
+            username: ""
+            password: ""
+            platform: ""
+            jpa:
+               database-platform: org.hibernate.dialect.SQLiteDialect
+            initialization-mode: always
+        means:
+           url: jdbc:sqlite:src/main/resources/means.db
+           driver-class-name: org.sqlite.JDBC
+            username: ""
+            password: ""
+            platform: ""
+            jpa:
+               database-platform: org.hibernate.dialect.SQLiteDialect
+            initialization-mode: always
+        
+        server:
+            port: 8080
+
