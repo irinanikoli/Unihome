@@ -11,7 +11,7 @@ import java.util.logging.Logger;
 public class HousingOption {
         private static final Logger logger = AppLogger.getLogger();
 
-        private static final String DB_HOUSES_URL = "jdbc:sqlite:houses.db";
+        private static final String DB_HOUSES_URL = "jdbc:sqlite:data/houses.db";
         private int id; // Unique identifier for each house
         private String location; // Description of the location
         private String address; // Address of the house

@@ -10,7 +10,7 @@ import java.util.List;
  * It includes the initialization of the database and the insertion of universities with their coordinates.
  */
 public class UniversitiesDatabase {
-    private static final String DB_UNI_URL = "jdbc:sqlite:universities.db";
+    private static final String DB_UNI_URL = "jdbc:sqlite:data/universities.db";
     
     // List of university names in Athens
     private static List<String> universityNames = List.of(

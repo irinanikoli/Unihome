@@ -8,7 +8,7 @@ import java.util.Random;
 
 
 public class HousesDatabase {
-    private static final String DB_HOUSES_URL = "jdbc:sqlite:houses.db";
+    private static final String DB_HOUSES_URL = "jdbc:sqlite:data/houses.db";
     private static Random random1 = new Random();
 
         // List of locations in Athens

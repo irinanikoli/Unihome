@@ -11,9 +11,9 @@ public class DistanceCalculator {
     private static final Logger logger = AppLogger.getLogger();
     
     // Database connection URLs
-    private static final String DB_HOUSES_URL = "jdbc:sqlite:houses.db";
-    private static final String DB_UNI_URL = "jdbc:sqlite:universities.db";
-    private static final String DB_MEANS_URL = "jdbc:sqlite:means.db";
+    private static final String DB_HOUSES_URL = "jdbc:sqlite:data/houses.db";
+    private static final String DB_UNI_URL = "jdbc:sqlite:data/universities.db";
+    private static final String DB_MEANS_URL = "jdbc:sqlite:data/means.db";
     
 
     

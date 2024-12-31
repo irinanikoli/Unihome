@@ -11,7 +11,7 @@ import java.sql.SQLException;
  * The database includes information about transportation stops in the region of Attica, Greece.
  */
 public class MeansDatabase {
-    private static final String DB_MEANS_URL = "jdbc:sqlite:means.db";
+    private static final String DB_MEANS_URL = "jdbc:sqlite:data/means.db";
     private static Random random1 = new Random();
 
         // List of transportation types to be inserted into the database
