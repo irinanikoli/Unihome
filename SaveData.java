@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 
 public class SaveData {
 
+    private static String university="";
     private static String budget = "";
     private static String mintm = "";
     private static String maxtm = "";
@@ -51,7 +52,9 @@ public class SaveData {
                 String[] parts = requestBody.replace("{", "").replace("}", "").replace("\"", "").split(",");
                 for (String part : parts) {
                     String[] keyValue = part.split(":");
-                    if (keyValue[0].trim().equals("budget")) {
+                    if (keyValue[0].trim().equals("university")) {
+                        university = keyValue[1].trim();
+                    } else if (keyValue[0].trim().equals("budget")) {
                         budget = keyValue[1].trim();
                     } else if (keyValue[0].trim().equals("mintm")) {
                         mintm = keyValue[1].trim();
