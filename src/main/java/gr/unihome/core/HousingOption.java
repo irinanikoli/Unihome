@@ -179,19 +179,34 @@ public class HousingOption {
 
     @Override
     public String toString() {
-        return "HousingOption{" +
-                "id='" + id + '\'' +
-                ", location='" + location + '\'' +
-                ", address=" + address +
-                ", cost=" + cost +
-                ", floor=" + floor +
-                ", size=" + size +
-                ", distanceFromUni=" + String.format("%.2f", distanceFromUni) + " km" +
-                ", distanceFromMeans=" + String.format("%.2f", distanceFromMeans) + " km" +
-                ", numberodbed=" + numberOfBed +
-                ", furnished=" + furnished +
-                ", latitude=" + latitude +
-                ", longitude=" + longitude +
-                '}';
+        return String.format(
+            """
+            ------------------------------------
+            ID: %d
+            Τοποθεσία: %s
+            Διεύθυνση: %s
+            Κόστος: €%d
+            Όροφος: %d
+            Μέγεθος: %d τ.μ.
+            Απόσταση από Πανεπιστήμιο: %.2f km
+            Απόσταση από Μέσα Μεταφοράς: %.2f km
+            Αριθμός Κλινών: %d
+            Επίπλωση: %s
+            Συντεταγμένες: (%.6f, %.6f)
+            ------------------------------------
+            """,
+            id,
+            location,
+            address,
+            cost,
+            floor,
+            size,
+            distanceFromUni,
+            distanceFromMeans,
+            numberOfBed,
+            (furnished == 1 ? "Ναι" : "Όχι"),
+            latitude,
+            longitude
+        );
     }
 }
