@@ -6,16 +6,15 @@ import java.util.Scanner;
 
 public class Application {
     public static void main(String[] args) {
-        //Initialize databases
-       
-            HousesDatabase.initialize();
-            UniversitiesDatabase.initialize();
-            MeansDatabase.initialize();
-            HousesDatabase.insertRandomHouses(100);
-            UniversitiesDatabase.insertRandomUniversities(8);
-            MeansDatabase.insertRandomMeans(5);
-   
-        //Show the list of unis for the user to chose 
+        // Initialize databases
+        HousesDatabase.initialize();
+        UniversitiesDatabase.initialize();
+        MeansDatabase.initialize();
+        HousesDatabase.insertRandomHouses(100);
+        UniversitiesDatabase.insertRandomUniversities(8);
+        MeansDatabase.insertRandomMeans(5);
+
+        // Show the list of universities for the user to choose
         List<String> universityNames = UniversitiesDatabase.getUniversitiesFromDB();
         if (universityNames.isEmpty()) {
             System.out.println("Η λίστα των πανεπιστημίων είναι κενή. Ελέγξτε τη βάση δεδομένων.");
@@ -31,7 +30,7 @@ public class Application {
         String selectedUniversity = null;
 
         while (selectedUniversity == null) {
-            System.out.print("Εισάγετε τον αριθμό που αντιστοιχεί στο πανεπιστήμιο: ");
+            System.out.print("\nΕισάγετε τον αριθμό που αντιστοιχεί στο πανεπιστήμιο: ");
             String input = scanner.nextLine().trim();
 
             try {
@@ -48,20 +47,19 @@ public class Application {
 
         System.out.println("Επιλέξατε το Πανεπιστήμιο: " + selectedUniversity);
 
-        //Calculate distances
+        // Calculate distances
         DistanceCalculator.calculateDistancesBetweenHousesAndUni(selectedUniversity);
         DistanceCalculator.calculateDistancesBetweenHousesAndMeans();
 
-        
         List<HousingOption> housingOptions = HousingOption.fetchHousingOptionsFromDB();
-      
-        //Enter priorities
+
+        // Enter priorities
         List<String> criteria = List.of("budget", "distanceFromUniversity", "size", "distanceFromMeans");
         List<Integer> priorities = getUserPriorities(scanner, criteria);
 
         double threshold = 2;
 
-        //Enter data of the user
+        // Enter data of the user
         Criteria studentCriteria = getUserCriteria(scanner, selectedUniversity);
 
         RecommendationService recommendationService = new RecommendationService(housingOptions, criteria, priorities);
@@ -71,31 +69,32 @@ public class Application {
         List<HousingOption> recommendations = recommendationService.getBestRecommendationList(studentCriteria, threshold, bestHouse);
 
         if (bestHouse != null) {
-            System.out.println("Το καλύτερο σπίτι είναι: " + bestHouse.toString());
+            System.out.println("\nΤο καλύτερο σπίτι είναι: " + bestHouse.toString());
         } else {
-            System.out.println("Δεν βρέθηκε κατάλληλο σπίτι.");
+            System.out.println("\nΔεν βρέθηκε κατάλληλο σπίτι.");
         }
 
         if (!recommendations.isEmpty()) {
-            System.out.println("Προτεινόμενα σπίτια:");
+            System.out.println("\nΠροτεινόμενα σπίτια:");
             for (HousingOption option : recommendations) {
                 System.out.println(option);
             }
         } else {
-            System.out.println("Δεν βρέθηκαν προτάσεις.");
+            System.out.println("\nΔεν βρέθηκαν προτάσεις.");
         }
     }
 
-    //Constraint for the numbers entered from user
+    // Method to get user priorities
     private static List<Integer> getUserPriorities(Scanner scanner, List<String> criteria) {
-        System.out.println("Καθορίστε τις προτεραιότητες σας για τα παρακάτω κριτήρια (1-4, χωρίς επαναλήψεις):");
+        System.out.println("\nΚαθορίστε τις προτεραιότητες σας για τα παρακάτω κριτήρια (1-4, χωρίς επαναλήψεις):");
         for (int i = 0; i < criteria.size(); i++) {
             System.out.println((i + 1) + ". " + criteria.get(i));
         }
 
         List<Integer> priorities = new ArrayList<>();
         while (priorities.size() < criteria.size()) {
-            System.out.print("Προτεραιότητα " + (priorities.size() + 1) + ": ");
+            String currentCriterion = criteria.get(priorities.size());
+            System.out.print("Προτεραιότητα για " + currentCriterion + " : ");
             String input = scanner.nextLine().trim();
 
             try {
@@ -103,7 +102,7 @@ public class Application {
                 if (priority >= 1 && priority <= 4 && !priorities.contains(priority)) {
                     priorities.add(priority);
                 } else {
-                    System.out.println("Η προτεραιότητα πρέπει να είναι μοναδική αριθμός από 1 έως 4.");
+                    System.out.println("Η προτεραιότητα πρέπει να είναι μοναδικός αριθμός από 1 έως 4.");
                 }
             } catch (NumberFormatException e) {
                 System.out.println("Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό.");
@@ -112,35 +111,35 @@ public class Application {
         return priorities;
     }
 
-    //Constraint for the user's input
+    // Method to get user criteria
     private static Criteria getUserCriteria(Scanner scanner, String universityName) {
-        System.out.println("Εισάγετε τα κριτήριά σας:");
+        System.out.println("\nΕισάγετε τα κριτήριά σας:");
+
         System.out.print("Όνομα φοιτητή: ");
         String name = scanner.nextLine().trim();
 
-        System.out.print("Μέγιστο κόστος (€): ");
-        int budget = getValidIntInput(scanner);
+        int budget = getValidIntInput(scanner, 250, 2500, "Μέγιστο κόστος (€) πρέπει να είναι μεταξύ 250 και 2500: ");
+        int size = getValidIntInput(scanner, 15, 150, "Ελάχιστα τετραγωνικά μέτρα πρέπει να είναι μεταξύ 15 και 150: ");
+        int maxDistanceFromUniversity = getValidIntInput(scanner, 30, 150000, "Μέγιστη απόσταση από το Πανεπιστήμιο (μέτρα) πρέπει να είναι μεταξύ 30 και 150000: ");
+        int maxDistanceFromMeans = getValidIntInput(scanner, 30, 15000, "Μέγιστη απόσταση από ΜΜΜ (μέτρα) πρέπει να είναι μεταξύ 30 και 15000: ");
 
-        System.out.print("Μέγιστη απόσταση από ΜΜΜ (μέτρα): ");
-        int maxDistanceFromMeans = getValidIntInput(scanner);
-
-        System.out.print("Ελάχιστα τετραγωνικα μετρα : ");
-        int size = getValidIntInput(scanner);
-
-        System.out.print("Μέγιστη απόσταση από το Πανεπιστήμιο (μέτρα): ");
-        int maxDistanceFromUniversity = getValidIntInput(scanner);
-
-        return new Criteria(name, universityName, budget, size, maxDistanceFromMeans, maxDistanceFromUniversity);
+        return new Criteria(name, universityName, budget, size, maxDistanceFromUniversity, maxDistanceFromMeans);
     }
 
-    //Validate input
-    private static int getValidIntInput(Scanner scanner) {
+    // Validate input
+    private static int getValidIntInput(Scanner scanner, int min, int max, String prompt) {
         while (true) {
+            System.out.print(prompt);
             String input = scanner.nextLine().trim();
             try {
-                return Integer.parseInt(input);
+                int value = Integer.parseInt(input);
+                if (value >= min && value <= max) {
+                    return value;
+                } else {
+                    System.out.println("Η τιμή πρέπει να είναι μεταξύ " + min + " και " + max + ".");
+                }
             } catch (NumberFormatException e) {
-                System.out.print("Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό: ");
+                System.out.println("Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό.");
             }
         }
     }
