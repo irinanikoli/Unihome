@@ -62,8 +62,7 @@ public class DistanceCalculator {
                             double houseLon = houseRs.getDouble("LongitudeH");
                             
                             double distance = calculateDistance(houseLat, houseLon, uniLat, uniLon);
-                        updateUniCoordinates(houseConn, houseId, distance);
-                        System.out.printf("The distance of house %d from university %s is %.2f km.%n", houseId, universityName, distance);
+                        updateUniCoordinates(houseConn, houseId, distance);                        
                     }
                 }       
              }
@@ -90,8 +89,7 @@ public class DistanceCalculator {
             pstmt.setDouble(1, distance);
             pstmt.setInt(2, houseId);
 
-            pstmt.executeUpdate();
-            System.out.println("Successfully updated university distance for house " + houseId);
+            pstmt.executeUpdate();            
         } catch (SQLException e) {
             System.err.println("Error executing SQL in houses: " + e.getMessage());
         }
@@ -125,8 +123,7 @@ public class DistanceCalculator {
                             double meansLat = meansResultSet.getDouble("Latitude");
                             double meansLon = meansResultSet.getDouble("Longitude");
                             
-                            double distance = calculateDistance(meansLat, meansLon, houseLat, houseLon);
-                            System.out.printf("Distance from house %d to means %d: %.2f km%n", houseId, meansId, distance);
+                            double distance = calculateDistance(meansLat, meansLon, houseLat, houseLon);                           
 
                             if (distance < minDistance || (distance == minDistance && meansId < closestMeansId)) {
                                 minDistance = distance;
@@ -161,7 +158,6 @@ public class DistanceCalculator {
             pstmt.setInt(2, houseId);
 
             pstmt.executeUpdate();
-            System.out.println("Successfully updated means distance for house " + houseId);
         } catch (SQLException e) {
             System.err.println("Σφάλμα κατά την εκτέλεση SQL στο houses: " + e.getMessage());
         }

@@ -57,12 +57,12 @@ public class UniversitiesDatabase {
               );
               """;
       
-        try (Connection conn = DBConnection.connect(DB_UNI_URL);  // Establish database connection
+        try (Connection conn = DBConnection.connect(DB_UNI_URL);  
+            // Establish database connection
             PreparedStatement dropStmt = conn.prepareStatement(dropTableSQL);
             PreparedStatement createStmt = conn.prepareStatement(createTableSQL)) {
                 dropStmt.executeUpdate();
                 createStmt.executeUpdate();
-                System.out.println("The 'universities' table was successfully created!");
             } catch (SQLException e) {
                 System.err.println("Error while executing SQL for universities: " + e.getMessage());
             }
@@ -99,7 +99,8 @@ public class UniversitiesDatabase {
         String insertSQL = """
             INSERT INTO universities (UniversityName, Latitude, Longitude)
             VALUES (?, ?, ?);
-        """; // SQL statement for inserting a university
+        """; 
+        // SQL statement for inserting a university
 
         try (Connection conn = DBConnection.connect(DB_UNI_URL);
              PreparedStatement pstmt = conn.prepareStatement(insertSQL)) {
@@ -112,7 +113,6 @@ public class UniversitiesDatabase {
             // Execute the insertion
             pstmt.executeUpdate();
             
-            System.out.println(name + " was successfully inserted!");
         } catch (SQLException e) {
             System.err.println("Error while executing SQL for universities: " + e.getMessage());
         }

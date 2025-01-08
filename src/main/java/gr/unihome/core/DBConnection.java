@@ -42,7 +42,6 @@ public class DBConnection {
                 // Create a Statement object to execute the SQL statement
                 try (Statement stmt = conn.createStatement()) {
                     stmt.executeUpdate(sql);
-                    System.out.println("The SQL statement was executed successfully.");
                 }
         } catch (SQLException e) {
             System.out.println("Error while executing SQL: " + e.getMessage());

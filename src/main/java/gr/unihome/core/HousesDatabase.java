@@ -63,8 +63,7 @@ public class HousesDatabase {
             PreparedStatement dropStmt = conn.prepareStatement(dropTableSQL);
             PreparedStatement createStmt = conn.prepareStatement(createTableSQL)) {
                 dropStmt.executeUpdate();
-                createStmt.executeUpdate();
-                System.out.println("The 'Houses' table was successfully created!");
+                createStmt.executeUpdate();               
         } catch (SQLException e) {
             System.err.println("Error executing SQL on houses: " + e.getMessage());
         }
@@ -138,7 +137,6 @@ public class HousesDatabase {
             pstmt.setDouble(12, longitude);
             
             pstmt.executeUpdate();
-            System.out.println("House " + id + " was successfully inserted!");
         } catch (SQLException e) {
             System.err.println("Error executing SQL on houses: " + e.getMessage());
         }

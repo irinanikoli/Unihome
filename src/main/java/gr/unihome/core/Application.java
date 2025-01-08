@@ -84,8 +84,6 @@ public class Application {
         } else {
             System.out.println("Δεν βρέθηκαν προτάσεις.");
         }
-
-        System.out.println("Δεδομένα εισήχθησαν με επιτυχία!");
     }
 
     //Constraint for the numbers entered from user

@@ -39,7 +39,6 @@ public class MeansDatabase {
             PreparedStatement createStmt = conn.prepareStatement(createTableSQL)) {
                 dropStmt.executeUpdate();
                 createStmt.executeUpdate();
-                System.out.println("The 'means' table was successfully created!");
             } catch (SQLException e) {
                 System.err.println("Error while executing SQL for 'means': " + e.getMessage());
             }
@@ -86,7 +85,6 @@ public class MeansDatabase {
             
             // Execute the insertion
             pstmt.executeUpdate();
-            System.out.println("Stop " + codeMeans + " was successfully inserted!");
         } catch (SQLException e) {
             System.err.println("Error while executing SQL for 'means': " + e.getMessage());
         }

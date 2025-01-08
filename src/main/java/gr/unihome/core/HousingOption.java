@@ -168,9 +168,6 @@ public class HousingOption {
                     cost, floor, size, distanceFromUni, distanceFromMeans, numberOfBed,
                     furnished, latitude, longitude);
                     housingOptions.add(housingOption);
-                    System.out.println("House " + id + " successfully added to the list!");
-
-                logger.info("Successful connection with the database and retrieval of data");
             }
         } catch (SQLException e) {
             System.err.println("Error while retrieving data from the database: " + e.getMessage());
