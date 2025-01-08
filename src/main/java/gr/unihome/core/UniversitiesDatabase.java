@@ -68,6 +68,10 @@ public class UniversitiesDatabase {
             }
     }
 
+    public static List<String> getUniversitiesFromDB() {
+        return universityNames;
+    }
+
     /**
      * Inserts a specific number of universities into the database.
      * The method uses predefined lists of university names, latitudes, and longitudes.
