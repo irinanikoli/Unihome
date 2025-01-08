@@ -118,10 +118,10 @@ public class Application {
         System.out.print("Όνομα φοιτητή: ");
         String name = scanner.nextLine().trim();
 
-        int budget = getValidIntInput(scanner, 250, 2500, "Μέγιστο κόστος (€) πρέπει να είναι μεταξύ 250 και 2500: ");
-        int size = getValidIntInput(scanner, 15, 150, "Ελάχιστα τετραγωνικά μέτρα πρέπει να είναι μεταξύ 15 και 150: ");
-        int maxDistanceFromUniversity = getValidIntInput(scanner, 30, 150000, "Μέγιστη απόσταση από το Πανεπιστήμιο (μέτρα) πρέπει να είναι μεταξύ 30 και 150000: ");
-        int maxDistanceFromMeans = getValidIntInput(scanner, 30, 15000, "Μέγιστη απόσταση από ΜΜΜ (μέτρα) πρέπει να είναι μεταξύ 30 και 15000: ");
+        int budget = getValidIntInput(scanner, 250, 2500, "Το μέγιστο κόστος (ευρώ) πρέπει να είναι μεταξύ 250 και 2500: ");
+        int size = getValidIntInput(scanner, 15, 150, "Τα ελάχιστα τετραγωνικά μέτρα πρέπει να είναι μεταξύ 15 και 150: ");
+        int maxDistanceFromUniversity = getValidIntInput(scanner, 30, 150000, "Η μέγιστη απόσταση από το Πανεπιστήμιο (μέτρα) πρέπει να είναι μεταξύ 30 και 150000: ");
+        int maxDistanceFromMeans = getValidIntInput(scanner, 30, 15000, "Η μέγιστη απόσταση από ΜΜΜ (μέτρα) πρέπει να είναι μεταξύ 30 και 15000: ");
 
         return new Criteria(name, universityName, budget, size, maxDistanceFromUniversity, maxDistanceFromMeans);
     }
