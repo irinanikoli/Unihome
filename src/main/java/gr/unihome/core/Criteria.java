@@ -19,6 +19,14 @@ public class Criteria {
         this.maxDistanceFromMeans = maxDistanceFromMeans;
     }
 
+    public String getStName() {
+        return this.stName;
+    }
+
+    public void setStName(String getStName) {
+        this.stName = stName;
+    }
+
     public String getStUniversity() {
         return this.stUniversity;
     }

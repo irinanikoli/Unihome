@@ -3,6 +3,8 @@ package gr.unihome.core;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
 public class Application {
     public static void main(String[] args) {
@@ -14,7 +16,7 @@ public class Application {
         UniversitiesDatabase.insertRandomUniversities(8);
         MeansDatabase.insertRandomMeans(5);
 
-        // Show the list of universities for the user to choose
+        // Show the list of universities for the user to select one
         List<String> universityNames = UniversitiesDatabase.getUniversitiesFromDB();
         if (universityNames.isEmpty()) {
             System.out.println("Η λίστα των πανεπιστημίων είναι κενή. Ελέγξτε τη βάση δεδομένων.");
@@ -29,6 +31,7 @@ public class Application {
         Scanner scanner = new Scanner(System.in);
         String selectedUniversity = null;
 
+        // Validate the user's university selection
         while (selectedUniversity == null) {
             System.out.print("\nΕισάγετε τον αριθμό που αντιστοιχεί στο πανεπιστήμιο: ");
             String input = scanner.nextLine().trim();
@@ -59,17 +62,20 @@ public class Application {
 
         double threshold = 3;
 
-        // Enter data of the user
+        // Collect user-specific criteria for house recommendations
         Criteria studentCriteria = getUserCriteria(scanner, selectedUniversity);
+
+        String name = studentCriteria.getStName();
 
         RecommendationService recommendationService = new RecommendationService(housingOptions, criteria, priorities);
 
         HousingOption bestHouse = recommendationService.getBestHouse(studentCriteria);
 
+        // Generate a list of recommended houses within the threshold
         List<HousingOption> recommendations = recommendationService.getBestRecommendationList(studentCriteria, threshold, bestHouse);
 
         if (bestHouse != null) {
-            System.out.println("\nΤο καλύτερο σπίτι είναι: " + bestHouse.toString());
+            System.out.println("\n " + name + ", το καλύτερο σπίτι για εσάς είναι: \n" + bestHouse.toString());
         } else {
             System.out.println("\nΔεν βρέθηκε κατάλληλο σπίτι.");
         }
@@ -84,7 +90,13 @@ public class Application {
         }
     }
 
-    // Method to get user priorities
+    /**
+     * Method to collect and validate user-defined priorities for house selection criteria.
+     * 
+     * @param scanner  The Scanner object for user input.
+     * @param criteria The list of criteria to prioritize.
+     * @return A list of user-defined priorities.
+     */
     private static List<Integer> getUserPriorities(Scanner scanner, List<String> criteria) {
         System.out.println("\nΚαθορίστε τις προτεραιότητες σας για τα παρακάτω κριτήρια (1-4, χωρίς επαναλήψεις):");
         for (int i = 0; i < criteria.size(); i++) {
@@ -111,12 +123,17 @@ public class Application {
         return priorities;
     }
 
-    // Method to get user criteria
+    /**
+     * Method to collect and validate user-specific criteria for house recommendations.
+     * 
+     * @param scanner         The scanner object for user input.
+     * @param universityName  The selected university name.
+     * @return A criteria object with user's values.
+     */
     private static Criteria getUserCriteria(Scanner scanner, String universityName) {
         System.out.println("\nΕισάγετε τα κριτήριά σας:");
 
-        System.out.print("Όνομα φοιτητή: ");
-        String name = scanner.nextLine().trim();
+        String name = getValidStringInput(scanner, "Παρακαλώ εισάγετε το όνομά σας (μόνο λατινικοί χαρακτήρες):", "[a-zA-Z ]+");
 
         int budget = getValidIntInput(scanner, 250, 2500, "Το μέγιστο κόστος (ευρώ) πρέπει να είναι μεταξύ 250 και 2500: ");
         int size = getValidIntInput(scanner, 15, 150, "Τα ελάχιστα τετραγωνικά μέτρα πρέπει να είναι μεταξύ 15 και 150: ");
@@ -126,7 +143,39 @@ public class Application {
         return new Criteria(name, universityName, budget, size, maxDistanceFromUniversity, maxDistanceFromMeans);
     }
 
-    // Validate input
+    /**
+     * Method to collect and validate user input as a string based on a regular expression.
+     * 
+     * @param scanner      The scanner object for user input.
+     * @param prompt       The message displayed to the user.
+     * @param regexPattern The regular expression for input validation.
+     * @return A valid string input.
+     */
+    private static String getValidStringInput(Scanner scanner, String prompt, String regexPattern) {
+        while (true) {
+            System.out.print(prompt);
+            String input = scanner.nextLine().trim();
+            try {
+                if (input.matches(regexPattern)) {
+                    return input;
+                } else {
+                    System.out.println("Το όνομα πρέπει να γραφεί με λατινικούς χαρακτήρες μόνο.");
+                }
+            } catch (NumberFormatException e) {
+                System.out.println("Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό.");
+            }
+        }
+    }
+
+    /**
+     * Method to collect and validate user input as an integer within a specified range.
+     * 
+     * @param scanner The scanner object for user input.
+     * @param min     The minimum valid value.
+     * @param max     The maximum valid value.
+     * @param prompt  The message displayed to the user.
+     * @return A valid integer input.
+     */
     private static int getValidIntInput(Scanner scanner, int min, int max, String prompt) {
         while (true) {
             System.out.print(prompt);
