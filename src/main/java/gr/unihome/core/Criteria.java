@@ -23,7 +23,7 @@ public class Criteria {
         return this.stName;
     }
 
-    public void setStName(String getStName) {
+    public void setStName(String stName) {
         this.stName = stName;
     }
 
