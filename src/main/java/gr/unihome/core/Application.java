@@ -57,7 +57,7 @@ public class Application {
         List<String> criteria = List.of("budget", "distanceFromUniversity", "size", "distanceFromMeans");
         List<Integer> priorities = getUserPriorities(scanner, criteria);
 
-        double threshold = 2;
+        double threshold = 3;
 
         // Enter data of the user
         Criteria studentCriteria = getUserCriteria(scanner, selectedUniversity);
