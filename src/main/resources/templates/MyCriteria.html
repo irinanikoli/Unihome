@@ -74,6 +74,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     width: 400px;
     margin: -650px auto;
+    
 }
 .custom-form form {
     display: flex;
@@ -245,14 +246,7 @@ input[type="radio"]:checked {
     display: flex;
     margin-top: -36px;
 }
-.comment {
-    font-size: 0.9em;
-    color: #ffffff;
-    position: absolute;
-    top: 27%;
-    left: 39%;
-    white-space: nowrap;
-}
+
 
 
 </style>
@@ -266,10 +260,6 @@ input[type="radio"]:checked {
                 <li><a href='About.html'> ΣΧΕΤΙΚΑ ΜΕ ΕΜΑΣ</a></li>
             </ul>
         </div>
-    </div>
-
-    <div>
-        <span class="comment">Στα κουτάκια επιλέξτε την σειρά προτεραιότητας των κριτηρίων σας</span>
     </div>
 
     <div class="form-container custom-form">
@@ -353,12 +343,12 @@ input[type="radio"]:checked {
         <select id="metroDistance"> 
             <option value="" disabled selected>Επιλογή Μέγιστης Απόστασης</option> 
             <option value="0.1">100m</option> 
-            <option value="0.2">200m</option> 
-            <option value="0.3">300m</option> 
-            <option value="0.5">500m</option>
+            <option value="0.2">200km</option> 
+            <option value="0.3">300km</option> 
+            <option value="0.5">500km</option>
             <option value="0.7">700m</option> 
-            <option value="0.8">800m</option> 
-            <option value="0.9">900m</option> 
+            <option value="0.8">800km</option> 
+            <option value="0.9">900km</option> 
             <option value="1">1km</option>  
             <option value="2">2km</option> 
             <option value="3">3km</option>                  
@@ -450,7 +440,6 @@ input[type="radio"]:checked {
     
             // Δημιουργία των δεδομένων για αποστολή
             const formData = {
-                university: document.getElementById("university").value,
                 budget: document.getElementById("budget").value,
                 mintm: document.getElementById("min-tm").value,
                 maxtm: document.getElementById("max-tm").value,
