@@ -133,96 +133,88 @@
 
 
 
-
         /* Στυλ για τις κάρτες */
         .card-container {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 20px;
+            flex-wrap: wrap; /* Επιτρέπει στις κάρτες να "σπάνε" γραμμή */
+            justify-content: space-evenly; /* Ευθυγραμμίζει τις κάρτες ομοιόμορφα */
+            gap: 20px; /* Διάστημα ανάμεσα στις κάρτες */
             padding: 20px;
             background-color: #f9f9f9;
-            justify-content: space-evenly;
-        }
+            width: 100%; /* Εξασφαλίζει ότι το container χρησιμοποιεί όλο το διαθέσιμο πλάτος */
+            box-sizing: border-box; /* Υπολογίζει τα padding και gap στο συνολικό πλάτος */
+         }
 
+    .card {
+        background: rgb(202, 224, 217);
+        border-radius: 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: calc(33.33% - 40px); /* Κάθε κάρτα να καταλαμβάνει το 1/3 του container */
+        max-width: 300px; /* Περιορισμός στο μέγιστο πλάτος */
+        overflow: hidden;
+        transition: transform 0.3s, box-shadow 0.3s;
+        text-align: center;
+        box-sizing: border-box; /* Υπολογίζει padding και περιθώρια σωστά */
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .card img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-bottom: 5px solid #0179a4;
+    }
+
+    .card-content {
+        padding: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .card-content h3 {
+        margin: 0;
+        font-size: 20px;
+        color: #0179a4;
+        font-weight: bold;
+    }
+
+    .card-content p {
+        margin: 0;
+        font-size: 16px;
+        line-height: 1.6;
+        color: #333;
+    }
+
+    .card-content .characteristics {
+        display: flex;
+        flex-direction: column;
+        gap: 5px;
+    }
+
+    .card-content .characteristics p {
+        font-size: 14px;
+        color: #555;
+    }
+
+    /* Responsive Styling */
+    @media (max-width: 768px) {
         .card {
-            background: rgb(202, 224, 217);
-            border-radius: 10px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            flex: 1 1 calc(25% - 40px);
-            text-align: center;
+            width: calc(50% - 20px); /* Σε μικρότερες οθόνες, 2 κάρτες ανά σειρά */
         }
+    }
 
-        .card:hover {
-            transform: scale(1.05);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    @media (max-width: 480px) {
+        .card {
+            width: 100%; /* Σε ακόμη μικρότερες οθόνες, 1 κάρτα ανά σειρά */
         }
+    }
 
-        .card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 5px solid #0179a4;
-        }
 
-        .card-content {
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-        }
-
-        .card-content h3 {
-            margin: 0;
-            font-size: 20px;
-            color: #0179a4;
-            font-weight: bold;
-        }
-
-        .card-content p {
-            margin: 0;
-            font-size: 16px;
-            line-height: 1.6;
-            color: #333;
-        }
-
-        .card-content .characteristics {
-            display: flex;
-            flex-direction: column;
-            gap: 5px;
-        }
-
-        .card-content .characteristics p {
-            font-size: 14px;
-            color: #555;
-        }
-
-        .card-content .rating {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .card-content .rating span {
-            color: #ffcc00;
-            font-size: 16px;
-        }
-
-        .card-content .rating p {
-            font-size: 14px;
-            color: #555;
-            margin: 0;
-        }
-
-        /* Responsive Styling */
-        @media (max-width: 768px) {
-            .card {
-                width: 100%;
-            }
-        }
     </style>
 </head>
 
@@ -252,43 +244,55 @@
 
 
     <!-- Ranking Section for Houses -->
-    <div class="card-container" id="card-container"></div>
+    <div class="card-container">
+        <div class="card">
+            <div class="card-content">
+                <h3>Σπίτι 1</h3>
+                <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
+                <div class="characteristics">
+                    <p>Κωδικός σπιτιού</p>
 
-    <script>
-        // Φόρτωση δεδομένων από το API
-        async function loadHouses() {
-            const response = await fetch('/api/houses/recommendations');
-            const houses = await response.json();
-    
-            const cardContainer = document.getElementById('card-container');
-            houses.forEach(house => {
-                const card = document.createElement('div');
-                card.className = 'card';
-    
-                card.innerHTML = `
-                    <img src="${house.imageUrl}" alt="${house.id}">
-                    <div class="card-content">
-                        <h3>${house.id}</h3>
-                        <p>Location: ${house.location}</p>
-                        <p>Address: ${house.address}</p>
-                        <p>Cost: ${house.cost} €</p>
-                        <p>Floor: ${house.floor}</p>
-                        <p>Size: ${house.size} m²</p>
-                        <p>Distance from University: ${house.distanceFromUni.toFixed(2)} km</p>
-                        <p>Distance from Transport: ${house.distanceFromMeans.toFixed(2)} km</p>
-                        <p>Beds: ${house.numberOfBed}</p>
-                        <p>Furnished: ${house.furnished === 1 ? 'Yes' : 'No'}</p>
-                        <p>Latitude: ${house.latitude.toFixed(6)}</p>
-                        <p>Longitude: ${house.longitude.toFixed(6)}</p>
-                    </div>
-                `;
-                cardContainer.appendChild(card);
-            });
-        }
-    
-        // Κλήση της λειτουργίας κατά τη φόρτωση της σελίδας
-        document.addEventListener('DOMContentLoaded', loadHouses);
-    </script>
+                </div>
+            </div>
+            <img src="OIP.jpg" alt="Σπίτι 1">
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <h3>Σπίτι 2</h3>
+                <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
+                <div class="characteristics">
+                    <p>Κωδικός σπιτιού</p>
+
+                </div>
+            </div>
+            <img src="σπιτι2.jpg" alt="Σπίτι 2">
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <h3>Σπίτι 3</h3>
+                <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
+                <div class="characteristics">
+                    <p>Κωδικός σπιτιού</p>
+
+                </div>
+            </div>
+            <img src="σπιτι3.jpg" alt="Σπίτι 3">
+        </div>
+        <div class="card">
+            <div class="card-content">
+                <h3>Σπίτι 4</h3>
+                <p>Περιγραφή: Άνετο διαμέρισμα κοντά στο κέντρο της πόλης.</p>
+                <div class="characteristics">
+                    <p>Κωδικός σπιτιού</p>
+
+                </div>
+            </div>
+            <img src="σπιτι4.jpg" alt="Σπίτι 4">
+        </div>
+
+        
+
+    </div>
 
 
 
