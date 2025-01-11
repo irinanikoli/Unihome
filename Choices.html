@@ -289,6 +289,43 @@
             </div>
             <img src="σπιτι4.jpg" alt="Σπίτι 4">
         </div>
+        
+        /* για σύνδεση με βασικό κώδικα */
+        <script>
+            // Φόρτωση δεδομένων από το API
+            async function loadHouses() {
+                const response = await fetch('/api/houses/recommendations');
+                const houses = await response.json();
+        
+                const cardContainer = document.getElementById('card-container');
+                houses.forEach(house => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+        
+                    card.innerHTML = `
+                        <img src="${house.imageUrl}" alt="${house.id}">
+                        <div class="card-content">
+                            <h3>${house.id}</h3>
+                            <p>Location: ${house.location}</p>
+                            <p>Address: ${house.address}</p>
+                            <p>Cost: ${house.cost} €</p>
+                            <p>Floor: ${house.floor}</p>
+                            <p>Size: ${house.size} m²</p>
+                            <p>Distance from University: ${house.distanceFromUni.toFixed(2)} km</p>
+                            <p>Distance from Transport: ${house.distanceFromMeans.toFixed(2)} km</p>
+                            <p>Beds: ${house.numberOfBed}</p>
+                            <p>Furnished: ${house.furnished === 1 ? 'Yes' : 'No'}</p>
+                            <p>Latitude: ${house.latitude.toFixed(6)}</p>
+                            <p>Longitude: ${house.longitude.toFixed(6)}</p>
+                        </div>
+                    `;
+                    cardContainer.appendChild(card);
+                });
+            }
+        
+            // Κλήση της λειτουργίας κατά τη φόρτωση της σελίδας
+            document.addEventListener('DOMContentLoaded', loadHouses);
+        </script>
 
         
 
