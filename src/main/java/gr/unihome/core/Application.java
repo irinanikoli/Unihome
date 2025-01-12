@@ -139,7 +139,7 @@ public class Application {
     private static Criteria getUserCriteria(Scanner scanner, String universityName) {
         System.out.println(CYAN + "\nΕισάγετε τα κριτήριά σας:" + RESET);
 
-        String name = getValidStringInput(scanner, "Παρακαλώ εισάγετε το όνομά σας (μόνο λατινικοί χαρακτήρες):", "[a-zA-Z ]+");
+        String name = getValidStringInput(scanner, "Παρακαλώ εισάγετε το όνομά σας (μόνο λατινικοί χαρακτήρες): ", "[a-zA-Z ]+");
 
         int budget = getValidIntInput(scanner, 250, 2500, "Το μέγιστο κόστος (ευρώ) πρέπει να είναι μεταξύ 250 και 2500: ");
         int size = getValidIntInput(scanner, 15, 150, "Τα ελάχιστα τετραγωνικά μέτρα πρέπει να είναι μεταξύ 15 και 150: ");
