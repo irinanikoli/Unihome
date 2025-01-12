@@ -1,4 +1,34 @@
 -------------------------------------------------------------------------------
 Test set: gr.unihome.core.MeansDatabaseTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.326 s - in gr.unihome.core.MeansDatabaseTest
+Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.562 s <<< FAILURE! -- in gr.unihome.core.MeansDatabaseTest
+gr.unihome.core.MeansDatabaseTest.testTableExists -- Time elapsed: 0.006 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: The 'CodeMeans' column was not found in the table. ==> expected: <true> but was: <false>
+	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
+	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
+	at org.junit.jupiter.api.AssertTrue.failNotTrue(AssertTrue.java:63)
+	at org.junit.jupiter.api.AssertTrue.assertTrue(AssertTrue.java:36)
+	at org.junit.jupiter.api.Assertions.assertTrue(Assertions.java:210)
+	at gr.unihome.core.MeansDatabaseTest.testTableExists(MeansDatabaseTest.java:77)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+gr.unihome.core.MeansDatabaseTest.testInsertMeans -- Time elapsed: 0.016 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Error during database connection or SQL execution: [SQLITE_ERROR] SQL error or missing database (no such table: means)
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:134)
+	at gr.unihome.core.MeansDatabaseTest.testInsertMeans(MeansDatabaseTest.java:41)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
+gr.unihome.core.MeansDatabaseTest.testInsertRandomMeans -- Time elapsed: 0.023 s <<< FAILURE!
+org.opentest4j.AssertionFailedError: Error during database connection or SQL execution: [SQLITE_ERROR] SQL error or missing database (no such table: means)
+	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
+	at org.junit.jupiter.api.Assertions.fail(Assertions.java:134)
+	at gr.unihome.core.MeansDatabaseTest.testInsertRandomMeans(MeansDatabaseTest.java:56)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+
