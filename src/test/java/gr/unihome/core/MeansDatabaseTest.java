@@ -22,7 +22,7 @@ public class MeansDatabaseTest {
 
         MeansDatabase.insertMeans(uniqueCodeMeans, "Στάση Λεωφορείου", 37.9838, 23.7275);
 
-        try (Connection conn = DBConnection.connect("jdbc:sqlite:means.db")) {
+        try (Connection conn = DBConnection.connect("jdbc:sqlite:data/means.db")) {
             assertNotNull(conn, "Connection to the database failed!");
 
             var statement = conn.createStatement();
@@ -46,7 +46,7 @@ public class MeansDatabaseTest {
     public void testInsertRandomMeans() {
         MeansDatabase.insertRandomMeans(5);
 
-        try (Connection conn = DBConnection.connect("jdbc:sqlite:means.db")) {
+        try (Connection conn = DBConnection.connect("jdbc:sqlite:data/means.db")) {
             var statement = conn.createStatement();
             var result = statement.executeQuery("SELECT COUNT(*) FROM means;");
             result.next();
@@ -59,7 +59,7 @@ public class MeansDatabaseTest {
 
     @Test
     public void testTableExists() {
-        try (Connection conn = DBConnection.connect("jdbc:sqlite:means.db")) {
+        try (Connection conn = DBConnection.connect("jdbc:sqlite:data/means.db")) {
             var statement = conn.createStatement();
             // Returns column info for the table
             var result = statement.executeQuery("PRAGMA table_info(means);");

@@ -24,7 +24,7 @@ public class UniversitiesDatabaseTest {
         String query = "SELECT name FROM sqlite_master WHERE type='table' AND name='universities';";
         
         // Connect to the database and check if the table was created
-        try (Connection conn = DBConnection.connect("jdbc:sqlite:universities.db"); 
+        try (Connection conn = DBConnection.connect("jdbc:sqlite:data/universities.db"); 
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
 
@@ -50,7 +50,7 @@ public class UniversitiesDatabaseTest {
         // Verify the insertion by checking if the university appears in the database
         String query = "SELECT * FROM universities WHERE UniversityName = ?;";
         
-        try (Connection conn = DBConnection.connect("jdbc:sqlite:universities.db"); 
+        try (Connection conn = DBConnection.connect("jdbc:sqlite:data/universities.db"); 
              PreparedStatement pstmt = conn.prepareStatement(query)) {
             
             pstmt.setString(1, name);
@@ -76,7 +76,7 @@ public class UniversitiesDatabaseTest {
         // Check if the universities are inserted correctly
         String query = "SELECT COUNT(*) FROM universities;";
         
-        try (Connection conn = DBConnection.connect("jdbc:sqlite:universities.db"); 
+        try (Connection conn = DBConnection.connect("jdbc:sqlite:data/universities.db"); 
              PreparedStatement pstmt = conn.prepareStatement(query);
              ResultSet rs = pstmt.executeQuery()) {
             
