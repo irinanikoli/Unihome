@@ -6,6 +6,13 @@ import java.util.Scanner;
 
 
 public class Application {
+
+    public static final String RESET = "\u001B[0m";
+	public static final String GREEN = "\u001B[32m";
+	public static final String RED = "\u001B[31m";
+    public static final String CYAN = "\u001B[36m";
+    public static final String YELLOW = "\u001B[33m";
+
     public static void main(String[] args) {
         // Initialize databases
         HousesDatabase.initialize();
@@ -18,11 +25,11 @@ public class Application {
         // Show the list of universities for the user to select one
         List<String> universityNames = UniversitiesDatabase.getUniversitiesFromDB();
         if (universityNames.isEmpty()) {
-            System.out.println("Η λίστα των πανεπιστημίων είναι κενή. Ελέγξτε τη βάση δεδομένων.");
+            System.out.println(RED + "Η λίστα των πανεπιστημίων είναι κενή. Ελέγξτε τη βάση δεδομένων." + RESET);
             return;
         }
 
-        System.out.println("Επιλέξτε Πανεπιστήμιο από τη λίστα:");
+        System.out.println(YELLOW + "Επιλέξτε Πανεπιστήμιο από τη λίστα:" + RESET);
         for (int i = 0; i < universityNames.size(); i++) {
             System.out.println((i + 1) + ". " + universityNames.get(i));
         }
@@ -32,7 +39,7 @@ public class Application {
 
         // Validate the user's university selection
         while (selectedUniversity == null) {
-            System.out.print("\nΕισάγετε τον αριθμό που αντιστοιχεί στο πανεπιστήμιο: ");
+            System.out.print(CYAN + "\nΕισάγετε τον αριθμό που αντιστοιχεί στο πανεπιστήμιο: " + RESET);
             String input = scanner.nextLine().trim();
 
             try {
@@ -40,14 +47,14 @@ public class Application {
                 if (choice >= 1 && choice <= universityNames.size()) {
                     selectedUniversity = universityNames.get(choice - 1);
                 } else {
-                    System.out.println("Ο αριθμός πρέπει να είναι μεταξύ 1 και " + universityNames.size() + ".");
+                    System.out.println(RED + "Ο αριθμός πρέπει να είναι μεταξύ 1 και " + universityNames.size() + "." + RESET);
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό.");
+                System.out.println(RED + "Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό." + RESET);
             }
         }
 
-        System.out.println("Επιλέξατε το Πανεπιστήμιο: " + selectedUniversity);
+        System.out.println("Επιλέξατε το Πανεπιστήμιο: " + GREEN + selectedUniversity + RESET);
 
         // Calculate distances
         DistanceCalculator.calculateDistancesBetweenHousesAndUni(selectedUniversity);
@@ -74,9 +81,9 @@ public class Application {
         List<HousingOption> recommendations = recommendationService.getBestRecommendationList(studentCriteria, threshold, bestHouse);
 
         if (bestHouse != null) {
-            System.out.println("\n " + name + ", το καλύτερο σπίτι για εσάς είναι: \n" + bestHouse.toString());
+            System.out.println("\n" + name + ", το καλύτερο σπίτι για εσάς είναι: \n" + GREEN + bestHouse.toString() + RESET);
         } else {
-            System.out.println("\nΔεν βρέθηκε κατάλληλο σπίτι.");
+            System.out.println(RED + "\nΔεν βρέθηκε κατάλληλο σπίτι." + RESET);
         }
 
         if (!recommendations.isEmpty()) {
@@ -85,7 +92,7 @@ public class Application {
                 System.out.println(option);
             }
         } else {
-            System.out.println("\nΔεν βρέθηκαν προτάσεις.");
+            System.out.println(RED + "\nΔεν βρέθηκαν προτάσεις." + RESET);
         }
     }
 
@@ -97,7 +104,7 @@ public class Application {
      * @return A list of user-defined priorities.
      */
     private static List<Integer> getUserPriorities(Scanner scanner, List<String> criteria) {
-        System.out.println("\nΚαθορίστε τις προτεραιότητες σας για τα παρακάτω κριτήρια (1-4, χωρίς επαναλήψεις):");
+        System.out.println(YELLOW + "\nΚαθορίστε τις προτεραιότητες σας για τα παρακάτω κριτήρια (1-4, χωρίς επαναλήψεις):" + RESET);
         for (int i = 0; i < criteria.size(); i++) {
             System.out.println((i + 1) + ". " + criteria.get(i));
         }
@@ -105,7 +112,7 @@ public class Application {
         List<Integer> priorities = new ArrayList<>();
         while (priorities.size() < criteria.size()) {
             String currentCriterion = criteria.get(priorities.size());
-            System.out.print("Προτεραιότητα για " + currentCriterion + " : ");
+            System.out.print(CYAN + "Προτεραιότητα για " + currentCriterion + " : " + RESET);
             String input = scanner.nextLine().trim();
 
             try {
@@ -113,10 +120,10 @@ public class Application {
                 if (priority >= 1 && priority <= 4 && !priorities.contains(priority)) {
                     priorities.add(priority);
                 } else {
-                    System.out.println("Η προτεραιότητα πρέπει να είναι μοναδικός αριθμός από 1 έως 4.");
+                    System.out.println(RED + "Η προτεραιότητα πρέπει να είναι μοναδικός αριθμός από 1 έως 4." + RESET);
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό.");
+                System.out.println(RED + "Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό." + RESET);
             }
         }
         return priorities;
@@ -130,7 +137,7 @@ public class Application {
      * @return A criteria object with user's values.
      */
     private static Criteria getUserCriteria(Scanner scanner, String universityName) {
-        System.out.println("\nΕισάγετε τα κριτήριά σας:");
+        System.out.println(CYAN + "\nΕισάγετε τα κριτήριά σας:" + RESET);
 
         String name = getValidStringInput(scanner, "Παρακαλώ εισάγετε το όνομά σας (μόνο λατινικοί χαρακτήρες):", "[a-zA-Z ]+");
 
@@ -158,10 +165,10 @@ public class Application {
                 if (input.matches(regexPattern)) {
                     return input;
                 } else {
-                    System.out.println("Το όνομα πρέπει να γραφεί με λατινικούς χαρακτήρες μόνο.");
+                    System.out.println(RED + "Το όνομα πρέπει να γραφεί με λατινικούς χαρακτήρες μόνο." + RESET);
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό.");
+                System.out.println(RED + "Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό." + RESET);
             }
         }
     }
@@ -184,10 +191,10 @@ public class Application {
                 if (value >= min && value <= max) {
                     return value;
                 } else {
-                    System.out.println("Η τιμή πρέπει να είναι μεταξύ " + min + " και " + max + ".");
+                    System.out.println(RED + "Η τιμή πρέπει να είναι μεταξύ " + min + " και " + max + "." + RESET);
                 }
             } catch (NumberFormatException e) {
-                System.out.println("Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό.");
+                System.out.println(RED + "Μη έγκυρη είσοδος. Πληκτρολογήστε έναν αριθμό." + RESET);
             }
         }
     }
