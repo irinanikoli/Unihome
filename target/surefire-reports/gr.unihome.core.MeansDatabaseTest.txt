@@ -1,8 +1,8 @@
 -------------------------------------------------------------------------------
 Test set: gr.unihome.core.MeansDatabaseTest
 -------------------------------------------------------------------------------
-Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.562 s <<< FAILURE! -- in gr.unihome.core.MeansDatabaseTest
-gr.unihome.core.MeansDatabaseTest.testTableExists -- Time elapsed: 0.006 s <<< FAILURE!
+Tests run: 3, Failures: 3, Errors: 0, Skipped: 0, Time elapsed: 0.380 s <<< FAILURE! -- in gr.unihome.core.MeansDatabaseTest
+gr.unihome.core.MeansDatabaseTest.testTableExists -- Time elapsed: 0.003 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: The 'CodeMeans' column was not found in the table. ==> expected: <true> but was: <false>
 	at org.junit.jupiter.api.AssertionFailureBuilder.build(AssertionFailureBuilder.java:151)
 	at org.junit.jupiter.api.AssertionFailureBuilder.buildAndThrow(AssertionFailureBuilder.java:132)
@@ -14,7 +14,7 @@ org.opentest4j.AssertionFailedError: The 'CodeMeans' column was not found in the
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 
-gr.unihome.core.MeansDatabaseTest.testInsertMeans -- Time elapsed: 0.016 s <<< FAILURE!
+gr.unihome.core.MeansDatabaseTest.testInsertMeans -- Time elapsed: 0.010 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: Error during database connection or SQL execution: [SQLITE_ERROR] SQL error or missing database (no such table: means)
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
 	at org.junit.jupiter.api.Assertions.fail(Assertions.java:134)
@@ -23,7 +23,7 @@ org.opentest4j.AssertionFailedError: Error during database connection or SQL exe
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
 
-gr.unihome.core.MeansDatabaseTest.testInsertRandomMeans -- Time elapsed: 0.023 s <<< FAILURE!
+gr.unihome.core.MeansDatabaseTest.testInsertRandomMeans -- Time elapsed: 0.020 s <<< FAILURE!
 org.opentest4j.AssertionFailedError: Error during database connection or SQL execution: [SQLITE_ERROR] SQL error or missing database (no such table: means)
 	at org.junit.jupiter.api.AssertionUtils.fail(AssertionUtils.java:38)
 	at org.junit.jupiter.api.Assertions.fail(Assertions.java:134)
