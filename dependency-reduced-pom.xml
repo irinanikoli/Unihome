@@ -19,7 +19,7 @@
               <createDependencyReducedPom>true</createDependencyReducedPom>
               <transformers>
                 <transformer>
-                  <mainClass>gr.unihome.Application</mainClass>
+                  <mainClass>gr.unihome.core.Application</mainClass>
                 </transformer>
               </transformers>
             </configuration>
