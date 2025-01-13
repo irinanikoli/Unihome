@@ -4,7 +4,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
         <meta charset="UTF-8">
         <title>Set your criteria</title>
-        <link rel="icon" href="favicon-32x32.png" type="image/x-icon">
+        <link rel="icon" href="../static/images/favicon-32x32.png" type="image/x-icon">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
@@ -22,7 +22,7 @@
     width: 100%;
     height: 100vh;
     background-color: #fff;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)), url(page2bg.png);
+    background-image: linear-gradient(rgba(0, 0, 0, 0.75),rgba(0, 0, 0, 0.75)), url(../static/images/page2bg.png);
     background-size: cover;
     background-position: center;
 }
@@ -182,7 +182,7 @@ input[type="radio"]:checked {
     justify-content: space-between; 
     margin-top: 1px;
     padding: 1px;
-    width: 88%;
+    width: 192%;
 }
 
 .range-item {
@@ -190,13 +190,6 @@ input[type="radio"]:checked {
     flex-direction: column;
     width: 45%;
     margin-left: -1px;
-}
- /* Το αριστερό κουτι τμ */
-#max-tm {
-    display: flex;
-    flex-direction: column;
-    width: 97%;
-    margin-left: -1px;   
 }
 
 .range-label {
@@ -241,7 +234,7 @@ input[type="radio"]:checked {
     border-radius: 4px;
     font-size: 14px;
     width: 25px;
-    margin-left: 112%;
+    margin-left: 107.9%;
     display: flex;
     margin-top: -36px;
 }
@@ -268,15 +261,12 @@ input[type="radio"]:checked {
         </div>
     </div>
 
-    <div>
-        <span class="comment">Στα κουτάκια επιλέξτε την σειρά προτεραιότητας των κριτηρίων σας</span>
-    </div>
-
     <div class="form-container custom-form">
         <form id="myForm" method="POST" action="http://localhost:8000/save" onsubmit="logFormData(event)">
 
     <!--Πανεπιστήμιο-->
             <div class="form-group"> 
+                <label for="comment">Στα κουτάκια δεξιά επιλέξτε την σειρά προτεραιότητας των κριτηρίων σας!<span></span></label> 
                 <label for="Πανεπιστήμιο">Πανεπιστήμιο:<span></span></label> 
                 <select id="university"> 
                     <option value="" disabled selected>Επιλογή Πανεπιστημίου</option> 
@@ -301,16 +291,11 @@ input[type="radio"]:checked {
     <!--Εμβαδόν-->
             <div class="range-container">
                 <div class="range-item">
-                <label for="min" class="range-label">Από (τ.μ.):</label>
+                <label for="min" class="range-label">Ελάχιστο Εμβαδόν (τ.μ.):</label>
                 <input type="number" id="min-tm" class="range-input" name="min" placeholder="Ελάχιστα τ.μ." min="30" max="150" step="10" value="30">
+                <input type="number" name="tm-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="tm_preference">
                 
             </div>
-
-        <div class="range-item">
-            <label for="max" class="range-label">Έως (τ.μ.):</label>
-            <input type="number" id="max-tm" class="range-input" name="max" placeholder="Μέγιστα τ.μ."min="30" max="150" step="10" value="30">
-            <input type="number" name="tm-preference" class="preference-input" min="1" max="4" step="1" placeholder="1" id="tm_preference">
-        </div>
     </div>
                 
      <!--Υπνοδωμάτια-->
