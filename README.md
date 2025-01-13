@@ -1,7 +1,8 @@
 # Unihome
 
 ## Description
-The Unihome software provides an efficient solution for allocating student housing based on user preferences. This document provides instructions on how to create an executable JAR for the Unihome project and test its functionality.
+Unihome is a software that finds the optimal houses to university students based on their own needs and choices. The software utilizes genetic algorithms to find the first and at the same time best house and brute force algorithm to find the recommended list of houses. In order for houses to be chosen, a score is calculated. The mechanism of score involves normalized weights for the 4 criteria of the user (budget, size, distanceFromUni, distanceFromMeans) that are calculated based on the number of priority that the student chooses (1-4). The best house returned from the first algortithm is excluded from the list to avoid duplication. The project is right now on a more abstract case, as we tend to focus more on the retrieval of imaginary data that are randomly generated each and every time the program is run and of course, the efficient and correct calculation of the scores. We also have a very nice and modern graphical user interface, but unfortunately right now it isn't connected to the core part of the project. It is in our future plans though, as we are very optimistic to finalize the connection and also work with real-world data that can make the software great for real usage.
+
 
 ## Instructions
 
