@@ -84,7 +84,7 @@ public class MatchingEngine {
 
         if (ho.getSize() < student.getMinSqMeters()) {
             double violationRatio = student.getMinSqMeters() / ho.getSize();
-            score -= weights.getOrDefault("size", 0.0) * (violationRatio - 1.0) * 0.5; // Ποινή μεγέθους
+            score -= weights.getOrDefault("size", 0.0) * (1.00 - violationRatio) * 0.5; // Ποινή μεγέθους
         }
     
         // Score should not be negative

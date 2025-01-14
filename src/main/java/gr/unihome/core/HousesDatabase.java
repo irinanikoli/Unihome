@@ -97,7 +97,7 @@ public class HousesDatabase {
             int id = i + 1;
             String location = athensLocations.get(random1.nextInt(athensLocations.size()));
             String address = athensAddresses.get(random1.nextInt(athensAddresses.size())) + " " + (random1.nextInt(200) + 1);
-            int cost = random1.nextInt(1751) + 250;
+            int cost = random1.nextInt(500) + 250;
             int floor = random1.nextInt(6);
             int size = random1.nextInt(121) + 30;
             double distanceFromUni = -1;
