@@ -29,3 +29,11 @@ Unihome is a software that finds the optimal houses to university students based
    Execute the JAR file using the following command:
    ```
    java -jar "C:\UNIHOME\Unihome\target\unihome-1.0-SNAPSHOT.jar"
+
+   
+## UML Diagram
+
+Below is the UML diagram of the project:
+
+![UML Diagram](Στιγμιότυπο%20οθόνης%20(45).png)
+
